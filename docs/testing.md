@@ -7,7 +7,7 @@
 | `bun run lint` / `bun run format:check`  | Static semantics, boundaries and formatting                                 |
 | `bun run typecheck`                      | Public implementation, tests and stories                                    |
 | `bun run check:unused`                   | Unused files, exports and dependencies (knip)                               |
-| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the committed file     |
+| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the version in Git     |
 | `bun run check:package` / `check:size`   | publint, attw type resolution and bundle size budgets (after `build`)       |
 | `bun run test` / `bun run test:coverage` | Vitest node/jsdom, with 80% component and 90% helper line floors            |
 | `bun run test:stories`                   | Every story in Chromium, plays and strict axe                               |

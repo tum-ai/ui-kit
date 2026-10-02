@@ -71,6 +71,19 @@ export function storyMetadata() {
       };
     });
 }
+/**
+ * Text of one TSDoc comment part. A `{@link X}` part has no text of its own,
+ * so it names its target (`X`); `{@link X | label}` keeps its label, and a
+ * `{@link https://…}` URL stays whole.
+ */
+function linkText(part, source) {
+  if (!part.name) return part.text ?? "";
+  const name = part.name.getText(source);
+  const text = part.text ?? "";
+  if (text.startsWith("://")) return `${name}${text}`;
+  const label = text.replace(/^\s*\|?\s*/, "").trim();
+  return label || `\`${name}\``;
+}
 export function publicApi() {
   return ["src/index.ts", "src/shell/index.ts"].flatMap((entry) => {
     const file = ts.createSourceFile(
@@ -112,10 +125,7 @@ export function publicApi() {
             ?.map((doc) =>
               typeof doc.comment === "string"
                 ? doc.comment
-                : // A `{@link X}` part has empty text; name its target instead.
-                  doc.comment
-                    ?.map((p) => (p.name ? `\`${p.name.getText(source)}\`` : (p.text ?? "")))
-                    .join(""),
+                : doc.comment?.map((p) => linkText(p, source)).join(""),
             )
             .join(" ") ?? "";
         return {

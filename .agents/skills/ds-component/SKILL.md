@@ -28,7 +28,7 @@ description: Add, change or extend a TUM.ai UI-kit component (src/components or 
    portals and edge cases; avoid snapshot-only tests.
 6. **Exports and docs.** New exports go through `src/index.ts` or `src/shell/index.ts`. When
    several agents work in parallel, the integrating agent owns these. Update `docs/components/*.md`.
-   Run `bun run manifests` to regenerate `docs/api.md` (never hand-edit it).
+   Run `node scripts/generate-api.mjs` to regenerate `docs/api.md` (never hand-edit it; `bun run check:api` fails when it is stale).
 7. **Check.** Run `bun run lint`, `bun run typecheck` and `bunx vitest run --project dom <test>`.
    Run the `ui-verify` skill for visual changes. Add a Changeset (`bun run changeset`) for public
    API, token, visual or accessibility changes.
