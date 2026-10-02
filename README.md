@@ -17,23 +17,17 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-Storybook opens at `http://localhost:6006`. See [Getting started](docs/getting-started.md) for a complete application example and installation before the first npm release. Install test browsers with `bunx playwright install --with-deps chromium webkit` before running browser checks. Run `bun run verify` for the complete local/CI-equivalent validation. `bun run test:stories` runs actual browser interactions and axe. Unit tests use Vitest, not Bun's test runner.
+Storybook opens at `http://localhost:6006`. See [Getting started](docs/getting-started.md) for a complete application example and installation instructions. Install test browsers with `bunx playwright install --with-deps chromium webkit` before running browser checks. Run `bun run verify` for the complete local/CI-equivalent validation. `bun run test:stories` runs actual browser interactions and axe. Unit tests use Vitest, not Bun's test runner.
 
 ## Consumer setup
 
-The npm package name is `@tum.ai/ui-kit`, under the owner-confirmed `tum.ai` organization. The first registry release is still pending. You can use the package immediately from a built tarball; no registry or hosting setup is needed.
+Install the public [npm package](https://www.npmjs.com/package/@tum.ai/ui-kit) in a Next 16 / React 19 / Tailwind 4 application:
 
 ```sh
-# In the cloned ui-kit repository:
-bun run build
-mkdir -p artifacts
-npm pack --ignore-scripts --pack-destination artifacts
-
-# In your Next.js application (replace the absolute path):
-bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz
+bun add --exact @tum.ai/ui-kit@0.1.0
 ```
 
-`bun run test:consumer` builds and installs that same package format into an isolated Next application and verifies it in Chromium. The [CI package-reports artifact](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) also contains the tested tarball for each successful run; it expires after 14 days. Build locally for a permanent copy.
+Commit the dependency and lockfile changes. See [Getting started](docs/getting-started.md) for peer versions and local tarball testing. `bun run test:consumer` builds and installs the package into an isolated Next application and verifies it in Chromium.
 
 ```tsx
 import { Button, Section, Heading } from "@tum.ai/ui-kit";
