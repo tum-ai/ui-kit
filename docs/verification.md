@@ -32,7 +32,7 @@ The comparison covers PageHero, Photo, Section, Container, SectionHeader, Action
 
 Reviewed renders include the complete page at phone and desktop widths, tone foundations, and the source-comparison set. The Storybook manager and complete-page preview were also inspected interactively. Normal test runs compare the reviewed baseline files; only the initial baseline-generation run used snapshot updating.
 
-The release tarball is `artifacts/tum-ai-ui-kit-0.1.0.tgz`. Machine-readable proof is in `artifacts/consumer.json`, `artifacts/parity/comparison.json`, `artifacts/design/index.json`, `coverage/coverage-summary.json` and the Playwright report. Generated artifacts are ignored by Git and can be recreated with the documented commands. Current remote verification is recorded in the [GitHub CI runs](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml); the table above records the initial local verification independently of CI.
+The release tarball is `artifacts/tum-ai-ui-kit-0.1.0.tgz`. Machine-readable proof is in `artifacts/consumer.json`, `artifacts/parity/comparison.json`, `artifacts/design/index.json`, `coverage/coverage-summary.json` and the Playwright report. Generated artifacts are ignored by Git and can be recreated with the documented commands. The first complete [GitHub CI run](https://github.com/tum-ai/ui-kit/actions/runs/37008047722) passed on commit `bd36e0428c8c01f75ec76dfbfc74c629e463c59e`: quality, unit coverage, tarball consumer, browser stories, visual regressions and the aggregate Verify job. Current results remain available in the [CI runs](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml).
 
 ## Accessibility proof boundary
 

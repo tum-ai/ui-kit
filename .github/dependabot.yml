@@ -4,6 +4,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
     groups:
       storybook:
         patterns: ["storybook", "@storybook/*", "eslint-plugin-storybook"]
@@ -11,7 +14,15 @@ updates:
         patterns: ["vitest", "@vitest/*"]
       development:
         dependency-type: development
+      runtime:
+        dependency-type: production
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      github-actions:
+        patterns: ["*"]
