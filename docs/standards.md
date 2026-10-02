@@ -2,7 +2,7 @@
 
 The kit holds itself to a few hard rules, and machines check them wherever they can. This page is the index of those rules: each row names the rule and what enforces it. A rule marked **manual** is checked in review, by people or by the review checklists; everything else fails a local command and CI.
 
-Run everything with `bun run verify`. The commands named below run each part on its own.
+Run everything with `bun run verify`; CI also checks the pull request title. The commands named below run each part on its own.
 
 ## Code
 
@@ -13,10 +13,10 @@ Run everything with `bun run verify`. The commands named below run each part on 
 | React 19 rules: stable keys, no leaked `&&` renders, no nested component definitions, no unstable default props or context values, refs named `ref` or `…Ref`                                                    | `@eslint-react` `strict-type-checked`                                  |
 | Hooks follow the rules of hooks and the React Compiler checks                                                                                                                                                    | `eslint-plugin-react-hooks`                                            |
 | TSDoc on every export and on every top-level prop of an exported type                                                                                                                                            | `jsdoc/require-jsdoc` (published `src` only)                           |
-| `docs/api.md` matches the TSDoc                                                                                                                                                                                  | `bun run check:api` (CI)                                               |
+| `docs/api.md` matches the TSDoc                                                                                                                                                                                  | `bun run check:api`                                                    |
 | Published code imports only relative paths and never application config, CMS clients or feature modules                                                                                                          | `no-restricted-imports`, `test/boundaries.test.ts`                     |
 | Explicit named exports, no `export *`                                                                                                                                                                            | `no-restricted-syntax`, `scripts/catalog.mjs`                          |
-| Every lint suppression is one line and says why: `// eslint-disable-next-line rule -- reason`. Unused suppressions fail                                                                                          | `eslint-comments/require-description`, `reportUnusedDisableDirectives` |
+| Every lint suppression names its rule and says why (`-- reason`); prefer `// eslint-disable-next-line rule -- reason`. Unused suppressions fail                                                                  | `eslint-comments/require-description`, `reportUnusedDisableDirectives` |
 | No unused files, exports or dependencies                                                                                                                                                                         | `knip` (`bun run check:unused`)                                        |
 | Every runtime export has a story or a documented nonvisual exception                                                                                                                                             | `test/catalog.test.ts`, `bun run manifests`                            |
 | Line coverage of at least 80% for components and 90% for helpers                                                                                                                                                 | `vitest.config.ts` thresholds, `bun run test:coverage`                 |
