@@ -1,7 +1,6 @@
 # Composition and motion components
 
-These components preserve the website's source API and styling at the revision in
-`extraction.json`. Application content, dates, counts, links and state stay in the
+These components provide page-level composition and motion. Application content, dates, counts, links and state stay in the
 consumer. Import runtime components from `@tum.ai/ui-kit` and load the kit's
 Tailwind stylesheet in the consumer application.
 
@@ -135,12 +134,12 @@ stories show this composition; no separate visual placeholder is needed.
 
 ## Portability and verification
 
-Runtime imports now use sibling components and `../lib/cn`; no application
-alias, CMS, config or feature dependency was introduced. Initial FAQ fragment
+Runtime imports use sibling components and `../lib/cn`, with no application
+alias, CMS, config or feature dependency. Initial FAQ fragment
 synchronization runs in a cancellable microtask after the mount effect, so it
-remains an enhancement after server rendering and complies with the destination's
+remains an enhancement after server rendering and complies with the
 React effect rules. Later fragment changes still synchronize through the browser
-event. Source client/server boundaries, semantic markup, motion behavior and
+event. Client/server boundaries, semantic markup, motion behavior and
 visual classes are retained.
 Stories use deterministic sample content and the local
 `/assets/placeholder.svg` fixture. Their tone metadata describes the supported

@@ -1,6 +1,6 @@
 # Rendered component capture
 
-`scripts/figma/capture.mjs` converts the built Storybook inventory into the versioned native scene format in `figma/schema.mjs`. It uses Node and Playwright only. Capturing and regenerating release artifacts does not require Codex, an MCP session, a Figma account, or access to a published website.
+`scripts/figma/capture.mjs` converts the built Storybook inventory into the versioned native scene format in `figma/schema.mjs`. It uses Node and Playwright only. Capturing and regenerating release artifacts requires no Figma account, API token or hosted website.
 
 Build Storybook and its manifests, serve that static directory, then capture:
 
@@ -63,7 +63,7 @@ Warnings distinguish documented representation limits from capture failures:
 | `NATIVE_LIST_MARKER`   | A native marker glyph uses Chromium's measured marker box; glyph appearance needs visual comparison.      |
 | `EFFECT_APPROXIMATION` | Background blur is preserved; CSS backdrop saturation has no native equivalent and is explicitly omitted. |
 
-A strict capture pass proves inventory completion and representability under these recorded limits. It does not prove pixel parity in Figma. The importer must validate available fonts, text wrapping, geometry, mask ordering, image tiling, and representative rendered output. Keep the source PNGs and diagnostics with the release artifact so changes can be audited without recreating an agent session.
+A strict capture pass proves inventory completion and representability under these recorded limits. It does not prove pixel parity in Figma. The importer must validate available fonts, text wrapping, geometry, mask ordering, image tiling, and representative rendered output. Keep the source PNGs and diagnostics with the release artifact so changes can be audited later without re-running the capture.
 
 Run the targeted parser, geometry, and inventory checks with:
 

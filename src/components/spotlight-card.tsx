@@ -42,7 +42,7 @@ export type SpotlightCardProps = ComponentProps<"div"> & VariantProps<typeof car
 /**
  * Card with a soft light that follows the pointer and a glow that traces the
  * border under it. Mouse/pen only; touch and keyboard users see the plain card.
- * Styles live in `.spotlight-surface` (src/styles/index.css).
+ * Styles live in `.spotlight-surface` (src/styles/tailwind.css).
  */
 export function SpotlightCard({
   variant,

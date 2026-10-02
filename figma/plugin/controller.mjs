@@ -353,7 +353,7 @@ export function createPluginController(figma, config, dependencies = {}) {
   };
 }
 
-/** Starts native UI polling; no Codex, model, token or browser automation is involved. */
+/** Starts release polling from the plugin UI; no API token or browser automation is involved. */
 export function startNativePlugin(figma, config, html) {
   figma.showUI(html, { width: 440, height: 430, themeColors: true });
   const controller = createPluginController(figma, config);

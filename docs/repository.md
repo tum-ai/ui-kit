@@ -1,6 +1,6 @@
 # GitHub workflow
 
-The canonical repository is [tum-ai/ui-kit](https://github.com/tum-ai/ui-kit). `main` is the only integration branch. The initial import bootstraps the empty repository; subsequent changes use short-lived branches and pull requests into `main`.
+The canonical repository is [tum-ai/ui-kit](https://github.com/tum-ai/ui-kit). `main` is the only integration branch. All changes reach it through short-lived branches and pull requests. Contributors without write access work from a fork.
 
 ```sh
 git switch main
@@ -12,14 +12,37 @@ git commit -m "feat(component): describe the change"
 git push -u origin feat/component-change
 ```
 
-Open a pull request using the supplied template. The [CI workflow](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) aggregates formatting/lint/types, coverage, browser accessibility/visual checks, and the packed Next consumer into `Verify`. Review design and API changes with the [CODEOWNERS](../.github/CODEOWNERS) maintainer; include migration notes and a Changeset for public API/token/visual changes. `main` requires a pull request, one approving review, resolved conversations, and a successful `Verify` check on an up-to-date branch. New commits dismiss stale approvals; force pushes and branch deletion remain disabled. Administrator bypass is enabled at the owner's request; an admin may explicitly override the review requirement after checking CI. Use a Conventional Commit PR title; squash merging keeps a coherent history and source branches are deleted after merge.
+Open a pull request using the template. Use a [Conventional Commit](https://www.conventionalcommits.org/) title; a check validates it. Pull requests are squash-merged, so the title becomes the commit on `main`.
 
-CI reports and traces are attached to each run for 14 days. The `package-reports` artifact includes the tested tarball. The `browser-reports` artifact includes renderer smoke captures and browser traces/screenshots. Full reference renders remain reproducible with `bun run render:design`. Native Figma release bundles are generated with `bun run figma:build` and attached to stable GitHub releases by `figma.yml`; generated output is not committed.
+## Checks and review
 
-Grouped Dependabot pull requests cover Bun and GitHub Actions dependencies. Dependency review runs on PRs. Dependency updates need the same checks and visual review as component changes; automatic merging is not enabled.
+The [CI workflow](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) runs four jobs and aggregates them into the required `Verify` check:
 
-See [Contributing](../CONTRIBUTING.md), [testing](testing.md) and [releasing](releasing.md). Pushing or merging never publishes to npm or deploys the explorer. The npm publish workflow is manual and uses the `npm-publish` environment; see the release guide for the trusted-publisher configuration and approval step. Hosting remains owner-managed and deferred.
+- **quality**: lint, formatting and types
+- **unit**: unit and component tests with coverage
+- **package**: the packed tarball installed into an isolated Next.js consumer
+- **browser**: browser stories with axe, visual regressions and the Figma scene build
 
-## Bun lockfile compatibility
+Pull requests into `main` need one approving review from a [code owner](../.github/CODEOWNERS), resolved conversations and a passing `Verify` check on an up-to-date branch. New commits dismiss stale approvals. Force pushes and branch deletion are disabled on `main`.
 
-Keep Bun pinned at 1.4.2. The lockfile intentionally uses the supported v1 serialization so GitHub's current Dependabot Bun reader can process it. The initial hosted run rejected v2 before checking dependencies ([upstream compatibility issue](https://github.com/dependabot/dependabot-core/issues/15848)). Converting the version marker and re-saving with the pinned Bun left all dependency records and integrity hashes unchanged; frozen installation was verified. Bun preserves this format on subsequent installs. Do not delete/regenerate the lockfile just to change dependencies. Once hosted Dependabot supports v2, the marker can be migrated separately with an unchanged dependency graph.
+Include migration notes and a Changeset for public API, token or visual changes. Design and API changes should explain the visual and accessibility impact.
+
+CI attaches reports to each run for 14 days:
+
+- `unit-reports`: coverage
+- `package-reports`: the tested tarball
+- `browser-reports`: renderer captures, the Figma scene, Playwright traces and screenshots
+
+Full reference renders are reproducible locally with `bun run render:design`.
+
+## Dependencies
+
+Dependabot opens grouped weekly pull requests for Bun and GitHub Actions dependencies. Dependency review runs on every pull request. Dependency updates go through the same checks and visual review as component changes, and nothing merges automatically. Major upgrades are deliberate changes.
+
+### Bun lockfile compatibility
+
+Keep Bun pinned at 1.4.2. The lockfile intentionally uses Bun's v1 text serialization, because Dependabot's Bun support cannot yet read v2 ([dependabot-core#15848](https://github.com/dependabot/dependabot-core/issues/15848)). Bun keeps this format on later installs. Don't delete and regenerate the lockfile just to change dependencies. Once Dependabot supports v2, the format can be migrated in a separate change that leaves the dependency graph unchanged.
+
+## Publishing
+
+Pushing or merging never publishes to npm or deploys the explorer. Releases are a separate, manually approved step; see [releasing](releasing.md). See also [Contributing](../CONTRIBUTING.md) and [testing](testing.md).

@@ -1,0 +1,21 @@
+name: Component or feature request
+description: Propose a new component, variant or improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you need to build?
+      description: Describe the page or use case, not only the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: existing
+    attributes:
+      label: What have you tried with existing components?
+      description: Could an existing component or variant cover this? Link stories or screenshots if helpful.
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API or design
+      description: Props, variants, tones and accessibility behavior you expect.

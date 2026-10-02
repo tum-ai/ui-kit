@@ -1,0 +1,46 @@
+name: Bug report
+description: A component, style or package problem.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the report. Please search existing issues first.
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: "@tum.ai/ui-kit 0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Affected component or entry point
+      placeholder: Dialog, Header, tailwind.css, ...
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: A minimal code sample, a Storybook story ID or a link to a reproduction.
+      render: tsx
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Next 16.3, React 19.3, Tailwind 4.3, Safari 26 on iOS
+  - type: dropdown
+    id: accessibility
+    attributes:
+      label: Is this an accessibility problem?
+      options:
+        - "No"
+        - "Yes"
+        - Not sure

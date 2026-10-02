@@ -1,8 +1,8 @@
 # iPhone Safari checklist
 
-For a maintainer on a real iPhone with Safari 26, against the Vercel preview of the PR. The site
-has workarounds for Safari's tinted status bar and toolbar (`docs/browser-quirks.md`, and the
-comments tagged Safari in the code). Check each item on the routes the change touches, in
+For a real iPhone with Safari 26, against a hosted preview of the explorer or of an application that
+uses the shell. The kit has workarounds for Safari's tinted status bar and toolbar (`docs/browser-quirks.md`, and the
+comments tagged Safari in the code). Check each item on the pages or stories the change touches, in
 portrait, and in landscape where noted.
 
 ## Page chrome
@@ -25,7 +25,7 @@ portrait, and in landscape where noted.
 - [ ] Closing with the close button returns focus and restores the scroll position; the page
       behind never scrolled while the menu was open.
 
-## Dialogs (event, research, booking)
+## Dialogs
 
 - [ ] The backdrop dims the areas behind the status bar and toolbar too.
 - [ ] The dialog sits in the visible area, never under the toolbar, including after the toolbar
@@ -42,7 +42,6 @@ portrait, and in landscape where noted.
 
 ## Anchors
 
-- [ ] In-page links (for example on /partners) land with the section title below the header, not
-      hidden behind it.
+- [ ] In-page links land with the section title below the header, not hidden behind it.
 
-Report each unchecked item with the route, orientation and a screenshot.
+Report each unchecked item with the page or story, orientation and a screenshot.

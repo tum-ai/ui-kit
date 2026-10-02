@@ -1,42 +1,60 @@
 # Releases and hosting
 
-## npm
+## npm package
 
-Package target: `@tum.ai/ui-kit`, public, ESM, Next 16 / React 19 / Tailwind 4. The first public release is [0.1.0](https://www.npmjs.com/package/@tum.ai/ui-kit/v/0.1.0). Public API, visual, token and accessibility changes need a Changeset. Before 1.0, breaking changes increment minor versions and require migration notes; compatible fixes increment patch.
+`@tum.ai/ui-kit` is a public ESM package for Next.js 16, React 19 and Tailwind 4, published from the [`tum.ai` npm organization](https://www.npmjs.com/org/tum.ai). The tarball contains only `dist`, the approved `assets`, the license and the notices.
 
-Run `bun run version:packages`, review the changelog/version, run `bun run verify`, and inspect the tarball list in `artifacts/consumer.json`. `npm pack --ignore-scripts --dry-run` may inspect a build without publishing. Only dist, approved assets and notices are distributed.
+### Versioning
 
-The npm organization is `tum.ai`; the GitHub organization is `tum-ai`. The bootstrap release 0.1.0 was published on 2026-10-02 from [304d24a](https://github.com/tum-ai/ui-kit/commit/304d24a14b9aa2b2027de62c51094bb4082ce669), after main CI passed, using maintainer `justiiiin` and browser-based 2FA. Its 225-file tarball has SHA-1 `ebd9bed5f45a62872df754b7aee83560aec44d7a`. This initial local publication has no GitHub provenance attestation; subsequent releases use the workflow below.
+The package follows semantic versioning, with one adjustment before 1.0:
 
-### One-time trusted publisher
+- Breaking changes increment the minor version and come with migration notes.
+- Compatible fixes increment the patch version.
 
-The connection must use GitHub owner `tum-ai`, repository `ui-kit`, workflow `publish.yml`, environment `npm-publish`, with direct publishing allowed. A maintainer with npm 11.15+ and package write access can register it with:
+Every public API, visual, token or accessibility change needs a Changeset (`bun run changeset`).
+
+Published versions are never overwritten. To fix a bad release, revert or fix the change and release a new patch. Deprecate the faulty version with `npm deprecate` when appropriate. Older versions stay available so consumers can roll back.
+
+### Release steps
+
+1. Merge the Changesets with their changes. When a release is due, run `bun run version:packages` on a branch. Review the version bump and changelog, then merge that pull request after CI passes.
+2. In GitHub Actions, open [Publish npm package](https://github.com/tum-ai/ui-kit/actions/workflows/publish.yml), choose **Run workflow**, and select `main`.
+3. Approve the `npm-publish` environment when GitHub asks. It is restricted to protected branches and requires a maintainer's review.
+4. The workflow runs `bun run verify` and then publishes with npm provenance through GitHub's OIDC identity. No npm token is stored in the repository.
+5. Check `npm view @tum.ai/ui-kit version` and install the exact new version in a consumer. Right after publishing, the registry index can lag behind the package page. Retry the install after a short wait, and never publish the same version again.
+6. Create a stable GitHub release with the tag `v<package version>` at the published commit. This triggers the [Figma library generation](figma.md).
+
+To inspect the package contents without publishing, run `bun run build`, then `npm pack --ignore-scripts --dry-run`. After `bun run test:consumer`, `artifacts/consumer.json` lists the tested tarball.
+
+### Trusted publisher setup
+
+Publishing uses [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/). The trusted connection is configured once on npm with these values:
+
+| Setting           | Value         |
+| ----------------- | ------------- |
+| GitHub owner      | `tum-ai`      |
+| Repository        | `ui-kit`      |
+| Workflow          | `publish.yml` |
+| Environment       | `npm-publish` |
+| Direct publishing | allowed       |
+
+A maintainer with package write access and npm 11.15 or later can register or inspect it:
 
 ```sh
 npm trust github @tum.ai/ui-kit --repository tum-ai/ui-kit --file publish.yml --environment npm-publish --allow-publish --yes
 npm trust list @tum.ai/ui-kit
 ```
 
-npm requires browser-based 2FA to authorize this connection. Follow the CLI link in any signed-in browser; no Codex access to that browser or saved npm token is required. The connection uses GitHub's short-lived OIDC identity on later releases. See [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/).
+`npm trust list` shows the configured connection. It does not prove that an OIDC publication has succeeded.
 
-### Subsequent releases
+## Hosting the explorer
 
-1. Add Changesets with API, design-token or visual changes. Run `bun run version:packages`, review the version/changelog, and merge the release changes after CI passes.
-2. In GitHub Actions, select [Publish npm package](https://github.com/tum-ai/ui-kit/actions/workflows/publish.yml), choose **Run workflow**, and select `main`.
-3. Approve the `npm-publish` environment when GitHub requests it. It is restricted to protected branches and requires review by `jaylann`. Administrator merge bypass does not remove this release approval.
-4. The workflow runs full verification and publishes with OIDC/provenance. Bun installs/builds/tests; Node 24's npm CLI publishes. Verify `npm view @tum.ai/ui-kit version` and install the exact new version in a consumer.
-5. Create a stable GitHub release with tag `v<package version>` at the published commit to generate the matching Figma bundle. The installed Figma updater applies it while open or on its next launch; see [Figma generation](figma.md).
+The Storybook explorer is a static site and can be served by any static host. `vercel.json` provides a ready configuration with these settings:
 
-A new package can appear on npm's website and exact-version endpoint before the package index is ready for installation. Keep the successful publish receipt, retry the read/install check after propagation, and never attempt to republish that version. `npm trust list @tum.ai/ui-kit` checks the configured connection; it does not prove an OIDC publication has run successfully.
+- install: `bun install --frozen-lockfile`
+- build: the package, Storybook and manifests
+- output: `storybook-static`
 
-No push, merge or automatic dependency update publishes a package. Never overwrite a version. Revert a bad change and release a new patch; deprecate a faulty published version when appropriate. Retain the previous version for consumer rollback.
+No CMS credentials or runtime environment variables are needed.
 
-## Vercel (owner-managed connection)
-
-The owner will connect the repository later. Do not inspect or modify the personal Vercel organization. `vercel.json` contains the complete static build configuration: frozen Bun install, package + Storybook + manifests build, `storybook-static` output. No CMS credentials or runtime environment variables are required.
-
-When connecting, choose the correct organization, set main as the production branch, and enable PR previews. Review the deployed explorer and its fonts/assets before promoting it. Do not commit `.vercel` state. Configure a custom domain only when the owner supplies one.
-
-## Source reconciliation
-
-`extraction.json` and `extraction-inventory.json` record provenance and ownership. Before eventual website adoption, compare the recorded source against the actual merged redesign, explicitly port relevant fixes, and install a fixed kit version in a separate website PR. Do not maintain an automatic bidirectional file sync.
+When you connect a host, use `main` as the production branch and enable pull request previews. Before promoting a deployment, check its fonts and assets. Don't commit host-specific state such as `.vercel/`.
