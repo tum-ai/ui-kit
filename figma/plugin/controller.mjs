@@ -1,5 +1,4 @@
 import {
-  batchKeys,
   compileBatch,
   createLedger,
   mergeLedgerPatch,
@@ -206,7 +205,8 @@ export function createPluginController(figma, config, dependencies = {}) {
       const assetIdentity = JSON.stringify(
         [sceneAsset, hashAsset].map(({ id, size, digest }) => ({ id, size, digest })),
       );
-      if (cached && cached.assetIdentity !== assetIdentity) cached = null;
+      if (cached && (cached.releaseId !== metadata.id || cached.assetIdentity !== assetIdentity))
+        cached = null;
       let feedCommit;
       if (cached?.releaseId !== metadata.id) {
         const feed = await jsonRequest(
@@ -216,20 +216,19 @@ export function createPluginController(figma, config, dependencies = {}) {
           throw new Error("Invalid release data commit");
         feedCommit = feed.object.sha;
       }
-      const raw =
-          cached?.releaseId === metadata.id
-            ? cached.raw
-            : await assetText(sceneAsset, 30 * 1024 * 1024, feedCommit, metadata.tag_name),
+      const raw = cached?.scene
+          ? null
+          : await assetText(sceneAsset, 30 * 1024 * 1024, feedCommit, metadata.tag_name),
         checksum =
           cached?.releaseId === metadata.id
             ? cached.checksum
             : (await assetText(hashAsset, 512, feedCommit, metadata.tag_name))
                 .trim()
                 .split(/\s+/)[0];
-      if (!/^[a-f0-9]{64}$/.test(checksum) || sha256(raw) !== checksum)
+      if (!/^[a-f0-9]{64}$/.test(checksum) || sceneAsset.digest !== `sha256:${checksum}`)
         throw new Error("Figma scene checksum mismatch");
-      const scene = plainJson(JSON.parse(raw));
-      validateScene(scene);
+      const scene = cached?.scene ?? plainJson(JSON.parse(raw));
+      if (!cached?.scene) validateScene(scene);
       if (
         scene.package !== config.package ||
         scene.source?.completeInventory !== true ||
@@ -266,7 +265,9 @@ export function createPluginController(figma, config, dependencies = {}) {
       );
       if (commit.sha !== scene.release.commit)
         throw new Error("Scene source commit does not match the immutable release tag");
-      cached = { releaseId: metadata.id, assetIdentity, raw, checksum };
+      report({ phase: "checking", message: "Preparing verified components and foundations…" });
+      const prepared = cached?.prepared ?? prepareScene(scene);
+      cached = { releaseId: metadata.id, assetIdentity, checksum, scene, prepared };
       await acquire();
       acquired = true;
       // Re-read shared state after lease acquisition; another user may have finished while this session fetched.
@@ -278,10 +279,8 @@ export function createPluginController(figma, config, dependencies = {}) {
         throw new Error(
           "Document state changed while fetching the release; the next check will use the new state",
         );
-      report({ phase: "checking", message: "Preparing verified components and foundations…" });
-      const prepared = prepareScene(scene);
       let ledger = fresh.ledger;
-      const keys = batchKeys(scene);
+      const keys = prepared.batches.map((batch) => batch.key);
       let changedNodes = 0;
       for (const [index, key] of keys.entries()) {
         renew();

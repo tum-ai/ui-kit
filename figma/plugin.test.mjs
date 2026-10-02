@@ -312,3 +312,16 @@ test("same-release metadata changes invalidate the byte cache before mutation", 
   assert.match((await controller.syncOnce()).error, /digest or size/);
   assert.equal(f.figma.writes, writes);
 });
+
+test("checkpoint hash caching still detects changed bytes under an unchanged head", () => {
+  const { figma, data } = setup();
+  const store = documentStore(figma.root);
+  store.save({ value: "verified" });
+  assert.deepEqual(store.load(), { value: "verified" });
+  const hash = JSON.parse(data.get("tumai.release-sync.v1.head")).chunks[0];
+  data.set(`tumai.release-sync.v1.blob.${hash}`, JSON.stringify({ value: "tampered" }));
+  assert.throws(() => store.load(), /Incomplete document ledger checkpoint/);
+  assert.throws(() => store.save({ value: "verified" }), /refusing to overwrite/);
+  data.delete(`tumai.release-sync.v1.blob.${hash}`);
+  assert.throws(() => store.load(), /Incomplete document ledger checkpoint/);
+});
