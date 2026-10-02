@@ -1,0 +1,638 @@
+@plugin "@tailwindcss/typography";
+@source "../**/*.js";
+@source "../**/*.{ts,tsx}";
+
+/*
+ * TUM.ai design tokens.
+ *
+ * Layering contract: every rule in this file lives in a cascade layer, so
+ * Tailwind utilities and component classes always win over element defaults.
+ * Brand values come from docs/brand/source (colors.jpeg, brand-guidelines.pdf);
+ * the tonal steps between them are derived from those anchors, never invented
+ * hues. See docs/design-system.md for usage.
+ */
+
+@theme {
+  /*
+   * --- Brand anchors (CI document) ---
+   * Electric Lavender #9A64D9 is violet-500, Dark Purple #523573 violet-800,
+   * Lavender Tint #F5EFFF violet-50 and Dark Indigo #1B0049 violet-950 (use
+   * the scale; there is no separate dark-indigo alias). White is Tailwind's
+   * own. Black replaces Tailwind's #000 with the brand black, so `bg-black`
+   * and `var(--color-black)` are on-brand.
+   */
+  --color-minimal-gray: oklch(0.9521 0 0); /* #EFEFEF */
+  --color-black: oklch(0.1275 0.0481 312.72); /* #0D0214 */
+
+  /* --- Violet scale: brand violet at 500, dark purple at 800, indigo at 950 --- */
+  --color-violet-50: #f5efff;
+  --color-violet-100: #ece2fb;
+  --color-violet-200: #dcc8f3;
+  --color-violet-300: #c9a5ef;
+  --color-violet-400: #b389e6;
+  --color-violet-500: #9a64d9;
+  --color-violet-600: #8052c2;
+  --color-violet-700: #6a43a3;
+  --color-violet-800: #523573;
+  --color-violet-900: #2f1757;
+  --color-violet-950: #1b0049;
+
+  /*
+   * --- Ink: violet-tinted neutrals ---
+   * Only the steps in use. Text and surfaces read the tone tokens (fg,
+   * fg-muted, raised, sunken) instead; the old 50-900 steps duplicated them
+   * or violet-950. ink-950 is the brand black, for scrims and backdrops.
+   */
+  --color-ink-200: #e4ddec;
+  --color-ink-600: #655b71;
+  --color-ink-950: #0d0214;
+
+  /* Live and active indicator dots (StatusBadge `live`, the active nav item,
+     the live event count). One step lighter than the brand violet, so the dot
+     reads on dark bands as well as on light ones. */
+  --color-indicator: var(--color-violet-400);
+
+  /* --- Typography --- */
+  --font-sans: var(--font-manrope, "Manrope"), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand guide: H1 120pt/1.0, H2 80pt/1.1, H3 48pt/1.2, text 21pt/1.4, with
+     headlines in Manrope Light. Display sizes are Light (300); display-md,
+     the section title, is Regular so it holds up at 32px. */
+  --text-display-2xl: clamp(3.25rem, 1.35rem + 6.6vw, 8rem);
+  --text-display-2xl--line-height: 0.94;
+  --text-display-2xl--letter-spacing: -0.055em;
+  --text-display-2xl--font-weight: 300;
+  --text-display-xl: clamp(2.85rem, 1.45rem + 4.8vw, 6.25rem);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.05em;
+  --text-display-xl--font-weight: 300;
+  --text-display-lg: clamp(2.35rem, 1.45rem + 3vw, 4.5rem);
+  --text-display-lg--line-height: 1.03;
+  --text-display-lg--letter-spacing: -0.045em;
+  --text-display-lg--font-weight: 300;
+  /* display-lg, capped so a word of ~10em (a long German compound such as
+     "Datenschutzerklärung") still fits the column between the gutters. */
+  --text-display-fit: min(var(--text-display-lg), calc((100vw - 2 * var(--gutter)) / 10));
+  --text-display-fit--line-height: 1.03;
+  --text-display-fit--letter-spacing: -0.045em;
+  --text-display-fit--font-weight: 300;
+  --text-display-md: clamp(2rem, 1.4rem + 1.9vw, 3.35rem);
+  --text-display-md--line-height: 1.08;
+  --text-display-md--letter-spacing: -0.04em;
+  --text-display-md--font-weight: 400;
+  --text-heading-lg: clamp(1.5rem, 1.25rem + 0.9vw, 2.125rem);
+  --text-heading-lg--line-height: 1.15;
+  --text-heading-lg--letter-spacing: -0.03em;
+  --text-heading-lg--font-weight: 500;
+  --text-heading-md: clamp(1.1875rem, 1.1rem + 0.35vw, 1.4375rem);
+  --text-heading-md--line-height: 1.28;
+  --text-heading-md--letter-spacing: -0.02em;
+  --text-heading-md--font-weight: 500;
+  --text-heading-sm: 1.0625rem;
+  --text-heading-sm--line-height: 1.4;
+  --text-heading-sm--letter-spacing: -0.01em;
+  --text-heading-sm--font-weight: 600;
+  --text-lead: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.012em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.65;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.45;
+  /* Label above a headline: sentence case, semibold, no tracking (the brand
+     guide sets labels like "Primary Logo" this way, never in capitals). */
+  --text-eyebrow: 0.875rem;
+  --text-eyebrow--line-height: 1.3;
+  --text-eyebrow--letter-spacing: -0.005em;
+  --text-eyebrow--font-weight: 600;
+  /* UI labels: md buttons and badges, logo lockups (15px). Size only, so it
+     keeps the surrounding line height like the arbitrary size it replaces. */
+  --text-label: 0.9375rem;
+  /* Small UI labels: sm buttons and badges, logo chips (13px). Size only, like
+     `text-label`; `text-meta` is the same size with its own line height. */
+  --text-label-sm: 0.8125rem;
+
+  /* Big figures (StatGrid, Ledger, counters): tight, light, one line high. */
+  --text-stat-sm: clamp(2rem, 1.75rem + 0.8vw, 2.5rem);
+  --text-stat-sm--line-height: 1;
+  --text-stat-sm--letter-spacing: -0.05em;
+  --text-stat-sm--font-weight: 300;
+  --text-stat-md: clamp(2.25rem, 1.8rem + 1.4vw, 3.25rem);
+  --text-stat-md--line-height: 1;
+  --text-stat-md--letter-spacing: -0.05em;
+  --text-stat-md--font-weight: 300;
+  --text-stat-lg: clamp(2.75rem, 2rem + 2.6vw, 4.5rem);
+  --text-stat-lg--line-height: 1;
+  --text-stat-lg--letter-spacing: -0.05em;
+  --text-stat-lg--font-weight: 300;
+  --text-stat-xl: clamp(3.25rem, 2.4rem + 3vw, 5.5rem);
+  --text-stat-xl--line-height: 1;
+  --text-stat-xl--letter-spacing: -0.05em;
+  --text-stat-xl--font-weight: 300;
+
+  /* --- Shape and depth --- */
+  /* Radius steps; sm to xl keep the previous theme's values. */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --shadow-soft: 0 1px 2px rgb(27 0 73 / 0.04), 0 12px 32px -18px rgb(27 0 73 / 0.14);
+  --shadow-lift: 0 2px 6px rgb(27 0 73 / 0.05), 0 24px 56px -28px rgb(27 0 73 / 0.26);
+  --shadow-inset-hairline: inset 0 1px 0 rgb(255 255 255 / 0.08);
+  /* Primary button: a crisp top highlight over a tight contact shadow. No
+     glow: a flat, exact fill reads more precise than a halo. */
+  --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 1px 2px rgb(27 0 73 / 0.24);
+  --shadow-button-hover: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 1px 2px rgb(27 0 73 / 0.3);
+  /* White (inverse) button on dark bands. */
+  --shadow-button-inverse: 0 1px 2px rgb(13 2 20 / 0.4);
+  /* Violet halo around an active marker (Steps). */
+  --shadow-halo: 0 0 0 6px rgb(154 100 217 / 0.16);
+
+  /*
+   * --- Motion ---
+   * House easing everywhere (`ease-brand`). Durations run from 300ms (hover)
+   * to 1.2s (entrances); only ambient loops (aurora, drift, the partner
+   * marquee) are longer, and those only run without reduced motion.
+   */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snappy: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* `backwards`: hold the start frame during the stagger delay, then release
+     the element entirely, so no compositing layer outlives the animation. */
+  --animate-rise: rise 1s var(--ease-brand) backwards;
+  --animate-rise-sm: rise-sm 0.8s var(--ease-brand) both;
+  --animate-fade: fade 0.9s var(--ease-brand) both;
+  --animate-aurora: aurora 26s var(--ease-in-out-soft) infinite alternate;
+  --animate-drift: drift 22s var(--ease-in-out-soft) infinite alternate;
+  --animate-pulse-ring: pulse-ring 2.4s var(--ease-brand) infinite;
+  /* A rule drawing itself from its transform origin (KeyDates, DayRuler). */
+  --animate-draw: draw 1.1s var(--ease-brand) both;
+
+  /* Transform and opacity only: a filter (the old blur) would make Safari
+     clip each word to its box and repaint large headlines every frame.
+     See docs/browser-quirks.md. */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.32em, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes rise-sm {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes aurora {
+    0% {
+      transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translate3d(4%, 3%, 0) rotate(8deg) scale(1.08);
+    }
+    100% {
+      transform: translate3d(-2%, 6%, 0) rotate(-6deg) scale(0.96);
+    }
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate3d(-3%, 4%, 0) rotate(-2.5deg);
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+    80%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: none;
+    }
+  }
+}
+
+/*
+ * Tone surfaces. Components read these semantic tokens instead of raw colors,
+ * so one component works on every band. Each foreground pair meets WCAG AA
+ * against its canvas; the violet tone is reserved for large type.
+ */
+@theme inline {
+  --color-canvas: var(--tone-canvas);
+  --color-raised: var(--tone-raised);
+  --color-sunken: var(--tone-sunken);
+  --color-fg: var(--tone-fg);
+  --color-fg-muted: var(--tone-fg-muted);
+  --color-fg-subtle: var(--tone-fg-subtle);
+  --color-hairline: var(--tone-hairline);
+  --color-hairline-strong: var(--tone-hairline-strong);
+  --color-highlight: var(--tone-accent);
+}
+
+@layer base {
+  :root {
+    --gutter: clamp(1.25rem, 4.6vw, 3.5rem);
+    --header-height: 0px;
+    /* Core is shell-independent. Optional shell.css supplies header clearance. */
+    --header-offset: 0px;
+
+    /* Canvas of each tone, shared by the tone scopes and the band seams. */
+    --tone-paper: var(--color-white);
+    --tone-mist: var(--color-minimal-gray);
+    --tone-lavender: var(--color-violet-50);
+    --tone-ink: var(--color-violet-950);
+    --tone-night: var(--color-black);
+    --tone-violet: var(--color-violet-500);
+
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: light;
+  }
+
+  /* Default tone: paper. */
+  :root,
+  [data-tone="paper"] {
+    --tone-canvas: var(--tone-paper);
+    --tone-focus: var(--color-violet-500);
+    color-scheme: light;
+    --tone-raised: #faf8fd;
+    --tone-sunken: #f4f1f8;
+    --tone-fg: #1b0049;
+    --tone-fg-muted: #5f566c;
+    --tone-fg-subtle: #756b80;
+    --tone-hairline: rgb(27 0 73 / 0.09);
+    --tone-hairline-strong: rgb(27 0 73 / 0.18);
+    --tone-accent: #7446b3;
+    --tone-glow: rgb(154 100 217 / 0.16);
+  }
+
+  [data-tone="mist"] {
+    --tone-canvas: var(--tone-mist);
+    --tone-focus: var(--color-violet-500);
+    color-scheme: light;
+    --tone-raised: #ffffff;
+    --tone-sunken: #e6e3ea;
+    --tone-fg: #1b0049;
+    --tone-fg-muted: #574e64;
+    --tone-fg-subtle: #685f74;
+    --tone-hairline: rgb(27 0 73 / 0.1);
+    --tone-hairline-strong: rgb(27 0 73 / 0.2);
+    --tone-accent: #6a3fa6;
+    --tone-glow: rgb(154 100 217 / 0.18);
+  }
+
+  [data-tone="lavender"] {
+    --tone-canvas: var(--tone-lavender);
+    --tone-focus: var(--color-violet-500);
+    color-scheme: light;
+    --tone-raised: #ffffff;
+    --tone-sunken: #ece2fb;
+    --tone-fg: #1b0049;
+    --tone-fg-muted: #574e66;
+    --tone-fg-subtle: #6a5f78;
+    --tone-hairline: rgb(82 53 115 / 0.14);
+    --tone-hairline-strong: rgb(82 53 115 / 0.26);
+    --tone-accent: #6a3fa6;
+    --tone-glow: rgb(154 100 217 / 0.2);
+  }
+
+  [data-tone="ink"] {
+    --tone-canvas: var(--tone-ink);
+    --tone-focus: var(--color-violet-300);
+    --tone-raised: #24104f;
+    --tone-sunken: #140036;
+    --tone-fg: #ffffff;
+    --tone-fg-muted: #cfc5de;
+    --tone-fg-subtle: #a497b9;
+    --tone-hairline: rgb(245 239 255 / 0.12);
+    --tone-hairline-strong: rgb(245 239 255 / 0.24);
+    --tone-accent: #c9a5ef;
+    --tone-glow: rgb(154 100 217 / 0.34);
+    color-scheme: dark;
+  }
+
+  [data-tone="night"] {
+    --tone-canvas: var(--tone-night);
+    --tone-focus: var(--color-violet-300);
+    --tone-raised: #1b0049;
+    --tone-sunken: #07010c;
+    --tone-fg: #ffffff;
+    --tone-fg-muted: #c6bbd6;
+    --tone-fg-subtle: #9489a6;
+    --tone-hairline: rgb(245 239 255 / 0.1);
+    --tone-hairline-strong: rgb(245 239 255 / 0.22);
+    --tone-accent: #c9a5ef;
+    --tone-glow: rgb(154 100 217 / 0.3);
+    color-scheme: dark;
+  }
+
+  /* Brand violet band: fg and fg-muted reach 4.9:1; fg-subtle (4.2:1) is for large type only. */
+  [data-tone="violet"] {
+    --tone-canvas: var(--tone-violet);
+    --tone-focus: var(--color-ink-950);
+    color-scheme: light;
+    --tone-raised: #a574de;
+    --tone-sunken: #8a55c9;
+    --tone-fg: #0d0214;
+    --tone-fg-muted: #0d0214;
+    --tone-fg-subtle: #1b0049;
+    --tone-hairline: rgb(27 0 73 / 0.2);
+    --tone-hairline-strong: rgb(27 0 73 / 0.34);
+    --tone-accent: #0d0214;
+    --tone-glow: rgb(255 255 255 / 0.25);
+  }
+
+  [data-tone] {
+    background-color: var(--tone-canvas);
+    color: var(--tone-fg);
+  }
+
+  /* Tone-aware default border color (no default outline color: it would make
+     focus rings fade in whenever an element also transitions colors). */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--tone-hairline);
+  }
+
+  /* iOS: brand-tinted tap flash; no double-tap zoom on repeated taps. */
+  :root {
+    -webkit-tap-highlight-color: rgb(154 100 217 / 0.16);
+  }
+
+  :where(a, button, [role="button"], summary, label) {
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background-color: rgb(154 100 217 / 0.32);
+    color: inherit;
+  }
+
+  /* Tailwind preflight resets buttons to cursor: default. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :where(a, button, [role="button"], [tabindex], summary):focus-visible {
+    outline: 3px solid var(--tone-focus);
+    outline-offset: 4px;
+  }
+
+  :where(h1, h2, h3, h4) {
+    text-wrap: balance;
+  }
+
+  :where(p) {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /*
+   * Scroll reveal. <Reveal> only marks elements that start below the fold as
+   * pending, so server-rendered and no-JS content is always visible. No blur:
+   * Safari clips filtered boxes (cutting descenders and rounded edges), and
+   * blurring large sections stutters on phones. See docs/browser-quirks.md.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      transition-property: opacity, translate, scale;
+      transition-duration: 0.9s, 1.05s, 1.05s;
+      transition-timing-function: var(--ease-brand);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    [data-reveal="pending"] {
+      opacity: 0;
+      translate: 0 28px;
+    }
+
+    [data-reveal="pending"][data-reveal-variant="fade"] {
+      translate: none;
+    }
+
+    [data-reveal="pending"][data-reveal-variant="scale"] {
+      translate: none;
+      scale: 0.96;
+    }
+
+    [data-reveal="pending"][data-reveal-variant="left"] {
+      translate: -32px 0;
+    }
+
+    [data-reveal="pending"][data-reveal-variant="right"] {
+      translate: 32px 0;
+    }
+
+    [data-reveal="pending"][data-reveal-variant="line"] {
+      opacity: 1;
+      translate: none;
+      scale: 0 1;
+    }
+
+    [data-reveal-variant="line"] {
+      transform-origin: left center;
+    }
+  }
+
+  /*
+   * Soft seams between neighbouring bands of close tints (light next to
+   * light, dark next to dark): the lower band fades in from the previous
+   * band's color instead of starting with a hard edge. Light/dark contrasts
+   * stay crisp on purpose. Only applies to sibling <Section> bands.
+   */
+  [data-band]:is([data-tone="mist"], [data-tone="lavender"]) + [data-band][data-tone="paper"],
+  [data-band]:is([data-tone="paper"], [data-tone="lavender"]) + [data-band][data-tone="mist"],
+  [data-band]:is([data-tone="paper"], [data-tone="mist"]) + [data-band][data-tone="lavender"],
+  [data-band][data-tone="night"] + [data-band][data-tone="ink"],
+  [data-band][data-tone="ink"] + [data-band][data-tone="night"] {
+    background-image: linear-gradient(
+      to bottom,
+      var(--band-from),
+      color-mix(in srgb, var(--band-from) 55%, var(--tone-canvas)) 35%,
+      var(--tone-canvas)
+    );
+    background-size: 100% clamp(6rem, 14vw, 11rem);
+    background-repeat: no-repeat;
+  }
+
+  /* The previous band's canvas (its own --tone-canvas is out of scope). */
+  [data-band][data-tone="paper"] + [data-band] {
+    --band-from: var(--tone-paper);
+  }
+  [data-band][data-tone="mist"] + [data-band] {
+    --band-from: var(--tone-mist);
+  }
+  [data-band][data-tone="lavender"] + [data-band] {
+    --band-from: var(--tone-lavender);
+  }
+  [data-band][data-tone="ink"] + [data-band] {
+    --band-from: var(--tone-ink);
+  }
+  [data-band][data-tone="night"] + [data-band] {
+    --band-from: var(--tone-night);
+  }
+
+  /*
+   * Pointer spotlight (see <SpotlightCard>). JS only writes --spot-x/--spot-y
+   * and --spot-opacity; both layers sit behind the card content.
+   */
+  .spotlight-surface::before,
+  .spotlight-surface::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--spot-opacity, 0);
+    transition: opacity 0.5s var(--ease-brand);
+  }
+
+  .spotlight-surface::before {
+    background: radial-gradient(
+      26rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      var(--tone-glow),
+      transparent 62%
+    );
+  }
+
+  .spotlight-surface::after {
+    padding: 1px;
+    background: radial-gradient(
+      16rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgb(201 165 239 / 0.8),
+      transparent 70%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+}
+
+/*
+ * Custom utilities. `@utility` puts them in the utilities layer, lets them
+ * take variants (`md:rounded-signature`) and lets tailwind-merge (lib/cn.ts)
+ * resolve conflicts with Tailwind's own classes.
+ */
+
+/* Subtle film grain for dark bands: fills its positioned parent. */
+@utility grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* The brand guide's signature corner: one large radius, three small ones. */
+@utility rounded-signature {
+  border-radius: clamp(3.5rem, 9vw, 8.75rem) 1rem 1rem 1rem;
+}
+
+/* Electric Fade text (see <Highlight variant="fade">). */
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-violet-300) 0%,
+    var(--color-violet-500) 55%,
+    var(--color-violet-300) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Figures that change or line up in columns. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Edge fade for marquees and horizontally scrolling rails. */
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+/*
+ * The one hover zoom for media in cards: put `zoom-media` on the image (or a
+ * decorative layer) and `group/zoom` on the element whose hover starts it,
+ * usually the card. Scale 1.04 on the house easing; no zoom at all when the
+ * visitor prefers reduced motion, and none on touch-only devices.
+ */
+@utility zoom-media {
+  @media (prefers-reduced-motion: no-preference) {
+    transition: scale 1.2s var(--ease-brand);
+
+    @media (hover: hover) {
+      :where(.group\/zoom):hover & {
+        scale: 1.04;
+      }
+    }
+  }
+}
+
+/*
+ * `card-hover:` applies while the enclosing card (`group/card`), link or
+ * button is hovered, on devices that can hover. Used by <IconBadge
+ * interactive>, so a badge reacts inside any clickable surface without the
+ * caller adding a group name.
+ */
+@custom-variant card-hover {
+  @media (hover: hover) {
+    :where(.group\/card, a, button):hover & {
+      @slot;
+    }
+  }
+}
+
+/* Anchor targets land below the fixed header (see --header-offset). */
+@utility scroll-mt-header {
+  scroll-margin-top: var(--header-offset);
+}

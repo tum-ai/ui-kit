@@ -1,0 +1,12 @@
+bun.lock
+dist
+node_modules
+storybook-static
+coverage
+artifacts
+.consumer
+playwright-report
+test-results
+assets
+
+.parity-storybook/

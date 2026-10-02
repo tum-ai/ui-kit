@@ -1,0 +1,3 @@
+#!/bin/sh
+set -eu
+bunx --no-install lint-staged

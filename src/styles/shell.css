@@ -1,0 +1,23 @@
+/* Opt-in website shell behavior, including Safari toolbar tinting. */
+@layer base {
+  :root {
+    --header-height: 4.25rem;
+    --header-offset: calc(var(--header-height) + 2.625rem);
+  }
+  html,
+  body {
+    width: 100%;
+    overflow-x: clip;
+  }
+  html {
+    background-color: var(--color-black);
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: transparent;
+    color: var(--tone-fg);
+    font-family: var(--font-sans);
+  }
+}
