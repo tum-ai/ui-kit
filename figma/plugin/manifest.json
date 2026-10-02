@@ -9,9 +9,7 @@
   "networkAccess": {
     "allowedDomains": [
       "https://api.github.com/repos/tum-ai/ui-kit/",
-      "https://github.com/tum-ai/ui-kit/releases/download/",
-      "https://release-assets.githubusercontent.com/",
-      "https://objects.githubusercontent.com/"
+      "https://raw.githubusercontent.com/tum-ai/ui-kit/"
     ],
     "reasoning": "Read the public TUM.ai UI kit release scene and checksum. No account credentials are collected."
   }

@@ -30,13 +30,15 @@ function setup() {
     assets: [
       {
         name: "figma-scene.json",
-        size: raw.length,
+        size: new TextEncoder().encode(raw).length,
+        digest: `sha256:${checksum}`,
         browser_download_url:
           "https://github.com/tum-ai/ui-kit/releases/download/v0.1.0/figma-scene.json",
       },
       {
         name: "figma-scene.json.sha256",
         size: 64,
+        digest: `sha256:${sha256(checksum)}`,
         browser_download_url:
           "https://github.com/tum-ai/ui-kit/releases/download/v0.1.0/figma-scene.json.sha256",
       },
@@ -50,7 +52,7 @@ function setup() {
         ? metadata
         : url.includes("/releases?")
           ? []
-          : { sha: scene.release.commit },
+          : { sha: scene.release.commit, object: { sha: scene.release.commit } },
     text: async () => (url.endsWith("sha256") ? checksum : raw),
   });
   const messages = [];
@@ -113,7 +115,7 @@ test("plugin rejects a different file, incomplete inventory, checksum mismatch a
         checksum.dependencies,
       ).syncOnce()
     ).error,
-    /checksum mismatch/,
+    /digest or size/,
   );
   assert.equal(checksum.figma.writes, 0);
   const concurrent = setup();
@@ -239,4 +241,74 @@ test("missing repository and failed release requests remain errors, not first-re
     assert.equal(fixture.figma.writes, 0);
     assert.equal(fixture.data.size, 0);
   }
+});
+
+test("release downloads use commit-pinned CORS-readable data and reject altered bytes before writes", async () => {
+  const fixture = setup();
+  const original = fixture.dependencies.fetch;
+  const downloads = [];
+  fixture.dependencies.fetch = async (url, options) => {
+    if (url.includes("raw.githubusercontent.com")) downloads.push(url);
+    assert.ok(!url.includes("github.com/tum-ai/ui-kit/releases/download/"));
+    return original(url, options);
+  };
+  assert.equal(
+    (await createPluginController(fixture.figma, fixture.config, fixture.dependencies).syncOnce())
+      .ok,
+    true,
+  );
+  assert.deepEqual(
+    downloads,
+    fixture.metadata.assets.map(
+      (asset) =>
+        `https://raw.githubusercontent.com/tum-ai/ui-kit/${"a".repeat(40)}/releases/v0.1.0/${asset.name}`,
+    ),
+  );
+  const altered = setup();
+  const valid = altered.dependencies.fetch;
+  altered.dependencies.fetch = async (url) =>
+    url.includes("raw.githubusercontent.com")
+      ? { ok: true, text: async () => "modified" }
+      : valid(url);
+  assert.match(
+    (await createPluginController(altered.figma, altered.config, altered.dependencies).syncOnce())
+      .error,
+    /digest or size/,
+  );
+  assert.equal(altered.figma.writes, 0);
+  assert.equal(altered.data.size, 0);
+});
+
+test("release data network failures and invalid feed commits leave the canvas untouched", async () => {
+  for (const invalidCommit of [false, true]) {
+    const fixture = setup();
+    const original = fixture.dependencies.fetch;
+    fixture.dependencies.fetch = async (url) => {
+      if (invalidCommit && url.endsWith("/git/ref/heads/figma-release-data"))
+        return { ok: true, json: async () => ({ sha: "main/../wrong" }) };
+      if (url.includes("raw.githubusercontent.com")) throw new Error("Failed to fetch");
+      return original(url);
+    };
+    const result = await createPluginController(
+      fixture.figma,
+      fixture.config,
+      fixture.dependencies,
+    ).syncOnce();
+    assert.match(
+      result.error,
+      invalidCommit ? /Invalid release data commit/ : /Could not download figma-scene.json/,
+    );
+    assert.equal(fixture.figma.writes, 0);
+    assert.equal(fixture.data.size, 0);
+  }
+});
+
+test("same-release metadata changes invalidate the byte cache before mutation", async () => {
+  const f = setup();
+  const controller = createPluginController(f.figma, f.config, f.dependencies);
+  assert.equal((await controller.syncOnce()).ok, true);
+  const writes = f.figma.writes;
+  f.metadata.assets[0].digest = `sha256:${"0".repeat(64)}`;
+  assert.match((await controller.syncOnce()).error, /digest or size/);
+  assert.equal(f.figma.writes, writes);
 });

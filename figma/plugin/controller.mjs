@@ -104,29 +104,45 @@ export function createPluginController(figma, config, dependencies = {}) {
   };
   const jsonRequest = async (url, { allowMissing = false } = {}) => {
     const response = await deadline(
-      request(url, { headers: { Accept: "application/vnd.github+json" } }),
+      request(url, { headers: { Accept: "application/vnd.github+json" }, cache: "no-cache" }),
     );
     if (allowMissing && response.status === 404) return null;
     if (!response.ok) throw new Error(`Release request failed (${response.status}): ${url}`);
     return plainJson(await deadline(response.json()));
   };
-  const assetText = async (asset, limit) => {
+  const assetText = async (asset, limit, feedCommit, tag) => {
     const expected = `https://github.com/${config.repository}/releases/download/`;
     if (
       !asset?.browser_download_url?.startsWith(expected) ||
-      typeof asset.size !== "number" ||
-      asset.size > limit
+      !Number.isSafeInteger(asset.size) ||
+      asset.size < 0 ||
+      asset.size > limit ||
+      !/^sha256:[a-f0-9]{64}$/.test(asset.digest ?? "")
     )
       throw new Error("Release asset origin or size does not match the configured repository");
-    const response = await deadline(request(asset.browser_download_url));
+    // GitHub release-download redirects omit CORS headers. The release workflow mirrors
+    // identical bytes to an immutable Git commit; the release digest remains authoritative.
+    report({ phase: "checking", message: `Downloading ${asset.name}…` });
+    const url = `https://raw.githubusercontent.com/${config.repository}/${feedCommit}/releases/${tag}/${asset.name}`;
+    let response;
+    try {
+      response = await deadline(request(url));
+    } catch (error) {
+      throw new Error(
+        `Could not download ${asset.name} from the release data mirror: ${error.message}`,
+      );
+    }
     if (!response.ok) throw new Error(`Release asset request failed (${response.status})`);
     const text = await deadline(response.text());
+    report({ phase: "checking", message: `Verifying ${asset.name}…` });
     let bytes = 0;
     for (const char of text) {
       const point = char.codePointAt(0);
       bytes += point < 128 ? 1 : point < 2048 ? 2 : point < 65536 ? 3 : 4;
       if (bytes > limit) throw new Error("Release asset exceeds size limit");
     }
+    if (bytes !== asset.size || `sha256:${sha256(text)}` !== asset.digest)
+      throw new Error("Release data mirror does not match the published asset digest or size");
     return text;
   };
   const getRelease = async () => {
@@ -185,14 +201,31 @@ export function createPluginController(figma, config, dependencies = {}) {
         throw new Error(
           "The latest release has no complete Figma scene and checksum yet. Waiting for release generation to finish.",
         );
+      if (!/^v\d+\.\d+\.\d+$/.test(metadata.tag_name))
+        throw new Error("Automatic syncing requires a stable v<version> release tag");
+      const assetIdentity = JSON.stringify(
+        [sceneAsset, hashAsset].map(({ id, size, digest }) => ({ id, size, digest })),
+      );
+      if (cached && cached.assetIdentity !== assetIdentity) cached = null;
+      let feedCommit;
+      if (cached?.releaseId !== metadata.id) {
+        const feed = await jsonRequest(
+          `https://api.github.com/repos/${config.repository}/git/ref/heads/figma-release-data`,
+        );
+        if (!/^[a-f0-9]{40}$/.test(feed.object?.sha ?? ""))
+          throw new Error("Invalid release data commit");
+        feedCommit = feed.object.sha;
+      }
       const raw =
           cached?.releaseId === metadata.id
             ? cached.raw
-            : await assetText(sceneAsset, 30 * 1024 * 1024),
+            : await assetText(sceneAsset, 30 * 1024 * 1024, feedCommit, metadata.tag_name),
         checksum =
           cached?.releaseId === metadata.id
             ? cached.checksum
-            : (await assetText(hashAsset, 512)).trim().split(/\s+/)[0];
+            : (await assetText(hashAsset, 512, feedCommit, metadata.tag_name))
+                .trim()
+                .split(/\s+/)[0];
       if (!/^[a-f0-9]{64}$/.test(checksum) || sha256(raw) !== checksum)
         throw new Error("Figma scene checksum mismatch");
       const scene = plainJson(JSON.parse(raw));
@@ -233,7 +266,7 @@ export function createPluginController(figma, config, dependencies = {}) {
       );
       if (commit.sha !== scene.release.commit)
         throw new Error("Scene source commit does not match the immutable release tag");
-      cached = { releaseId: metadata.id, raw, checksum };
+      cached = { releaseId: metadata.id, assetIdentity, raw, checksum };
       await acquire();
       acquired = true;
       // Re-read shared state after lease acquisition; another user may have finished while this session fetched.
@@ -245,6 +278,7 @@ export function createPluginController(figma, config, dependencies = {}) {
         throw new Error(
           "Document state changed while fetching the release; the next check will use the new state",
         );
+      report({ phase: "checking", message: "Preparing verified components and foundations…" });
       const prepared = prepareScene(scene);
       let ledger = fresh.ledger;
       const keys = batchKeys(scene);
@@ -353,7 +387,7 @@ export function createPluginController(figma, config, dependencies = {}) {
   };
 }
 
-/** Starts native UI polling; no Codex, model, token or browser automation is involved. */
+/** Starts release polling from the plugin UI; no API token or browser automation is involved. */
 export function startNativePlugin(figma, config, html) {
   figma.showUI(html, { width: 440, height: 430, themeColors: true });
   const controller = createPluginController(figma, config);
