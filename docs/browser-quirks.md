@@ -30,7 +30,7 @@ It ignores `theme-color`.
   (`src/shell/header.tsx`), so Safari doesn't tint the status bar from the header; once
   the page scrolls, the page itself shows through behind the status bar.
 
-History: #262 (`8b9be3c`, `9a13d68`, `ea80095`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`8b9be3c`, `9a13d68`, `ea80095`).
 
 ## Full-screen overlays
 
@@ -48,7 +48,7 @@ collapses and expands, so the visible viewport changes height while the large vi
   uses `min-h-lvh` with a bottom padding of `100lvh - 100dvh`, so the last row can still scroll
   above the toolbar on small phones and in landscape (`src/shell/header.tsx`).
 
-History: #262 (`401bd5f`, `9a13d68`, `9bab38f`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`401bd5f`, `9a13d68`, `9bab38f`).
 
 ## Focus escaping modals
 
@@ -63,7 +63,7 @@ Portals render outside `#app-root` (the consuming application layout).
 
 Verification: WebKit on macOS may require Option+Tab; WebKit on Linux uses plain Tab. The kit tests the shell stories and isolated consumer.
 
-History: #262 (`9e0799c`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`9e0799c`).
 
 ## Clipped text and filters
 
@@ -80,14 +80,14 @@ blurring large areas repaints every frame and stutters on phones.
 - The design rule follows from this: never animate `filter` on text, and release any filter when
   its animation ends ([design-system.md](design-system.md), "Motion rules").
 
-History: #262 (`7ac50f4`, `9bab38f`, `5138545`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`7ac50f4`, `9bab38f`, `5138545`).
 
 ## Touch
 
 - A brand-tinted tap highlight replaces the default grey flash, and `touch-action: manipulation`
   on links and buttons removes double-tap zoom on repeated taps (`src/styles/tailwind.css`).
 
-History: #262 (`9bab38f`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`9bab38f`).
 
 ## Adding a workaround
 

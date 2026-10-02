@@ -20,8 +20,8 @@ consumer's Next.js Image runtime and the UI kit's semantic tone tokens.
 ## Images and optimization
 
 All absolute HTTP(S) image URLs bypass Next.js optimization by default. Local
-assets retain Next.js defaults. This is host-neutral and removes the website's
-CMS configuration from the package. Pass `unoptimized={false}` to `Photo`,
+assets retain Next.js defaults. This is host-neutral and keeps image-host
+configuration out of the package. Pass `unoptimized={false}` to `Photo`,
 `PersonCard`, `FallbackImage` or `LogoTile` to select optimization explicitly.
 `IndexList` accepts `image.unoptimized`; each `QuoteCard` portrait or logo
 accepts its own `unoptimized` field. `LogoWall` forwards each logo's override.

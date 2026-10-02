@@ -39,7 +39,7 @@ export type SectionProps<T extends BlockElement = "section"> = PolymorphicProps<
  * A full-bleed page band. Children read `bg-canvas`, `text-fg`,
  * `text-fg-muted`, `border-hairline` and `text-highlight`, which resolve per
  * tone, so the same component works on light and dark bands. Adjacent bands
- * of close tints blend softly at the seam (see `[data-band]` in index.css).
+ * of close tints blend softly at the seam (see `[data-band]` in src/styles/tailwind.css).
  * Give it `aria-labelledby` pointing at its heading.
  */
 export function Section<T extends BlockElement = "section">({

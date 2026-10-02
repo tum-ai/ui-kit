@@ -27,7 +27,7 @@ export type TopBlendProps = VariantProps<typeof topBlendStyles> & {
 
 /**
  * Eases the edge of a dark band into the flat root canvas color (brand black,
- * see index.css). Safari paints its status bar and bottom toolbar from that
+ * set by src/styles/shell.css). Safari paints its status bar and bottom toolbar from that
  * canvas at the page's ends, so without this the aurora and logomark of a
  * hero (top) or the footer (bottom) meet the browser chrome at a visible
  * seam. Place inside the band, after its decorative layers: it sits above

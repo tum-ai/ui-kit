@@ -1,17 +1,25 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 
-<Meta title="Start here" />
+<Meta title="Start here/Introduction" />
 
 # TUM.ai UI kit
 
-A shared visual language for TUM.ai projects: precise typography, calm reading bands, and accessible interactions.
+A shared visual language for TUM.ai projects: precise typography, calm reading bands and accessible interactions, packaged for Next.js as `@tum.ai/ui-kit`.
 
-Start with **Foundations**, explore the component families, then compose the shell and page patterns. Controls show supported variants; the Accessibility panel reports automated checks. Passing automation does not replace keyboard, VoiceOver or real-device review.
+```sh
+npm install @tum.ai/ui-kit
+```
+
+Read **Getting started** for the stylesheet and layout setup. **Foundations** covers the brand, tones and tokens, and the remaining sections hold the component families, the page shell and page patterns. Controls show the supported variants, and the Accessibility panel reports automated checks. Passing automation does not replace keyboard, screen reader or real-device review.
 
 ## Design contract
 
-Use Manrope, semantic tone tokens and supplied marks. Choose HTML heading levels independently of visual size. Base UI supplies interactive behavior. Keep visible focus, announce external links, respect reduced motion and render meaningful content without JavaScript.
+Use Manrope, semantic tone tokens and the supplied marks. Choose HTML heading levels independently of visual size. Base UI supplies interactive behavior. Keep focus visible, announce external links, respect reduced motion and render meaningful content without JavaScript.
 
-## For maintainers
+## Brand use
 
-Components, tests, stories and TSDoc change together. The published package and isolated Next consumer are checked in CI. Source provenance, release instructions and manual verification checklists live in the repository documentation. Figma metadata is prepared for a later generated library.
+The code is MIT-licensed. The TUM.ai name, logos and marks are reserved for authorized TUM.ai projects. See **Foundations / Brand** and `BRAND-ASSETS.md` in the repository.
+
+## For contributors
+
+Components, tests, stories and TSDoc change together. CI checks the published package in an isolated Next.js application. The **Contribution** section covers the workflow, testing, releases and the generated Figma library. Source code and issues are at [github.com/tum-ai/ui-kit](https://github.com/tum-ai/ui-kit).

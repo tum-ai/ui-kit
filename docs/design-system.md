@@ -1,14 +1,16 @@
 # Design system
 
 The site's visual language follows the 2026 brand guide
-(`docs/brand/source/brand-guidelines.pdf`) and the partner page (#257): dark
+(`docs/brand/source/brand-guidelines.pdf`) and the website's partner page
+([website_new#257](https://github.com/tum-ai/website_new/pull/257)): dark
 indigo bands with the large logomark as a background shape, big light-weight
 Manrope headlines with tight tracking, thin rules, rounded photography, and
 calm light bands for reading. Motion is small, purposeful and always optional.
 
 - Components: `src/components` (import from `@tum.ai/ui-kit` only)
 - Tokens: `src/styles/tailwind.css`
-- Live reference: Storybook (development and Vercel previews only)
+- Live reference: Storybook (`bun run dev`, or a hosted build of the explorer)
+- Brand usage: [brand guide](brand.md)
 - Base UI supplies interaction semantics; CSS cascade layers keep tokens and component overrides predictable. See [portability decisions](portability.md).
 
 Applications compose these components and own their route-specific styles and content. The kit contains no CMS or page-only effects.
@@ -56,10 +58,10 @@ Semantic utilities (resolve per tone):
 Raw scales exist for rare cases: `violet-50…950` (500 = #9A64D9,
 800 = #523573, 950 = #1B0049) and `ink-50…950` (violet-tinted neutrals).
 `bg-indicator` (`--color-indicator`, violet-400) is the live and active dot:
-`StatusBadge` `live`, the active nav item, the live event count. It reads on
+`StatusBadge` `live`, the active nav item, a live count. It reads on
 dark and light bands alike.
 
-Custom utilities (`@utility` in `index.css`): `grain` (film grain on dark
+Custom utilities (`@utility` in `src/styles/tailwind.css`): `grain` (film grain on dark
 bands), `zoom-media` (the one hover zoom for card media; put `group/zoom` on the
 element whose hover starts it), `scroll-mt-header` (anchor targets land below
 the fixed header), `tabular`, `mask-fade-x`, `rounded-signature`,
@@ -127,25 +129,25 @@ the top of `src/components/index.ts`, which wins if the two disagree.
 - **Links go through `Anchor`:** routes use next/link; http(s) opens a new
   tab with `rel="noopener noreferrer"` and a screen-reader hint; mailto:, tel:
   and in-page anchors stay plain `<a>`. `ButtonLink`, `TextLink` and
-  `LogoTile` link through it. **Images** use next/image; remote CMS URLs
-  pass `unoptimized`.
-- **Imports:** ds files import only sibling ds files and `@/lib/cn`.
+  `LogoTile` link through it. **Images** use next/image; absolute remote URLs
+  default to `unoptimized` (see [media](components/media.md)).
+- **Imports:** component files import only sibling component files and `../lib/cn`, through relative paths.
 
 A change to a component is done when the component, its colocated test, its
-Storybook showcase entry (the catalog coverage test fails on a missing export) and its row in the API reference below agree. The `ds-component` skill
+Storybook showcase entry (the catalog coverage test fails on a missing export) and its entry in the generated [API reference](api.md) agree. The `ds-component` skill
 walks through it.
 
 ## Components
 
 Layout
 
-- `Container`: sizes `default` (80rem), `wide`, `narrow`, `prose`. Gutters match `/partners`.
+- `Container`: sizes `default` (80rem), `wide`, `narrow`, `prose`.
 - `Section`: props `tone`, `spacing` (`sm`–`xl`), `grain` (dark bands). Give it an `id` and `aria-labelledby`.
 - `SectionHeader`: `eyebrow`, `index`, `title`, `count` (a small "(4)" after the title), `lead`, `actions`, `layout` (`split` | `stack` | `center`), `size` (`md`, `lg`, or `xl` for a page's lead statement) and `headingAs`. Reveals on scroll.
 
 Page patterns
 
-- `PageHero`: every page starts with one: a flat ink band (no aurora or grain). It accepts `eyebrow`, `title` (strings rise in word by word, and `<Highlight>` parts work), `lead`, `actions`, an optional `media` column, `children` (for stats or filters under the headline) and `classNames` slots. `emphasis="highlight"` sets the whole title in the tone's accent, as on the brand guide's section slides; keep the default when the title marks words with `<Highlight>`. `size="fit"` caps the title for long single words (the privacy page). It clears the fixed header.
+- `PageHero`: every page starts with one: a flat ink band (no aurora or grain). It accepts `eyebrow`, `title` (strings rise in word by word, and `<Highlight>` parts work), `lead`, `actions`, an optional `media` column, `children` (for stats or filters under the headline) and `classNames` slots. `emphasis="highlight"` sets the whole title in the tone's accent, as on the brand guide's section slides; keep the default when the title marks words with `<Highlight>`. `size="fit"` caps the title for long single words. It clears the fixed header.
 - `CtaBand`: closing call to action on flat ink (no aurora or grain). `variant="panel"` is an inset ink panel; `variant="band"` is full bleed. `mark={false}` drops the drifting logomark when `visual` is the band's artwork. Takes `children` and `classNames.footer`.
 - `FaqSection`: sticky heading beside an accordion, with `defaultValue` (questions that start open). No eyebrow by default. `FaqList` renders the accordion on its own (one answer open at a time) and takes `defaultValue` too, or `value` with `onValueChange` when a parent reacts to the open question. An item with an `id` is deep-linkable: a link to `#id` opens it, on load and on later fragment changes.
 - `Steps`: a numbered process, with `rail` (`solid`, `dashed`, `none`), `marker` (`badge`, `dot`), an optional per-step `number` (e.g. "02A") and a `detail` line under the title (such as the step's dates). `layout="rows"` sets each step as a hairline row with the number beside it, for steps that are sentences.
@@ -193,7 +195,7 @@ Motion
 - `Reveal`: fades content in on scroll. Variants: `up`, `fade`, `scale`, `left`, `right`, `line`. Use `delay={i * 80}` to stagger.
 - `SplitWords`: headline words rise in on load; animated with CSS only.
 - `CountUp`: parses formatted strings such as "1.2M+"; `parseFigure` and `formatFigure` are the server-safe helpers.
-- `MotionProvider`: framer-motion's `LazyMotion strict`, provided once by the site layout.
+- `MotionProvider`: framer-motion's `LazyMotion strict`, rendered once in the application's root layout.
 - `BrandMark`: the logomark as a tonal background shape, with an `intensity` step for dark bands. Use it as decoration only, never as a logo substitute.
 - `Aurora`: slow light field for dark bands.
 
@@ -201,7 +203,7 @@ Motion
 
 - Above the fold, use the CSS utilities (`motion-safe:animate-rise`, `-rise-sm`, `-fade`) or `SplitWords`. Never use `Reveal` there: it waits for hydration.
 - Below the fold, use `Reveal`. Only elements that start below the viewport are hidden, so server-rendered HTML and no-JS visitors always see content.
-- Animate only `transform` and `opacity`. Avoid `filter` on anything containing text or large areas: Safari clips filtered elements to their box (cutting descenders) and large blurs stutter on phones. Any filter must be released when the animation ends. A short blur on logo images (not text) is fine: the partner walls blur the outgoing and incoming artwork through a swap (`partners.css`). Use the house easing `ease-brand` (`cubic-bezier(0.22,1,0.36,1)`). Keep durations between 300ms (hover) and 1.2s (entrances).
+- Animate only `transform` and `opacity`. Avoid `filter` on anything containing text or large areas: Safari clips filtered elements to their box (cutting descenders) and large blurs stutter on phones. Any filter must be released when the animation ends. A short blur on logo images (not text) is fine: a logo wall may blur the outgoing and incoming artwork through a swap. Use the house easing `ease-brand` (`cubic-bezier(0.22,1,0.36,1)`). Keep durations between 300ms (hover) and 1.2s (entrances).
 - Prefix every looping or entrance animation with `motion-safe:`. Components already handle reduced motion themselves.
 - Hover effects should be small: slow image zoom (1.04, `zoom-media`), arrow nudges, a 4px card lift, spotlight. Nothing bouncy.
 - framer-motion runs inside `LazyMotion strict`: import `m`, not `motion`.

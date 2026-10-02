@@ -1,41 +1,27 @@
 # Getting started
 
-## Explore and develop
+## Install in a Next.js application
 
-Install Node 24.19.0 and Bun 1.4.2, matching `.node-version` and `packageManager`. Then:
-
-```sh
-git clone https://github.com/tum-ai/ui-kit.git
-cd ui-kit
-bun install --frozen-lockfile
-bun run dev
-```
-
-Open <http://localhost:6006>. Foundations explains the six tones and tokens; Components and Patterns contain live controls, props, examples and accessibility notes. Contribution documents the maintenance workflow. Storybook needs no `.env`, Sanity access, npm login or hosting connection. The install sets up this repository's Conventional Commit and staged-file hooks.
-
-For a static local explorer:
+The kit targets Next.js 16, React 19 and Tailwind CSS 4. Check the exact peer ranges in `package.json`. Install the package from npm:
 
 ```sh
-bun run build:storybook
-bun run manifests
-node scripts/serve.mjs storybook-static 6006
+npm install @tum.ai/ui-kit
 ```
 
-Stop an existing dev server before starting the static server on the same port.
-
-## Install in a Next.js application now
-
-The initial verified combination is Next 16.3.6, React/React DOM 19.3.0 and Tailwind 4.3.3. Use compatible peer versions from `package.json`. Version 0.1.0 is available publicly on npm; installing it does not require npm login.
-
-From your application:
+If the application does not use Tailwind 4 yet, add it with its PostCSS plugin:
 
 ```sh
-bun add --exact @tum.ai/ui-kit@0.1.0
+npm install tailwindcss@^4 @tailwindcss/postcss@^4
 ```
 
-Commit your application's dependency and lockfile changes. Installing the raw Git repository as a dependency is not supported: compiled `dist` is deliberately not committed.
+```js
+// postcss.config.mjs
+export default { plugins: { "@tailwindcss/postcss": {} } };
+```
 
-To test an unpublished change, run `bun run build` and `npm pack --ignore-scripts --pack-destination artifacts` in the kit checkout, then install the resulting tarball with `bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz`. Keep a shared tarball in a stable project/vendor location when other developers or CI need it; a path to your personal checkout is not portable.
+`pnpm add`, `yarn add` and `bun add` work the same way. Commit the dependency and lockfile changes. Installing the Git repository directly is not supported, because the compiled `dist` directory is not committed.
+
+### Stylesheets
 
 In `app/globals.css`, after the Tailwind import:
 
@@ -45,9 +31,9 @@ In `app/globals.css`, after the Tailwind import:
 @import "@tum.ai/ui-kit/fonts.css";
 ```
 
-Keep the usual Tailwind 4 PostCSS integration in the app. The kit stylesheet registers its packaged JavaScript for class detection; no source aliases or manually copied class lists are needed. `fonts.css` is optional when your app supplies `--font-manrope` through its own font loader.
+The kit stylesheet registers its packaged JavaScript for class detection, so you need no source aliases and no copied class lists. Keep the application's own Tailwind source detection. `fonts.css` is optional when your app supplies `--font-manrope` through its own font loader.
 
-A minimal server layout:
+### Root layout
 
 ```tsx
 import "./globals.css";
@@ -70,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-A minimal server page:
+### A first page
 
 ```tsx
 import { ButtonLink, Container, Heading, Section } from "@tum.ai/ui-kit";
@@ -90,11 +76,60 @@ export default function Page() {
 }
 ```
 
-Add your own `/about` route for that link. Components with event handlers belong in a client module. Keep the root barrel as supplied; adding `"use client"` to every consumer defeats the server-compatible components. Dialog portals mount outside `app-root`, while their background inertness targets that ID; use `backgroundRootId` if your application uses a different root.
+Add your own `/about` route for that link. Components with event handlers belong in a client module. Keep the root barrel as it is, because adding `"use client"` to every consumer defeats the server-compatible components.
 
-For the optional floating Header and Footer, also import `@tum.ai/ui-kit/shell.css` and follow [shell usage](components/shell.md). The application supplies navigation, logos, resolved CTAs and footer content. Copy approved identity files from `node_modules/@tum.ai/ui-kit/assets` to your app's `public` directory when using URL-based logos. Observe [brand terms](../BRAND-ASSETS.md). Remote optimized images require your application's Next image configuration; see [portability](portability.md).
+Dialog portals mount outside `app-root`, while dialogs make that ID inert. Use `backgroundRootId` if your application uses a different root.
 
-The [Next consumer fixture](../examples/next-consumer) is an automated integration fixture: `bun run test:consumer` copies it, injects the tarball dependency and assets, and intercepts its intentionally invalid remote test URL. It is not a standalone app to run directly. Use the minimal layout/page above when starting an application.
+### Optional page shell
+
+For the floating `Header` and `Footer`, also import `@tum.ai/ui-kit/shell.css` and follow the [shell notes](components/shell.md). The application supplies navigation, logos, resolved CTAs and footer content.
+
+To use the official logo files by URL, copy them from `node_modules/@tum.ai/ui-kit/assets` into your app's `public` directory. Follow the [brand guide](brand.md) and the [brand asset terms](../BRAND-ASSETS.md).
+
+Optimized remote images need the application's own Next.js `images.remotePatterns`; see [portability](portability.md).
+
+## Explore the components locally
+
+Install Node 24 and Bun 1.4.2, matching `.node-version` and `packageManager`. Then:
+
+```sh
+git clone https://github.com/tum-ai/ui-kit.git
+cd ui-kit
+bun install --frozen-lockfile
+bun run dev
+```
+
+Open <http://localhost:6006>:
+
+- **Start here** introduces the kit.
+- **Foundations** explains the brand, the six tones and the tokens.
+- **Components** and **Patterns** contain live controls, props, examples and accessibility results.
+- **Contribution** documents the maintenance workflow.
+
+The explorer needs no environment variables, CMS access or accounts. `bun install` also sets up the repository's commit-message and staged-file hooks.
+
+For a static build of the explorer:
+
+```sh
+bun run build:storybook
+bun run manifests
+node scripts/serve.mjs storybook-static 6006
+```
+
+Stop any running dev server first, because both use the same port.
+
+## Test an unreleased change in your application
+
+In the kit checkout:
+
+```sh
+bun run build
+npm pack --ignore-scripts --pack-destination artifacts
+```
+
+Then install the resulting tarball in your application, for example `npm install /path/to/ui-kit/artifacts/tum.ai-ui-kit-<version>.tgz`. A path into one developer's checkout is not portable. If other developers or CI need the tarball, keep it somewhere shared.
+
+The [Next consumer fixture](../examples/next-consumer) is an automated integration fixture, not a starter app. `bun run test:consumer` copies it, installs the packed tarball, builds it and exercises it in Chromium.
 
 ## Verify changes
 
@@ -103,6 +138,11 @@ bunx playwright install --with-deps chromium webkit
 bun run verify
 ```
 
-This checks formatting, types, coverage, package/explorer builds, export coverage, browser stories, accessibility, visual regressions and the packed Next consumer. Visual baselines target macOS 26; GitHub runs that lane on the matching runner. Linux runs unit and package checks in CI. See [testing](testing.md) before intentionally updating snapshots. Passing automation does not replace the [outstanding manual accessibility checks](verification.md#accessibility-proof-boundary).
+This checks:
 
-Hosting remains a separate, owner-managed setup step. See [Figma generation](figma.md) for the release-driven native library updater; no cloud connection is required to explore or install a locally packed kit.
+- formatting, types and coverage
+- the package and explorer builds, and export coverage
+- browser stories, accessibility and visual regressions
+- the packed Next consumer
+
+Visual baselines target macOS; CI runs that lane on a matching runner. See [testing](testing.md) before you update snapshots. Passing automation does not replace the [manual accessibility checks](testing.md#manual-accessibility-checks).

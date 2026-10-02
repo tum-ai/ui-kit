@@ -14,7 +14,6 @@ export default tseslint.config(
       "storybook-static/**",
       "coverage/**",
       "artifacts/**",
-      ".parity-storybook/**",
       "test-results/**",
       "playwright-report/**",
       ".consumer/**",

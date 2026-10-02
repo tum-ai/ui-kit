@@ -1,6 +1,6 @@
 # Native scene and reconciliation engine
 
-`schema.mjs` is the versioned JSON scene contract and pre-write validator. `compiler.mjs` validates stable external identities, prepares bounded foundation/page batches and embeds the plain Plugin API runtime for an initial MCP execution. `runtime.mjs` is shared with the [native release plugin](plugin/README.md), which applies release JSON without Codex.
+`schema.mjs` is the versioned JSON scene contract and pre-write validator. `compiler.mjs` validates stable external identities, prepares bounded foundation/page batches and embeds the plain Plugin API runtime for execution through Figma's MCP server (used to populate the library initially). `runtime.mjs` is shared with the [native release plugin](plugin/README.md), which applies release JSON.
 
 A scene has `schemaVersion: 1`, a package name, `{version, commit}` release identity, collections, variables, text/effect styles, pages and diagnostics. Every native asset and component property has one globally unique stable `key`. Collections have named modes; variables refer to a collection key and use mode-keyed values or `{alias: variableKey}`. Scopes are explicit and WEB code syntax uses `var(--token)`. Unknown native fields, missing references, cyclic aliases, unsupported paints, invalid Auto Layout sizing contexts and error diagnostics are rejected.
 
