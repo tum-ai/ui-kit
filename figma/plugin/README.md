@@ -22,6 +22,8 @@ Native components, variant sets, editable text and rich text ranges, vector SVGs
 
 Figma color-variable bindings control the complete RGBA value, including alpha. A CSS opacity modifier therefore needs a derived color variable with the correct value in each mode. The engine checks the resulting bound paint alpha and fails explicitly if it differs from the captured source.
 
+Text sizing is applied after geometry and variable bindings, because Figma resizing can reset it. Explicit CSS `nowrap` and captured single-line inline labels use intrinsic text sizing; paragraphs keep their captured wrapping width. Updating an older ledger verifies the existing fingerprint before migrating sizing in place. The updater checks painted glyph bounds against clipping ancestors and reports additional overflow instead of shrinking fonts or widening containers.
+
 Managed native properties are fingerprinted. A manual edit to generated text, fills, bound variables, styles or owned geometry causes an explicit drift failure on replay, including a replay of the same release. Canvas placement of top-level library assets is designer-owned. Imported SVG roots retain their identity; changed SVG source replaces only known imported vector descendants, and fails if a designer inserted content inside those descendants.
 
 ## Checkpoints and recovery
