@@ -84,7 +84,7 @@ describe("native token foundations", () => {
   test("does not flatten missing contexts or values that vary on two axes", () => {
     expect(() => buildFoundations(contexts().slice(1))).toThrow("Missing token context");
     const base = contexts();
-    base[0].values["--text-display"].value = 31;
+    base[0]!.values["--text-display"].value = 31;
     expect(() => buildFoundations(base)).toThrow("varies on both axes");
   });
 });

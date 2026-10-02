@@ -11,6 +11,6 @@ const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
   staticDirs: [{ from: "../assets", to: "/assets" }],
   typescript: { reactDocgen: "react-docgen-typescript" },
-  viteFinal: async (config) => ({ ...config, plugins: [...(config.plugins ?? []), tailwind()] }),
+  viteFinal: (config) => ({ ...config, plugins: [...(config.plugins ?? []), tailwind()] }),
 };
 export default config;

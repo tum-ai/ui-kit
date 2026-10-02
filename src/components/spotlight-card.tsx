@@ -54,19 +54,19 @@ export function SpotlightCard({
   ref,
   ...props
 }: SpotlightCardProps) {
-  const own = useRef<HTMLDivElement>(null);
-  const composedRef = useComposedRef(own, ref);
-  const frame = useRef(0);
+  const ownRef = useRef<HTMLDivElement>(null);
+  const composedRef = useComposedRef(ownRef, ref);
+  const frameRef = useRef(0);
 
   const handleMove = useCallback(
     (event: PointerEvent<HTMLDivElement>) => {
       onPointerMove?.(event);
       if (event.pointerType === "touch") return;
-      const node = own.current;
+      const node = ownRef.current;
       if (!node) return;
       const { clientX, clientY } = event;
-      cancelAnimationFrame(frame.current);
-      frame.current = requestAnimationFrame(() => {
+      cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
         const rect = node.getBoundingClientRect();
         node.style.setProperty("--spot-x", `${clientX - rect.left}px`);
         node.style.setProperty("--spot-y", `${clientY - rect.top}px`);
@@ -79,8 +79,8 @@ export function SpotlightCard({
   const handleLeave = useCallback(
     (event: PointerEvent<HTMLDivElement>) => {
       onPointerLeave?.(event);
-      cancelAnimationFrame(frame.current);
-      own.current?.style.setProperty("--spot-opacity", "0");
+      cancelAnimationFrame(frameRef.current);
+      ownRef.current?.style.setProperty("--spot-opacity", "0");
     },
     [onPointerLeave],
   );

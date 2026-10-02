@@ -5,11 +5,12 @@ import { useState } from "react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-import { FaqList } from "./faq-list";
+import { type FaqItem, FaqList } from "./faq-list";
 import { FaqSection } from "./faq-section";
 import { stubMatchMedia, stubObservers } from "./testing";
 
-const items = [
+// A tuple, so `items[0]` is known to exist.
+const items: [FaqItem, FaqItem] = [
   { question: "Who can apply?", answer: "Every student in Munich." },
   { question: "Does it cost anything?", answer: "No, membership is free." },
 ];
@@ -98,7 +99,7 @@ describe("FaqList", () => {
     const user = userEvent.setup();
     render(<FaqList items={items} defaultValue={[items[0].question]} />);
     const [first, second] = screen.getAllByRole("button");
-    await user.click(second);
+    await user.click(second!);
     expect(second).toHaveAttribute("aria-expanded", "true");
     expect(first).toHaveAttribute("aria-expanded", "false");
   });
@@ -110,7 +111,7 @@ describe("FaqList", () => {
 });
 
 describe("FaqList deep links", () => {
-  const linked = [
+  const linked: [FaqItem, FaqItem] = [
     { ...items[0], id: "who" },
     { ...items[1], id: "cost" },
   ];
@@ -201,7 +202,9 @@ describe("FaqList deep links", () => {
         window.dispatchEvent(new HashChangeEvent("hashchange"));
       });
       // Once on the next frame, again after the closing answer collapsed.
-      act(() => vi.advanceTimersByTime(1000));
+      act(() => {
+        vi.advanceTimersByTime(1000);
+      });
       expect(scrollIntoView).toHaveBeenCalledTimes(2);
       expect(scrolled.every((node) => node.id === "cost")).toBe(true);
     } finally {

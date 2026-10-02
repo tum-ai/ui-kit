@@ -1,0 +1,6 @@
+#!/bin/sh
+# Whole-program checks that are too slow for every commit: the strict
+# typecheck and unused-code scan. CI runs them again on the pull request.
+set -eu
+bun run --silent typecheck
+bun run --silent check:unused

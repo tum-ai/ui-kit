@@ -187,7 +187,7 @@ const logoNameStyles = cva("font-semibold", {
 });
 
 /** Props for {@link LogoTile}. */
-export type LogoTileProps = LogoItem &
+export type LogoTileProps = Omit<LogoItem, "aspectRatio"> &
   Omit<VariantProps<typeof logoTileStyles>, "linked"> & {
     /** Load the artwork eagerly, e.g. inside a moving marquee. */
     eager?: boolean;
@@ -313,7 +313,7 @@ export type LogoWallProps = VariantProps<typeof logoWallStyles> & {
 export function LogoWall({ logos, layout, columns, size = "md", label, className }: LogoWallProps) {
   return (
     <ul aria-label={label} className={cn(logoWallStyles({ layout, columns }), className)}>
-      {logos.map((logo) => {
+      {logos.map(({ aspectRatio, ...logo }) => {
         if (layout !== "strip") {
           return (
             <li key={logo.name} className="flex">
@@ -321,7 +321,7 @@ export function LogoWall({ logos, layout, columns, size = "md", label, className
             </li>
           );
         }
-        const box = getStripLogoBox(logo.aspectRatio);
+        const box = getStripLogoBox(aspectRatio);
         return (
           <li
             key={logo.name}

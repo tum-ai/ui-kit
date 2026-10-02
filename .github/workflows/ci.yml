@@ -23,6 +23,9 @@ jobs:
       - run: bun run lint
       - run: bun run format:check
       - run: bun run typecheck
+      - run: bun run check:unused
+      - name: API reference matches TSDoc
+        run: bun run check:api
   unit:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -48,6 +51,8 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup
       - run: bun run build
+      - run: bun run check:package
+      - run: bun run check:size
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:consumer
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

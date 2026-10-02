@@ -83,7 +83,7 @@ test("gradient converter interpolates omitted stops and rejects unrepresented ef
     colors,
   );
   gradient.gradientStops.forEach((stop: { position: number }, index: number) =>
-    expect(stop.position).toBeCloseTo([0, 0.2, 0.6, 1][index]),
+    expect(stop.position).toBeCloseTo([0, 0.2, 0.6, 1][index]!),
   );
   expect(() =>
     linearGradient(
@@ -441,7 +441,7 @@ test("zero-size gradients do not cover text and repeated gradients remain native
     kind: "component",
   };
   expect(normalizeCapture(raw, story).node.fills).toEqual([]);
-  raw.children[0].style = {
+  raw.children[0]!.style = {
     ...style,
     "background-size": "10px 2px",
     "background-position": "0% 0%",

@@ -28,6 +28,9 @@ import { getHeaderScrollState } from "./header-scroll";
 import { NavAnchor } from "./nav-anchor";
 import type { NavLink, ShellLogo } from "./types";
 
+/** Stable default, so an omitted `connectLinks` keeps one identity across renders. */
+const NO_LINKS: readonly NavLink[] = [];
+
 /** Props for {@link Header}; application navigation and branding are supplied by the caller. */
 export type HeaderProps = Omit<ComponentProps<"header">, "children"> & {
   /** Main destinations, in display order. Route descendants keep their parent active. */
@@ -58,7 +61,7 @@ export type HeaderProps = Omit<ComponentProps<"header">, "children"> & {
 export function Header({
   navigation,
   logo,
-  connectLinks = [],
+  connectLinks = NO_LINKS,
   cta = null,
   homeHref = "/",
   homeLabel = "Home",
@@ -100,7 +103,8 @@ export function Header({
       });
     };
 
-    update();
+    // Measure on the next frame, not during the effect, so mounting renders once.
+    scheduleUpdate();
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
 
@@ -132,7 +136,7 @@ export function Header({
   // needs no arrow.
   const ctaInPage = cta?.href.startsWith("#") ?? false;
   const isActive = (href: string) =>
-    pathname === href || (href !== "/" && (pathname?.startsWith(`${href}/`) ?? false));
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
   return (
     <Dialog open={open} onOpenChange={setOpen} backgroundRootId={backgroundRootId}>

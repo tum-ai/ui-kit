@@ -43,7 +43,7 @@ function useInertBackground(open: boolean, backgroundRootId: string) {
 
     const state = inertBackgrounds.get(root) ?? {
       holders: 0,
-      originallyInert: root.inert === true || root.hasAttribute("inert"),
+      originallyInert: root.inert || root.hasAttribute("inert"),
     };
     state.holders += 1;
     inertBackgrounds.set(root, state);

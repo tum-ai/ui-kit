@@ -242,7 +242,7 @@ describe("mobile menu", () => {
     expect(menu).toHaveClass("h-lvh", "overflow-y-auto");
     expect(menu.querySelector(".min-h-lvh")).toHaveClass("pb-[calc(100lvh-100dvh)]");
     expect(within(menu).getAllByRole("link")).toHaveLength(navigation.length);
-    expect(within(menu).getByRole("link", { name: navigation[17].label })).toHaveAttribute(
+    expect(within(menu).getByRole("link", { name: navigation[17]!.label })).toHaveAttribute(
       "aria-current",
       "page",
     );

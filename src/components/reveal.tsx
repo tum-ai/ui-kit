@@ -67,12 +67,12 @@ export function Reveal<T extends BlockElement = "div">({
   children,
   ...props
 }: RevealProps<T>) {
-  const own = useRef<HTMLElement>(null);
-  const composedRef = useComposedRef<HTMLElement>(own, ref);
+  const ownRef = useRef<HTMLElement>(null);
+  const composedRef = useComposedRef<HTMLElement>(ownRef, ref);
   const [state, setState] = useState<RevealState>("idle");
 
   useEffect(() => {
-    const node = own.current;
+    const node = ownRef.current;
     if (!node) return;
     if (prefersReducedMotion()) return;
     if (node.getBoundingClientRect().top < window.innerHeight * 0.94) return;

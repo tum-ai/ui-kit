@@ -6,6 +6,9 @@
 | ---------------------------------------- | --------------------------------------------------------------------------- |
 | `bun run lint` / `bun run format:check`  | Static semantics, boundaries and formatting                                 |
 | `bun run typecheck`                      | Public implementation, tests and stories                                    |
+| `bun run check:unused`                   | Unused files, exports and dependencies (knip)                               |
+| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the committed file     |
+| `bun run check:package` / `check:size`   | publint, attw type resolution and bundle size budgets (after `build`)       |
 | `bun run test` / `bun run test:coverage` | Vitest node/jsdom, with 80% component and 90% helper line floors            |
 | `bun run test:stories`                   | Every story in Chromium, plays and strict axe                               |
 | `bun run build:storybook`                | Production explorer                                                         |
@@ -13,6 +16,8 @@
 | `bun run test:e2e`                       | Chromium/WebKit browser and visual cases                                    |
 | `bun run test:consumer`                  | Pack, install outside the checkout, compile a real Next app and exercise it |
 | `bun run render:design`                  | Deterministic component render bundle for design review                     |
+
+The rules these commands enforce are listed in [engineering standards](standards.md).
 
 Every new public component needs documented props, a story, a behavioral test where meaningful, and accessible supported examples. Compound primitives are shown together. Nonvisual helper exceptions must name their documentation/testing coverage.
 

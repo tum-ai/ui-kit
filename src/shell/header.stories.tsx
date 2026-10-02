@@ -68,9 +68,9 @@ async function waitForMenuEntrance(menu: HTMLElement) {
       .getAnimations({ subtree: true })
       .map((animation) => animation.finished.catch(() => undefined)),
   );
-  await waitFor(() => {
+  await waitFor(async () => {
     for (const row of menu.querySelectorAll("nav li")) {
-      expect(getComputedStyle(row).opacity).toBe("1");
+      await expect(getComputedStyle(row).opacity).toBe("1");
     }
   });
 }

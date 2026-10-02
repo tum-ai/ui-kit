@@ -112,7 +112,10 @@ export function publicApi() {
             ?.map((doc) =>
               typeof doc.comment === "string"
                 ? doc.comment
-                : doc.comment?.map((p) => p.text ?? p.name?.getText(source) ?? "").join(""),
+                : // A `{@link X}` part has empty text; name its target instead.
+                  doc.comment
+                    ?.map((p) => (p.name ? `\`${p.name.getText(source)}\`` : (p.text ?? "")))
+                    .join(""),
             )
             .join(" ") ?? "";
         return {

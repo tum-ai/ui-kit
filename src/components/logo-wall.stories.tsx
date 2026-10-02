@@ -53,7 +53,7 @@ export const Wordmark: Story = {
   ),
 };
 export const MissingArtworkAndKeyboardLink: Story = {
-  args: { logos: [logos[1], logos[3]] },
+  args: { logos: [logos[1]!, logos[3]!] },
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole("img")).not.toBeInTheDocument();
     await userEvent.tab();
@@ -61,7 +61,7 @@ export const MissingArtworkAndKeyboardLink: Story = {
   },
 };
 export const LoadError: Story = {
-  args: { logos: [logos[0]] },
+  args: { logos: [logos[0]!] },
   play: async ({ canvas }) => {
     canvas.getByRole("img", { name: "TUM.ai" }).dispatchEvent(new Event("error"));
     await expect(canvas.findByText("TUM.ai")).resolves.toBeVisible();

@@ -47,19 +47,19 @@ export type DayRulerProps = Omit<ComponentProps<"div">, "children"> &
   };
 
 /**
- * A window of days as a ruler: one tick per day, taller ticks every week,
- * and a fill from the first tick to today's with a mark on it, so how much
- * of the window is gone reads at a glance. Built from whole days, not
- * eyeballed. Decorative (`aria-hidden`): state the same fact in text beside
- * it, such as "27 days left".
- */
-/**
  * Share of the ruler at each end where the mark label pins to that edge instead
  * of centring on the mark, so a label near the first or last day never overflows
  * the ruler.
  */
 const LABEL_EDGE = 0.15;
 
+/**
+ * A window of days as a ruler: one tick per day, taller ticks every week,
+ * and a fill from the first tick to today's with a mark on it, so how much
+ * of the window is gone reads at a glance. Built from whole days, not
+ * eyeballed. Decorative (`aria-hidden`): state the same fact in text beside
+ * it, such as "27 days left".
+ */
 export function DayRuler({
   days,
   elapsed,

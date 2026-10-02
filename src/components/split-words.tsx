@@ -26,6 +26,7 @@ function splitUnits(children: ReactNode): Unit[] {
     return `${base}:${count}`;
   };
   const collect = (node: ReactNode) => {
+    // eslint-disable-next-line @eslint-react/no-children-to-array -- splitting text children into words needs the flat list
     for (const child of Children.toArray(node)) {
       if (typeof child === "string" || typeof child === "number") {
         for (const part of String(child).split(/(\s+)/)) {

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Everything",
+    "path": "dist/index.js",
+    "import": "*",
+    "limit": "80 kB"
+  },
+  {
+    "name": "Button (tree-shaking)",
+    "path": "dist/index.js",
+    "import": "{ Button }",
+    "limit": "14.5 kB"
+  },
+  {
+    "name": "Section and typography (server components)",
+    "path": "dist/index.js",
+    "import": "{ Section, Display, Text }",
+    "limit": "9.5 kB"
+  },
+  {
+    "name": "Shell",
+    "path": "dist/shell/index.js",
+    "import": "*",
+    "limit": "37.5 kB"
+  }
+]

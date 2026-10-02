@@ -49,12 +49,13 @@ const preview: Preview = {
   decorators: [
     (Story, context) => (
       <>
-        {context.title.startsWith("Shell/") || context.parameters.kit?.shell ? (
+        {context.title.startsWith("Shell/") ||
+        (context.parameters as { kit?: { shell?: boolean } }).kit?.shell ? (
           <style>{shellStyles}</style>
         ) : null}
         <div
           id="app-root"
-          data-tone={context.globals.tone}
+          data-tone={context.globals["tone"] as string | undefined}
           style={{
             minHeight: "100vh",
             padding: context.parameters.layout === "fullscreen" ? 0 : 24,

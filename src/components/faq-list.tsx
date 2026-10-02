@@ -87,12 +87,12 @@ export function FaqList({
   };
 
   /** The item a fragment just opened, to bring back into view. */
-  const pendingScroll = useRef<string | null>(null);
+  const pendingScrollRef = useRef<string | null>(null);
 
   const openFromHash = useEffectEvent(() => {
     const item = itemFromHash(items);
     if (!item?.id || open.includes(item.question)) return;
-    pendingScroll.current = item.id;
+    pendingScrollRef.current = item.id;
     change([item.question]);
   });
 
@@ -104,9 +104,10 @@ export function FaqList({
    * `scrollIntoView` honours the item's `scroll-mt-header`.
    */
   useEffect(() => {
-    const id = pendingScroll.current;
+    const id = pendingScrollRef.current;
     if (!id || open.length === 0) return;
-    pendingScroll.current = null;
+    pendingScrollRef.current = null;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- jsdom has no scrollIntoView
     const align = () => document.getElementById(id)?.scrollIntoView?.({ block: "start" });
     const frame = requestAnimationFrame(align);
     const settle = window.setTimeout(align, PANEL_SETTLE_MS);

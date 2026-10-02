@@ -123,6 +123,7 @@ The kit implements the TUM.ai brand: violet and indigo palette, Manrope, tone ba
 | [Component notes](docs/components)           | Contracts for foundations, media, compositions and the shell   |
 | [Public API](docs/api.md)                    | Generated export reference                                     |
 | [Portability decisions](docs/portability.md) | How the components stay independent of any one application     |
+| [Engineering standards](docs/standards.md)   | Every enforced rule and the check that enforces it             |
 | [Testing and accessibility](docs/testing.md) | Test layers, axe, visual baselines, manual checks              |
 | [Browser quirks](docs/browser-quirks.md)     | Safari workarounds and where they live                         |
 | [Figma library](docs/figma.md)               | Generating the native Figma library from code                  |

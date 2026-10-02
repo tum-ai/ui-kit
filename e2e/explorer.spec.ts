@@ -120,12 +120,12 @@ test("nested tone focus outlines meet non-text contrast", async ({ page }) => {
       function light(color: string) {
         context.fillStyle = color;
         context.fillRect(0, 0, 1, 1);
-        const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
-        const [red, green, blue] = [r, g, b].map((n) => {
-          n /= 255;
+        const data = context.getImageData(0, 0, 1, 1).data;
+        const linear = (channel = 0) => {
+          const n = channel / 255;
           return n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4;
-        });
-        return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+        };
+        return 0.2126 * linear(data[0]) + 0.7152 * linear(data[1]) + 0.0722 * linear(data[2]);
       }
       const a = light(style.outlineColor),
         b = light(background);
