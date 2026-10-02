@@ -6,6 +6,14 @@ import { Anchor } from "./anchor";
 const meta = {
   title: "Actions/Anchor",
   component: Anchor,
+  // Anchor is unstyled by design (callers bring the styling), so the hover audit skips it.
+  decorators: [
+    (Story) => (
+      <div data-static-hover>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     kit: { exports: ["Anchor"], tones: ["paper", "mist", "lavender", "ink", "night", "violet"] },
   },

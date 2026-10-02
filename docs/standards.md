@@ -38,13 +38,16 @@ A size budget sits about 10% above the current size. Raise it in the same change
 
 ## Accessibility
 
-| Rule                                                                                              | Enforced by                                                           |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| JSX accessibility rules at the `strict` level, applied through the kit's link and button wrappers | `eslint-plugin-jsx-a11y`                                              |
-| No WCAG 2.0–2.2 A/AA axe violations, contrast included, in every story                            | `@storybook/addon-a11y` with `test: "error"` (`bun run test:stories`) |
-| No axe violations in component DOM tests                                                          | `test/axe.ts` in `*.test.tsx`                                         |
-| Focus rings meet 3:1 against every tone                                                           | `e2e/explorer.spec.ts`                                                |
-| Screen reader, zoom and reflow, forced colors, iPhone Safari                                      | **manual** (see [testing](testing.md#manual-accessibility-checks))    |
+| Rule                                                                                                             | Enforced by                                                           |
+| ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| JSX accessibility rules at the `strict` level, applied through the kit's link and button wrappers                | `eslint-plugin-jsx-a11y`                                              |
+| No WCAG 2.0–2.2 A/AA axe violations, contrast included, in every story                                           | `@storybook/addon-a11y` with `test: "error"` (`bun run test:stories`) |
+| No axe violations in component DOM tests                                                                         | `test/axe.ts` in `*.test.tsx`                                         |
+| Every tone's text, accent and focus tokens meet AA (4.5:1 text, 3:1 focus) against its canvas and raised surface | `test/contrast.test.ts` (computed from `tailwind.css`)                |
+| Focus rings are 3px and meet 3:1 against every tone, and stay visible in forced colors                           | `e2e/explorer.spec.ts`                                                |
+| Every interactive export (Base UI, links, buttons) is exercised by a story `play` function                       | `test/catalog.test.ts`                                                |
+| Nothing moves under reduced motion in any story, at rest, on hover or on keyboard focus                          | `e2e/motion.spec.ts` (Chromium, `reduce`)                             |
+| Screen reader, zoom and reflow, iPhone Safari                                                                    | **manual** (see [testing](testing.md#manual-accessibility-checks))    |
 
 ## Design and motion
 
@@ -55,7 +58,8 @@ A size budget sits about 10% above the current size. Raise it in the same change
 | Every `animate-*` is `motion-safe:`, and every transform that responds to hover, focus, press or state is gated for reduced motion                              | `tumai/motion-tokens`                                            |
 | No transitioned or animated filters (Safari clips filtered boxes)                                                                                               | `tumai/no-filter-motion`                                         |
 | `"use client"` exactly where a module uses client-only hooks, DOM handlers or inline function props                                                             | `tumai/client-boundary`                                          |
-| The [micro-interaction contract](design-system.md#micro-interaction-contract): hover, focus, press, open and close states on every interactive element          | **manual** (review)                                              |
+| Every visible link and button in every story looks different on hover, and `pressable` controls shrink while pressed                                            | `e2e/motion.spec.ts` (`motion` project)                          |
+| The rest of the [micro-interaction contract](design-system.md#micro-interaction-contract): focus parity, open and close timing, transitions on state changes    | **manual** (review)                                              |
 | Composition rules (nested corners, equal heights, no meta rows)                                                                                                 | **manual** ([design system](design-system.md#composition-rules)) |
 
 The `tumai/*` rules live in `eslint-rules/` with their tests, and apply to published source. Their messages name the fix.

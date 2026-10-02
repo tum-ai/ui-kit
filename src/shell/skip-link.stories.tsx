@@ -14,7 +14,7 @@ const meta = {
       <SkipLink {...args} />
       <header className="pt-16">
         <nav aria-label="Example navigation">
-          <a href="#details" className="text-highlight">
+          <a href="#details" className="text-highlight transition-colors hover:text-fg">
             Navigation before the content
           </a>
         </nav>

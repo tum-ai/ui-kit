@@ -20,6 +20,13 @@ export default defineConfig({
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "webkit", use: { ...devices["Desktop Safari"] } },
+    // The per-story motion audits run once, in Chromium (see e2e/motion.spec.ts).
+    { name: "webkit", testIgnore: /motion\.spec\.ts/, use: { ...devices["Desktop Safari"] } },
+    // Everything above runs with reduced motion; this project checks the motion itself.
+    {
+      name: "motion",
+      testMatch: /motion\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], reducedMotion: "no-preference" },
+    },
   ],
 });

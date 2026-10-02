@@ -47,7 +47,10 @@ const meta = {
           <section id="contact" className="mt-24">
             <h2 className="text-display-md">Start a conversation.</h2>
             <p className="mt-4 text-body">The caller owns this content and its destinations.</p>
-            <a href="#main-content" className="mt-6 inline-block text-highlight">
+            <a
+              href="#main-content"
+              className="mt-6 inline-block text-highlight transition-colors hover:text-fg"
+            >
               Back to content
             </a>
           </section>
