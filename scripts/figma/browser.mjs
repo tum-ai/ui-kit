@@ -269,16 +269,31 @@ export function extractRenderedDom({ storyId, tokenNames = [], pseudoBoxes = {} 
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     // Root opacity is represented by the outer scene node exactly once.
     clone.setAttribute("opacity", "1");
-    const rotation = getComputedStyle(element).rotate;
-    if (rotation === "180deg") {
+    // An icon turned with CSS `rotate` (a flipped chevron, an arrow that turns on
+    // hover or focus) is drawn turned inside its own viewBox, around its centre.
+    const angle = /^(-?[\d.]+)deg$/.exec(getComputedStyle(element).rotate)?.[1];
+    if (angle && Number(angle) % 360 !== 0) {
       const viewBox = element.viewBox.baseVal;
       const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
       group.setAttribute(
         "transform",
-        `rotate(180 ${viewBox.x + viewBox.width / 2} ${viewBox.y + viewBox.height / 2})`,
+        `rotate(${angle} ${viewBox.x + viewBox.width / 2} ${viewBox.y + viewBox.height / 2})`,
       );
       while (clone.firstChild) group.append(clone.firstChild);
       clone.append(group);
+      // The node takes the turned element's bounding box, which grows with the
+      // angle; widen the viewBox by as much so the icon keeps its size.
+      const box = element.getBoundingClientRect();
+      const width = parseFloat(getComputedStyle(element).width) || box.width;
+      const height = parseFloat(getComputedStyle(element).height) || box.height;
+      const scaleX = box.width / width;
+      const scaleY = box.height / height;
+      const viewWidth = viewBox.width * scaleX;
+      const viewHeight = viewBox.height * scaleY;
+      clone.setAttribute(
+        "viewBox",
+        `${viewBox.x + (viewBox.width - viewWidth) / 2} ${viewBox.y + (viewBox.height - viewHeight) / 2} ${viewWidth} ${viewHeight}`,
+      );
     }
     return new XMLSerializer().serializeToString(clone);
   }
