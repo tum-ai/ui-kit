@@ -106,7 +106,7 @@ Open <http://localhost:6006>:
 - **Components** and **Patterns** contain live controls, props, examples and accessibility results.
 - **Contribution** documents the maintenance workflow.
 
-The explorer needs no environment variables, CMS access or accounts. `bun install` also sets up the repository's commit-message and staged-file hooks.
+The explorer needs no environment variables, CMS access or accounts. `bun install` also sets up the repository's commit-message, staged-file and pre-push hooks.
 
 For a static build of the explorer:
 
@@ -140,9 +140,9 @@ bun run verify
 
 This checks:
 
-- formatting, types and coverage
-- the package and explorer builds, and export coverage
-- browser stories, accessibility and visual regressions
+- lint, formatting, types, unused code, the API reference and coverage
+- the package and explorer builds, package lint (publint, attw), size budgets and export coverage
+- browser stories, accessibility, motion audits and visual regressions
 - the packed Next consumer
 
 Visual baselines target macOS; CI runs that lane on a matching runner. See [testing](testing.md) before you update snapshots. Passing automation does not replace the [manual accessibility checks](testing.md#manual-accessibility-checks).

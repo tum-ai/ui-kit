@@ -24,7 +24,7 @@ export function SkipLink({
     <a
       href={`#${targetId}`}
       className={cn(
-        "top-3 left-3 bg-white px-5 py-3 font-semibold focus-visible:translate-y-0 absolute z-100 -translate-y-[200%] rounded-full text-small text-violet-950 shadow-lift transition-[translate,background-color] duration-surface hover:bg-violet-50 motion-reduce:transition-none",
+        "top-3 left-3 bg-white px-5 py-3 font-semibold focus-visible:translate-y-0 absolute z-100 -translate-y-[200%] rounded-full text-small text-violet-950 shadow-lift transition-[translate,background-color] duration-hover hover:bg-violet-50 motion-reduce:transition-none",
         className,
       )}
       {...props}

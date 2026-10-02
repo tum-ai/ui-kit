@@ -83,30 +83,57 @@ function luminance([r, g, b]: Rgb): number {
   return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
 }
 
+function ratio(a: Rgb, b: Rgb): number {
+  const [la, lb] = [luminance(a), luminance(b)];
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
 function contrast(tone: Tone, foreground: string, background: string): number {
-  const a = luminance(parseColor(resolve(tone, foreground)));
-  const b = luminance(parseColor(resolve(tone, background)));
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  return ratio(parseColor(resolve(tone, foreground)), parseColor(resolve(tone, background)));
+}
+
+/** `color` at `alpha` over `under`, mixed in sRGB as browsers paint it (`bg-fg/92`). */
+function over(tone: Tone, color: string, alpha: number, under: string): Rgb {
+  const top = parseColor(resolve(tone, color));
+  const bottom = parseColor(resolve(tone, under));
+  return top.map((channel, index) => channel * alpha + (bottom[index] ?? 0) * (1 - alpha)) as Rgb;
 }
 
 /** Text: 4.5:1 (WCAG 1.4.3). Non-text indicators and focus rings: 3:1 (1.4.11). */
 const TEXT = 4.5;
 const NON_TEXT = 3;
 
-const cases = TONES.flatMap((tone) => {
-  // The violet band is for large type only; its subtle text reaches 3:1, not 4.5:1.
-  const subtle = tone === "violet" ? NON_TEXT : TEXT;
-  return [
-    [tone, "--tone-fg", "--tone-canvas", TEXT],
-    [tone, "--tone-fg", "--tone-raised", TEXT],
-    [tone, "--tone-fg-muted", "--tone-canvas", TEXT],
-    [tone, "--tone-fg-muted", "--tone-raised", TEXT],
-    [tone, "--tone-fg-subtle", "--tone-canvas", subtle],
-    [tone, "--tone-fg-subtle", "--tone-raised", subtle],
-    [tone, "--tone-accent", "--tone-canvas", TEXT],
-    [tone, "--tone-focus", "--tone-canvas", NON_TEXT],
-  ] as const;
-});
+const cases = TONES.flatMap(
+  (tone) =>
+    [
+      [tone, "--tone-fg", "--tone-canvas", TEXT],
+      [tone, "--tone-fg", "--tone-raised", TEXT],
+      [tone, "--tone-fg-muted", "--tone-canvas", TEXT],
+      [tone, "--tone-fg-muted", "--tone-raised", TEXT],
+      [tone, "--tone-fg-subtle", "--tone-canvas", TEXT],
+      [tone, "--tone-fg-subtle", "--tone-raised", TEXT],
+      [tone, "--tone-accent", "--tone-canvas", TEXT],
+      [tone, "--tone-accent", "--tone-raised", TEXT],
+      [tone, "--tone-focus", "--tone-canvas", NON_TEXT],
+      [tone, "--tone-focus", "--tone-raised", NON_TEXT],
+      [tone, "--tone-focus", "--tone-sunken", NON_TEXT],
+    ] as const,
+);
+
+/**
+ * Translucent state fills, as components use them. Each entry is a text
+ * token on a fill token at an alpha, painted over a surface.
+ */
+const states = TONES.flatMap((tone) =>
+  (["--tone-canvas", "--tone-raised"] as const).flatMap(
+    (surface) =>
+      [
+        // ChipGroup: a selected chip at rest and hovered (`bg-fg`, `hover:bg-fg/92`).
+        [tone, "selected chip", "--tone-canvas", "--tone-fg", 1, surface],
+        [tone, "hovered selected chip", "--tone-canvas", "--tone-fg", 0.92, surface],
+      ] as const,
+  ),
+);
 
 describe("tone contrast", () => {
   test("reads every tone from the stylesheet", () => {
@@ -116,6 +143,14 @@ describe("tone contrast", () => {
   test.each(cases)("%s: %s on %s meets %s:1", (tone, foreground, background, minimum) => {
     expect(contrast(tone, foreground, background)).toBeGreaterThanOrEqual(minimum);
   });
+
+  test.each(states)(
+    "%s: %s text on its fill over %s",
+    (tone, _state, text, fill, alpha, surface) => {
+      const background = over(tone, fill, alpha, surface);
+      expect(ratio(parseColor(resolve(tone, text)), background)).toBeGreaterThanOrEqual(TEXT);
+    },
+  );
 });
 
 describe("color parsing", () => {

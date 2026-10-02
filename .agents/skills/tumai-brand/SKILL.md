@@ -41,4 +41,5 @@ brand.
 - Text on every band meets AA.
 - There is one primary action per view where possible.
 - Headlines use the display scale with tight tracking, and body copy is short.
-- Motion uses transform and opacity, `motion-safe:` and `ease-brand`.
+- Motion moves things with transform and opacity and uses the duration tokens, `motion-safe:` and
+  `ease-brand`. Every interactive element answers hover, focus and press.

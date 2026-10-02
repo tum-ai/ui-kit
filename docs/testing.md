@@ -7,7 +7,7 @@
 | `bun run lint` / `bun run format:check`  | Static semantics, boundaries and formatting                                 |
 | `bun run typecheck`                      | Public implementation, tests and stories                                    |
 | `bun run check:unused`                   | Unused files, exports and dependencies (knip)                               |
-| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the committed file     |
+| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the version in Git     |
 | `bun run check:package` / `check:size`   | publint, attw type resolution and bundle size budgets (after `build`)       |
 | `bun run test` / `bun run test:coverage` | Vitest node/jsdom, with 80% component and 90% helper line floors            |
 | `bun run test:stories`                   | Every story in Chromium, plays and strict axe                               |
@@ -29,7 +29,7 @@ Violet bands support a restricted palette: do not demonstrate known-invalid comb
 
 ### Motion and interaction audits
 
-`e2e/motion.spec.ts` walks every story in the built explorer. With reduced motion (the `chromium` project) it hovers and tabs through each story and fails if any animation or transition moves, resizes or repositions something; colour fades may run. With motion on (the `motion` project) it fails if a visible link or button looks the same hovered as at rest, or if a `pressable` control does not shrink while pressed. Mark an element (or a wrapper) `data-static-hover` only when it brings no styling by design, as the unstyled `Anchor` does.
+`e2e/motion.spec.ts` walks every story in the built explorer, up to 16 controls per story. With reduced motion (the `chromium` project) it hovers and tabs through each story, opens and closes up to 6 disclosures, dialogs and menus, and fails if any animation or transition moves, resizes, repositions or clips something; colour and opacity fades may run. Shell and pattern stories run again at 390px, where the mobile header appears. With motion on (the `motion` project) it fails if a visible link or button looks the same hovered as at rest, not counting movement (which reduced motion removes), or if a `pressable` control does not shrink while pressed. It doesn't sample framer-motion's frame-by-frame updates, every interaction or every width, so the manual reduced-motion check still applies. Mark an element (or a wrapper) `data-static-hover` only when it brings no styling by design, as the unstyled `Anchor` does.
 
 `test/contrast.test.ts` computes each tone's token contrast from `src/styles/tailwind.css`, so a token change that breaks AA fails without a browser.
 
@@ -42,8 +42,8 @@ Automated checks do not establish WCAG conformance. Axe cannot resolve some grad
 | Keyboard                          | Logical order, visible focus, overlays trap focus and return it to the trigger  |
 | Screen reader (VoiceOver or NVDA) | Names, roles, dialog announcements, external-link hints                         |
 | 200% zoom and 400% reflow         | No clipped content or horizontal scrolling at 320 CSS pixels                    |
-| Forced colors                     | Borders and icons remain visible (focus rings are automated)                    |
-| Reduced motion                    | Counters and reveals read well when static (movement itself is automated)       |
+| Forced colors                     | Focus rings, borders, icons and selected states remain visible                  |
+| Reduced motion                    | Nothing moves in flows the audit doesn't reach; counters and reveals read well  |
 | Real iPhone Safari                | The [iPhone checklist](../.agents/skills/ui-verify/references/iphone-safari.md) |
 | Gradient and image backgrounds    | Text contrast in every rendered state                                           |
 

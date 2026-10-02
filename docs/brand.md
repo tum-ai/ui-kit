@@ -115,7 +115,7 @@ Manrope is the only typeface. The brand guidelines set H1 at 120pt/1.0, H2 at 80
 
 ## Motion
 
-Motion is small, crisp and never bouncy. Use the house easing `ease-brand` and the duration tokens, from `duration-press` (150ms) to `duration-entrance` (1s); nothing runs longer than 1.2s except ambient loops. Animate only transform and opacity. Typical moves are a 1.04 image zoom, a 4px card lift and an arrow nudge. Everything respects `prefers-reduced-motion`. Full rules are in the [design system](design-system.md#motion-rules).
+Motion is small, crisp and never bouncy. Use the house easing `ease-brand` and the duration tokens, from `duration-press` (150ms) to `duration-entrance` (1s); nothing runs longer than 1.2s except ambient loops. Move things only with transform and opacity; colours may fade. Typical moves are a 1.04 image zoom, a 4px card lift and an arrow nudge. Everything respects `prefers-reduced-motion`. Full rules are in the [design system](design-system.md#motion-rules).
 
 ## Writing
 
@@ -131,4 +131,4 @@ Motion is small, crisp and never bouncy. Use the house easing `ease-brand` and t
 - The primary action uses the kit's primary button.
 - Headlines use the display scale with tight tracking.
 - Logos are the supplied files, without invented marks or color variants.
-- Motion uses transform and opacity, the duration tokens, `motion-safe:` and `ease-brand`. Every interactive element answers hover, focus and press.
+- Motion moves things with transform and opacity and uses the duration tokens, `motion-safe:` and `ease-brand`. Every interactive element answers hover, focus and press.

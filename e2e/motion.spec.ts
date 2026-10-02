@@ -1,12 +1,17 @@
 /**
  * Motion and micro-interaction gates for every story in the built explorer.
  *
- * - Reduced motion (the `chromium` project, which emulates `reduce`): after
- *   hovering and tabbing through a story, no animation or transition may be
- *   moving anything (transform, size or position). Colour fades may run.
+ * - Reduced motion (the `chromium` project, which emulates `reduce`): while
+ *   a story's first controls are hovered, tabbed to and (for disclosures,
+ *   dialogs and menus) opened and closed, no animation or transition may move
+ *   anything (transform, size, position, clip or background geometry). Colour
+ *   and opacity fades may run. Shell and pattern stories run again at phone
+ *   width, where the mobile header controls appear.
  * - Interaction states (the `motion` project, no preference): every visible
- *   link and button looks different on hover, and `pressable` elements shrink
- *   while pressed. The micro-interaction contract in docs/design-system.md.
+ *   link and button looks different on hover without counting movement, so
+ *   the hover still reads under reduced motion, and `pressable` elements
+ *   shrink while pressed. The micro-interaction contract in
+ *   docs/design-system.md.
  *
  * A story opts an element out of the hover check with `data-static-hover`
  * (for example an unstyled `Anchor` that brings no styling of its own).
@@ -28,6 +33,10 @@ const stories = Object.values(
 /** At most this many controls per story are hovered and tabbed through. */
 const CONTROLS_PER_STORY = 16;
 const CONTROLS = "a[href], button, [role='button'], [role='tab'], summary";
+/** Controls that open something: their open and close are audited too. */
+const OPENERS = "button[aria-expanded], button[aria-haspopup]";
+/** Stories whose layout changes at phone width (the mobile header). */
+const PHONE_STORIES = /^(shell|patterns)-/;
 
 async function story(page: Page, id: string) {
   await page.goto(`/iframe.html?id=${id}&viewMode=story`);
@@ -85,7 +94,7 @@ async function visibleControls(page: Page): Promise<Locator[]> {
 async function movingAnimations(page: Page): Promise<string[]> {
   return page.evaluate(() => {
     const MOVING =
-      /^(transform|translate|scale|rotate|width|height|inset|top|right|bottom|left|margin.*|padding.*)$/;
+      /^(transform|translate|scale|rotate|width|height|inset.*|top|right|bottom|left|margin.*|padding.*|background-position.*|background-size|clip-path|stroke-dashoffset|offset.*)$/;
     const describe = (el: Element | null) =>
       el
         ? `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ""}.${[...el.classList].slice(0, 4).join(".")}`
@@ -109,32 +118,78 @@ async function movingAnimations(page: Page): Promise<string[]> {
   });
 }
 
+/** Opens and closes each opener, sampling movement while it opens and closes. */
+async function exerciseOpeners(page: Page, moving: Set<string>) {
+  // Close what a story opens by default (a dialog shown open), so its trigger is reachable.
+  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape");
+  await settleFrame(page);
+  const openers = page.locator(OPENERS).filter({ visible: true });
+  const count = Math.min(await openers.count(), 6);
+  for (let index = 0; index < count; index++) {
+    const opener = openers.nth(index);
+    if (
+      !(await opener.isVisible()) ||
+      (await opener.isDisabled()) ||
+      // Still open, or behind a modal: the story controls it.
+      (await opener.evaluate((el) => el.closest("[inert]") !== null))
+    ) {
+      continue;
+    }
+    const label = await opener.evaluate((el) =>
+      (el.getAttribute("aria-label") ?? el.textContent).trim().slice(0, 30),
+    );
+    await opener.click();
+    await settleFrame(page);
+    for (const item of await movingAnimations(page)) moving.add(`open "${label}" → ${item}`);
+    await page.keyboard.press("Escape");
+    await settleFrame(page);
+    // A disclosure ignores Escape: close it the way it opened.
+    if ((await opener.getAttribute("aria-expanded")) === "true" && (await opener.isVisible())) {
+      await opener.click();
+      await settleFrame(page);
+    }
+    for (const item of await movingAnimations(page)) moving.add(`close "${label}" → ${item}`);
+  }
+}
+
 test.describe("reduced motion", () => {
   for (const entry of stories) {
-    test(`${entry.id}: nothing moves under reduced motion`, async ({ page }) => {
-      test.skip(
-        test.info().project.name !== "chromium",
-        "Runs once, in Chromium with reduced motion.",
-      );
-      await story(page, entry.id);
-      const moving = new Set(await movingAnimations(page));
-      for (const control of await visibleControls(page)) {
-        await hover(control);
-        await settleFrame(page);
-        for (const item of await movingAnimations(page)) moving.add(`hover → ${item}`);
-      }
-      await page.mouse.move(0, 0);
-      for (let step = 0; step < CONTROLS_PER_STORY; step++) {
-        await page.keyboard.press("Tab");
-        await settleFrame(page);
-        for (const item of await movingAnimations(page)) moving.add(`focus → ${item}`);
-      }
-      expect([...moving]).toEqual([]);
-    });
+    const widths = PHONE_STORIES.test(entry.id) ? [1280, 390] : [1280];
+    for (const width of widths) {
+      test(`${entry.id} at ${width}px: nothing moves under reduced motion`, async ({ page }) => {
+        test.skip(
+          test.info().project.name !== "chromium",
+          "Runs once, in Chromium with reduced motion.",
+        );
+        await page.setViewportSize({ width, height: 900 });
+        await story(page, entry.id);
+        const moving = new Set(await movingAnimations(page));
+        if (width > 390) {
+          for (const control of await visibleControls(page)) {
+            await hover(control);
+            await settleFrame(page);
+            for (const item of await movingAnimations(page)) moving.add(`hover → ${item}`);
+          }
+        }
+        await page.mouse.move(0, 0);
+        for (let step = 0; step < CONTROLS_PER_STORY; step++) {
+          await page.keyboard.press("Tab");
+          await settleFrame(page);
+          for (const item of await movingAnimations(page)) moving.add(`focus → ${item}`);
+        }
+        await exerciseOpeners(page, moving);
+        expect([...moving]).toEqual([]);
+      });
+    }
   }
 });
 
-/** The computed styles that make a hover state visible. */
+/**
+ * The computed styles that make a hover state visible. Movement (transform,
+ * translate, scale, rotate) is left out on purpose: it disappears under
+ * reduced motion, so a hover must also show as colour, tint or underline.
+ */
 async function appearance(control: Locator, hovered: boolean): Promise<string | null> {
   return control.evaluate((el, hovered) => {
     // Null when the pointer state is not the one asked for (a late scroll moved it).
@@ -152,10 +207,6 @@ async function appearance(control: Locator, hovered: boolean): Promise<string | 
       "text-decoration-color",
       "text-decoration-thickness",
       "opacity",
-      "transform",
-      "translate",
-      "scale",
-      "rotate",
       "filter",
     ];
     // A nav can answer for its links (the header pill glides along the whole nav).
@@ -189,12 +240,13 @@ async function snapshot(page: Page, control: Locator, hovered: boolean): Promise
 test.describe("interaction states", () => {
   test.beforeEach(async ({ page }) => {
     if (test.info().project.name !== "motion") return;
-    // Hover states are compared at their end values; skip the transitions.
+    // Hover states are compared at their end values: skip the transitions, and
+    // stop keyframe animations so an entrance can't pass for a hover state.
     await page.addInitScript(() => {
       document.addEventListener("DOMContentLoaded", () => {
         const style = document.createElement("style");
         style.textContent =
-          "*, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; }";
+          "*, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation: none !important; }";
         document.head.append(style);
       });
     });

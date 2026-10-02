@@ -156,8 +156,8 @@
    * --- Motion ---
    * House easing everywhere (`ease-brand`; `ease-snappy` for full-screen
    * slides). Durations run from 150ms (press) to 1.2s (entrances); only
-   * ambient loops (aurora, drift) are longer, and those only run without
-   * reduced motion.
+   * ambient loops (aurora, drift, the live pulse ring) are longer, and those
+   * only run without reduced motion.
    */
   --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-snappy: cubic-bezier(0.32, 0.72, 0, 1);
@@ -166,11 +166,13 @@
   /*
    * The duration scale (`duration-press` … `duration-entrance`). Components
    * use these names, never raw milliseconds (`tumai/motion-tokens` lints it).
-   * press: an element answering a press or toggle.
-   * hover: colour, underline and arrow responses to hover and focus.
-   * surface: panels, overlays, the card lift, the header's frosting.
+   * press: an element answering a press (`pressable` uses it).
+   * hover: colour, tint and opacity responses to hover and focus, and exits.
+   * surface: anything that travels or draws (arrow nudges, underline draws,
+   *   icon turns, the card lift), panels, overlays, the header's frosting.
    * media: image crossfades and staggered menu items.
-   * entrance: content arriving on load or scroll (the 1.2s cap stays).
+   * entrance: transition-based arrivals. The keyframe entrances (`rise`,
+   *   `fade`, `draw`, Reveal) run 0.8–1.1s; the 1.2s cap stays.
    */
   --transition-duration-press: 150ms;
   --transition-duration-hover: 300ms;
@@ -388,7 +390,7 @@
     color-scheme: dark;
   }
 
-  /* Brand violet band: fg and fg-muted reach 4.9:1; fg-subtle (4.2:1) is for large type only. */
+  /* Brand violet band: every text token reaches AA on canvas and raised (test/contrast.test.ts); still keep the band to large type and use it sparingly. */
   [data-tone="violet"] {
     --tone-canvas: var(--tone-violet);
     --tone-focus: var(--color-ink-950);
@@ -646,28 +648,30 @@
 
 /*
  * Press feedback for anything clickable: a 3% shrink while pressed, so a
- * tap or click lands physically. List `scale` (or use `transition-transform`)
- * in the element's own transition. Nothing shrinks when disabled or under
- * reduced motion.
+ * tap or click lands physically. The press takes `duration-press`; the
+ * release eases back at the element's own duration. List `scale` (or use
+ * `transition-transform`) in the element's own transition; lint checks it.
+ * Nothing shrinks when disabled or under reduced motion.
  */
 @utility pressable {
   @media (prefers-reduced-motion: no-preference) {
     &:active:not(:disabled, [data-disabled], [aria-disabled="true"]) {
       scale: 0.97;
+      transition-duration: var(--transition-duration-press);
     }
   }
 }
 
 /*
- * The 4px card lift, on hover and on keyboard focus (of the card or a link
- * inside it) alike. List `translate`
- * in the element's own transition. No lift under reduced motion, and no
- * hover lift on touch-only devices.
+ * The 4px card lift, on hover and on keyboard focus of the card or of a link
+ * or button inside it (not of a text field, which is focus-visible on every
+ * click). List `translate` in the element's own transition; lint checks it.
+ * No lift under reduced motion, and no hover lift on touch-only devices.
  */
 @utility hover-lift {
   @media (prefers-reduced-motion: no-preference) {
     &:focus-visible,
-    &:has(:focus-visible) {
+    &:has(:is(a, button):focus-visible) {
       translate: 0 -4px;
     }
 

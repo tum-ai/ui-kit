@@ -156,7 +156,7 @@ export function Header({
             <Anchor
               href={homeHref}
               aria-label={homeLabel}
-              className="flex shrink-0 items-center rounded-full transition-opacity duration-hover hover:opacity-80"
+              className="-mx-2 px-2 -my-1.5 py-1.5 hover:bg-white/[0.09] flex shrink-0 items-center rounded-full transition-colors duration-hover"
             >
               <Image {...logo} preload className="h-6 md:h-7 w-auto" />
             </Anchor>
@@ -218,7 +218,7 @@ export function Header({
               >
                 <span aria-hidden className="w-4 gap-1.25 flex flex-col">
                   <span className="motion-safe:group-hover/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-hover ease-brand" />
-                  <span className="h-[1.5px] w-2/3 rounded-full bg-current transition-[width] duration-hover ease-brand group-hover/menu:w-full" />
+                  <span className="h-[1.5px] w-full origin-left scale-x-[0.667] rounded-full bg-current transition-transform duration-hover ease-brand group-hover/menu:scale-x-100 motion-reduce:transition-none" />
                 </span>
               </DialogTrigger>
             </div>
