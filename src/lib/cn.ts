@@ -3,7 +3,7 @@ import { extendTailwindMerge } from "tailwind-merge";
 
 /**
  * tailwind-merge only knows Tailwind's stock scales. Every custom token and
- * utility from src/styles/index.css that competes with a stock class is
+ * utility from src/styles/tailwind.css that competes with a stock class is
  * registered here; without it `text-display-xl` would read as a text color
  * and be dropped next to `text-fg`. Keep this list in sync with the theme
  * (`src/lib/cn.test.ts` checks the important pairs).

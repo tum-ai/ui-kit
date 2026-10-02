@@ -1,15 +1,15 @@
-# ds component template
+# Component template
 
 A sketch of the conventions, not a component to copy verbatim. The header of
-`src/components/index.ts` is authoritative; align with it and with the closest existing
+`src/index.ts` is authoritative; align with it and with the closest existing
 component.
 
 ```tsx
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ComponentProps, ElementType } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "../lib/cn";
 
-/** Visual variants of {@link Callout}. Exported so other ds components can compose it. */
+/** Visual variants of {@link Callout}. Exported so other components can compose it. */
 export const calloutStyles = cva("rounded-3xl p-6 relative border border-hairline text-fg", {
   variants: {
     /** Surface treatment. */

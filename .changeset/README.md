@@ -1,3 +1,3 @@
 # Changesets
 
-Run `bun run changeset` for public API, visual, accessibility or token changes. A maintainer runs `bun run version:packages`, reviews the version/changelog, and invokes the protected npm workflow after merging. No automatic publishing on push.
+Run `bun run changeset` for any public API, visual, accessibility or token change, and commit the generated file with your change. Maintainers collect Changesets into a release with `bun run version:packages` and publish through the protected npm workflow; see [docs/releasing.md](../docs/releasing.md). Nothing is published automatically on push or merge.

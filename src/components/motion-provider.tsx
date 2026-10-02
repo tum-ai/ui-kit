@@ -5,12 +5,12 @@ import type { ReactNode } from "react";
 
 /** Props for {@link MotionProvider}. */
 export type MotionProviderProps = {
-  /** The app (the site layout wraps everything in it). */
+  /** The application content; render the provider once in the root layout. */
   children: ReactNode;
 };
 
 /**
- * Site-wide motion settings; the (site) layout renders it once.
+ * Application-wide motion settings; render it once in the root layout.
  * `LazyMotion strict` keeps framer-motion's bundle small: use `m.*`
  * components (not `motion.*`) inside the app. Transform and layout animations
  * respect the visitor's reduced-motion preference.

@@ -1,4 +1,4 @@
-/* Opt-in website shell behavior, including Safari toolbar tinting. */
+/* Opt-in page shell behavior, including Safari toolbar tinting. */
 @layer base {
   :root {
     --header-height: 4.25rem;
