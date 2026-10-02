@@ -156,7 +156,7 @@ export function Header({
             <Anchor
               href={homeHref}
               aria-label={homeLabel}
-              className="flex shrink-0 items-center rounded-full transition-opacity duration-hover hover:opacity-80"
+              className="-mx-2 px-2 -my-1.5 py-1.5 hover:bg-white/[0.09] flex shrink-0 items-center rounded-full transition-colors duration-hover"
             >
               <Image {...logo} preload className="h-6 md:h-7 w-auto" />
             </Anchor>

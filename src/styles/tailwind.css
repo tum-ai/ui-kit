@@ -390,7 +390,7 @@
     color-scheme: dark;
   }
 
-  /* Brand violet band: fg and fg-muted reach 4.9:1; fg-subtle (4.2:1) is for large type only. */
+  /* Brand violet band: every text token reaches AA on canvas and raised (test/contrast.test.ts); still keep the band to large type and use it sparingly. */
   [data-tone="violet"] {
     --tone-canvas: var(--tone-violet);
     --tone-focus: var(--color-ink-950);
