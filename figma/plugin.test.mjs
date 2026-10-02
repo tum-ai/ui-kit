@@ -45,7 +45,12 @@ function setup() {
   const fetch = async (url) => ({
     ok: true,
     status: 200,
-    json: async () => (url.endsWith("latest") ? metadata : { sha: scene.release.commit }),
+    json: async () =>
+      url.endsWith("latest")
+        ? metadata
+        : url.includes("/releases?")
+          ? []
+          : { sha: scene.release.commit },
     text: async () => (url.endsWith("sha256") ? checksum : raw),
   });
   const messages = [];
@@ -203,4 +208,35 @@ test("recovery import is exclusive with polling and other imports", async () => 
   release();
   await importing;
   assert.equal((await controller.syncOnce()).ok, true);
+});
+
+test("first launch waits without writes when the repository has no releases, then catches up", async () => {
+  const fixture = setup();
+  const original = fixture.dependencies.fetch;
+  let published = false;
+  fixture.dependencies.fetch = async (url) =>
+    !published && url.endsWith("/releases/latest") ? { ok: false, status: 404 } : original(url);
+  const controller = createPluginController(fixture.figma, fixture.config, fixture.dependencies);
+  assert.deepEqual(await controller.syncOnce(), { waiting: "first-release" });
+  assert.equal(fixture.messages.at(-1).phase, "waiting");
+  assert.equal(fixture.figma.writes, 0);
+  assert.equal(fixture.data.size, 0);
+  published = true;
+  assert.equal((await controller.syncOnce()).ok, true);
+});
+
+test("missing repository and failed release requests remain errors, not first-release waits", async () => {
+  for (const status of [404, 403, 500]) {
+    const fixture = setup();
+    fixture.dependencies.fetch = async () => ({ ok: false, status });
+    const result = await createPluginController(
+      fixture.figma,
+      fixture.config,
+      fixture.dependencies,
+    ).syncOnce();
+    assert.ok(result.error.includes(`failed (${status})`));
+    assert.equal(fixture.messages.at(-1).phase, "error");
+    assert.equal(fixture.figma.writes, 0);
+    assert.equal(fixture.data.size, 0);
+  }
 });

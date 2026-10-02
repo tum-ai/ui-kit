@@ -5,5 +5,6 @@
   "repository": "tum-ai/ui-kit",
   "sourceBranch": "main",
   "generatedNamespace": "TUM.ai",
-  "libraryPublication": "manual"
+  "libraryPublication": "manual",
+  "pluginId": "1687921594818732934"
 }

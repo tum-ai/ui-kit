@@ -34,9 +34,11 @@ Each scene records the UI-kit Git commit, package version, extraction provenance
 
 ## Install the updater once
 
-The local development plugin uses Figma's supported Plugin API and requires the desktop editor. Register a new development plugin in Figma and retain its assigned ID. Build using `FIGMA_PLUGIN_ID=<assigned ID> bun run figma:plugin`, then import the generated manifest into the desktop editor. Keep the same registration ID for every maintainer; it identifies the document-scoped generation ledger. The exact generated paths and controls are described in `figma/plugin/README.md`.
+The updater is registered as plugin `1687921594818732934`. Its public ID is recorded in `design/figma.config.json` and the GitHub repository variable `FIGMA_PLUGIN_ID`, so release builds use the same document ledger. Maintainers should reuse this registration instead of creating another ID.
 
-Set the same non-secret ID as GitHub repository variable `FIGMA_PLUGIN_ID` to include the ready-to-import updater in release artifacts. Never replace it with a guessed ID. No npm or Figma credentials belong in the plugin bundle.
+Run `bun run figma:plugin`, then import `artifacts/figma-plugin/manifest.json` in Figma Desktop under **Plugins → Development → Import plugin from manifest**. Open the configured library file and run **TUM.ai UI kit release sync**. If you created the registration template on this computer, remove its starter entry from the development list before importing the compiled manifest: Figma can otherwise resolve the same ID to the starter folder.
+
+Registration, local installation, file identity validation and GitHub access were verified in Figma Desktop on 2026-10-02. No stable GitHub release exists yet, so the first complete native import and release-to-library update remain unverified. The plugin waits without changing the canvas until the first release is available. No npm or Figma credentials belong in its bundle. See `figma/plugin/README.md` for recovery controls.
 
 For the initial file created through MCP, the updater must receive the verified seed ledger containing existing generated identities. Without that state, generation stops on conflicting names instead of duplicating components. Keep the checkpoint export with release evidence; never infer ownership merely from a component name.
 

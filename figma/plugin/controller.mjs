@@ -102,10 +102,11 @@ export function createPluginController(figma, config, dependencies = {}) {
     checkLease();
     store.write("lease", { owner, expiresAt: now() + 120000 });
   };
-  const jsonRequest = async (url) => {
+  const jsonRequest = async (url, { allowMissing = false } = {}) => {
     const response = await deadline(
       request(url, { headers: { Accept: "application/vnd.github+json" } }),
     );
+    if (allowMissing && response.status === 404) return null;
     if (!response.ok) throw new Error(`Release request failed (${response.status}): ${url}`);
     return plainJson(await deadline(response.json()));
   };
@@ -131,7 +132,16 @@ export function createPluginController(figma, config, dependencies = {}) {
   const getRelease = async () => {
     const metadata = await jsonRequest(
       `https://api.github.com/repos/${config.repository}/releases/latest`,
+      { allowMissing: true },
     );
+    if (metadata === null) {
+      // A missing repository or lost access must still surface as an error.
+      const releases = await jsonRequest(
+        `https://api.github.com/repos/${config.repository}/releases?per_page=1`,
+      );
+      if (!Array.isArray(releases)) throw new Error("Invalid repository release response");
+      return null;
+    }
     if (
       metadata.draft ||
       metadata.prerelease ||
@@ -154,6 +164,14 @@ export function createPluginController(figma, config, dependencies = {}) {
         );
       report({ phase: "checking", message: "Checking the latest package release…" });
       const metadata = await getRelease();
+      if (metadata === null) {
+        report({
+          phase: "waiting",
+          message:
+            "No stable GitHub release has been published yet. This plugin will check again automatically while open.",
+        });
+        return { waiting: "first-release" };
+      }
 
       if (
         saved.release &&
