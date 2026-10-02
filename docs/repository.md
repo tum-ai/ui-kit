@@ -18,9 +18,9 @@ Open a pull request using the template. Use a [Conventional Commit](https://www.
 
 The [CI workflow](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) runs four jobs and aggregates them into the required `Verify` check:
 
-- **quality**: lint, formatting and types
+- **quality**: lint, formatting, types, unused code (knip) and the API reference matching TSDoc
 - **unit**: unit and component tests with coverage
-- **package**: the packed tarball installed into an isolated Next.js consumer
+- **package**: publint and type-resolution checks, bundle size budgets, and the packed tarball installed into an isolated Next.js consumer
 - **browser**: browser stories with axe, visual regressions and the Figma scene build
 
 Pull requests into `main` need one approving review from a [code owner](../.github/CODEOWNERS), resolved conversations and a passing `Verify` check on an up-to-date branch. New commits dismiss stale approvals. Force pushes and branch deletion are disabled on `main`.

@@ -128,6 +128,9 @@ describe("scroll frosting", () => {
   test("frosts once scrolled and becomes transparent at the top", async () => {
     renderHeader();
     expect(pill()).toHaveClass("bg-transparent");
+    // Let the mount measurement run first, so the scroll below needs the listener.
+    await act(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+    expect(pill()).toHaveClass("bg-transparent");
     window.scrollY = headerFrostAfter + 1;
     fireEvent.scroll(window);
     await waitFor(() => expect(pill()).toHaveClass("backdrop-blur-xl"));
@@ -139,15 +142,24 @@ describe("scroll frosting", () => {
     renderHeader("/projects", { solid: true });
     expect(pill()).toHaveClass("backdrop-blur-xl");
   });
-  test("cancels a pending animation frame on unmount", () => {
-    const request = vi.spyOn(window, "requestAnimationFrame").mockReturnValue(41);
+  test("coalesces scroll and resize into one frame and cancels it on unmount", () => {
+    const frames: FrameRequestCallback[] = [];
+    const request = vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => {
+      frames.push(callback);
+      return 40 + frames.length;
+    });
     const cancel = vi.spyOn(window, "cancelAnimationFrame");
     const { unmount } = renderHeader();
+    // The mount measurement.
+    expect(request).toHaveBeenCalledTimes(1);
+    act(() => {
+      frames[0]?.(0);
+    });
     fireEvent.scroll(window);
     fireEvent.resize(window);
-    expect(request).toHaveBeenCalledTimes(1);
+    expect(request).toHaveBeenCalledTimes(2);
     unmount();
-    expect(cancel).toHaveBeenCalledWith(41);
+    expect(cancel).toHaveBeenCalledWith(42);
   });
 });
 
