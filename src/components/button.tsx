@@ -21,7 +21,7 @@ export const buttonStyles = cva(
     "group/button gap-2 relative isolate inline-flex shrink-0 items-center justify-center overflow-hidden",
     "font-semibold rounded-full tracking-[-0.01em] whitespace-nowrap select-none",
     "transition-[background-color,color,border-color,box-shadow,scale] duration-hover ease-brand",
-    "pressable disabled:pointer-events-none disabled:opacity-45",
+    "disabled:pointer-events-none disabled:opacity-45",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:shrink-0",
   ],
   {
@@ -50,6 +50,11 @@ export const buttonStyles = cva(
       // Text-height links get a finger-sized hit area; the negative margin
       // keeps their layout box unchanged.
       { variant: "link", className: "-my-3 px-0 py-3 h-auto" },
+      // Filled and outlined buttons press; a text link (like TextLink) doesn't.
+      {
+        variant: ["primary", "secondary", "outline", "ghost", "inverse"],
+        className: "pressable",
+      },
     ],
     defaultVariants: { variant: "primary", size: "md" },
   },
