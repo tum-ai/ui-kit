@@ -6,8 +6,16 @@
  * (including cva variants), or a `classNames={{ … }}` object. The strings
  * inside are gathered with their AST nodes, so rules can check one class
  * (`duration-300`) or the list as a whole (a transform gated by
- * `motion-reduce:transition-none` elsewhere in the same list). A `const`
- * identifier passed to a class helper is followed to its string.
+ * `motion-reduce:transition-none` elsewhere in the same list).
+ *
+ * Each class also carries a `group`: `"base"` for classes that always apply
+ * (a `cn` argument, a cva base), or the object property it sits under (a cva
+ * variant value, a `classNames` slot). A rule that looks for a companion
+ * class should only accept one from the same group or from `"base"`, because
+ * two variants or two slots never style the same element together.
+ *
+ * `const` identifiers and `const` object maps (`tones.ink`, `tones[tone]`)
+ * passed to a class helper are followed to their strings.
  */
 
 const CLASS_FUNCTIONS = new Set(["cn", "cva", "clsx", "cx"]);
@@ -37,7 +45,7 @@ export function parseClass(token) {
 }
 
 /**
- * @typedef {{ token: string, variants: string[], utility: string, node: import("estree").Node }} ClassEntry
+ * @typedef {{ token: string, variants: string[], utility: string, node: import("estree").Node, group: string }} ClassEntry
  */
 
 function isClassCall(node) {
@@ -56,12 +64,28 @@ function isClassAttribute(node) {
   );
 }
 
-/** True when `node` sits inside another class list (it is collected there). */
+/**
+ * True when `node` is collected as part of an enclosing class list. A call
+ * to anything else in between (`cn(pick(cn(…)))`) ends the enclosing list,
+ * so the inner one is checked as its own root.
+ */
 function insideClassList(node) {
   for (let parent = node.parent; parent; parent = parent.parent) {
     if (isClassCall(parent) || isClassAttribute(parent)) return true;
+    if (parent.type === "CallExpression") return false;
   }
   return false;
+}
+
+/** The `const` initializer an identifier refers to, if any. */
+function constInit(context, identifier) {
+  const variable = context.sourceCode
+    .getScope(identifier)
+    .references.find((reference) => reference.identifier === identifier)?.resolved;
+  const definition = variable?.defs[0];
+  return definition?.type === "Variable" && definition.parent.kind === "const"
+    ? definition.node.init
+    : null;
 }
 
 /**
@@ -75,58 +99,67 @@ function collect(context, root) {
   /** @type {ClassEntry[]} */
   const entries = [];
   const seen = new Set();
-  const add = (text, node) => {
+  const add = (text, node, group) => {
     for (const token of text.split(/\s+/)) {
       if (!token) continue;
-      entries.push({ token, ...parseClass(token), node });
+      entries.push({ token, ...parseClass(token), node, group });
     }
   };
-  const visit = (node) => {
+  const visit = (node, group) => {
     if (!node || typeof node !== "object" || seen.has(node)) return;
     seen.add(node);
     switch (node.type) {
       case "Literal":
-        if (typeof node.value === "string") add(node.value, node);
+        if (typeof node.value === "string") add(node.value, node, group);
         return;
       case "TemplateLiteral":
-        for (const quasi of node.quasis) add(quasi.value.cooked ?? "", quasi);
-        for (const expression of node.expressions) visit(expression);
+        for (const quasi of node.quasis) add(quasi.value.cooked ?? "", quasi, group);
+        for (const expression of node.expressions) visit(expression, group);
         return;
       case "Property":
-        // Object keys name variants or slots (`primary:`, `frame:`), not classes.
-        visit(node.value);
+        // Keys name variants or slots (`primary:`, `frame:`), not classes; each
+        // value styles its own element or state.
+        visit(node.value, `property:${String(node.range)}`);
         return;
       case "Identifier": {
-        const variable = context.sourceCode
-          .getScope(node)
-          .references.find((reference) => reference.identifier === node)?.resolved;
-        const definition = variable?.defs[0];
-        if (definition?.type === "Variable" && definition.parent.kind === "const") {
-          visit(definition.node.init);
+        const init = constInit(context, node);
+        // A `const x = cn(…)` is already checked as its own class list.
+        if (init && !isClassCall(init)) visit(init, group);
+        return;
+      }
+      case "MemberExpression": {
+        if (node.object.type !== "Identifier") return;
+        const init = constInit(context, node.object);
+        if (init?.type !== "ObjectExpression") return;
+        const key =
+          !node.computed && node.property.type === "Identifier" ? node.property.name : null;
+        for (const property of init.properties) {
+          if (property.type !== "Property") continue;
+          const name =
+            property.key.type === "Identifier" ? property.key.name : String(property.key.value);
+          // The picked value styles this element, so it joins the current group.
+          if (key === null || name === key) visit(property.value, group);
         }
         return;
       }
-      case "MemberExpression":
-        // `styles.base` and friends: skip, the object is linted where it is defined.
-        return;
       case "JSXAttribute":
-        visit(node.value);
+        visit(node.value, group);
         return;
       case "JSXExpressionContainer":
-        visit(node.expression);
+        visit(node.expression, group);
         return;
       case "CallExpression":
-        if (isClassCall(node)) for (const argument of node.arguments) visit(argument);
+        if (isClassCall(node)) for (const argument of node.arguments) visit(argument, group);
         return;
       default:
         for (const [key, value] of Object.entries(node)) {
           if (key === "parent" || key === "loc" || key === "range") continue;
-          if (Array.isArray(value)) value.forEach(visit);
-          else if (value && typeof value.type === "string") visit(value);
+          if (Array.isArray(value)) for (const item of value) visit(item, group);
+          else if (value && typeof value.type === "string") visit(value, group);
         }
     }
   };
-  visit(root);
+  visit(root, "base");
   return entries;
 }
 
@@ -149,5 +182,22 @@ export function forEachClassList(context, check) {
     JSXAttribute(node) {
       if (isClassAttribute(node)) run(node);
     },
+  };
+}
+
+/**
+ * `context.report` that reports each problem once, even when a shared string
+ * (a `const` or an object map) is reached from several class lists.
+ *
+ * @param {import("eslint").Rule.RuleContext} context
+ * @returns {(descriptor: import("eslint").Rule.ReportDescriptor & { node: import("estree").Node }) => void}
+ */
+export function reportOnce(context) {
+  const reported = new Set();
+  return (descriptor) => {
+    const key = `${String(descriptor.node.range)}:${String(descriptor.messageId)}:${JSON.stringify(descriptor.data ?? {})}`;
+    if (reported.has(key)) return;
+    reported.add(key);
+    context.report(descriptor);
   };
 }

@@ -3,19 +3,19 @@
 Import components and their prop types from `@tum.ai/ui-kit`. They use the
 consumer's Next.js Image runtime and the UI kit's semantic tone tokens.
 
-| Export                   | Use and variants                                                                                                                                           |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Photo`                  | Captioned `figure`, six aspect ratios including responsive panorama, rounded or bleed frame, focal position, eager LCP loading.                            |
-| `PersonCard`             | 4:5 portrait, name heading, byline and supporting content. Set `headingAs` to fit the page hierarchy.                                                      |
-| `QuoteCard`, `QuoteMark` | Semantic quotation and attribution, raised, glass, editorial or ruled. Portrait defaults to decorative alt text; organization logos need an alt.           |
-| `LogoTile`, `LogoWall`   | Name fallback for missing or failed artwork, tile, chip, bare or mono; grid or equal-area wrapping strip. Optional wordmark avoids a duplicate image name. |
-| `FallbackImage`          | Next Image props with an optional source and caller-supplied fallback. Failed sources retry when `src` changes.                                            |
-| `IndexList`              | Link rows with decorative thumbnails on small screens and a sticky preview from `lg`; pointer and keyboard focus select the same row.                      |
-| `BrandPanel`             | Decorative ink placeholder with three seeded compositions. Put it in a positioned, clipped image frame.                                                    |
-| `BrandMark`              | Decorative official mark geometry, tonal or gradient, optional drift and dark-band intensity. Use the official asset for a real logo.                      |
-| `Aurora`, `TopBlend`     | Decorative dark-band light and an eased top or bottom edge. Place in a `relative isolate` parent.                                                          |
-| `SpotlightCard`          | Raised, outline, glass or plain surface, padding steps and optional hover lift. Put a real link or button inside for interaction.                          |
-| `EmptyState`             | Live status region with optional decorative icon, guidance and a recovery action.                                                                          |
+| Export                   | Use and variants                                                                                                                                                           |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Photo`                  | Captioned `figure`, six aspect ratios including responsive panorama, rounded or bleed frame, focal position, eager LCP loading.                                            |
+| `PersonCard`             | 4:5 portrait, name heading, byline and supporting content. Set `headingAs` to fit the page hierarchy.                                                                      |
+| `QuoteCard`, `QuoteMark` | Semantic quotation and attribution, raised, glass, editorial or ruled. Portrait defaults to decorative alt text; organization logos need an alt.                           |
+| `LogoTile`, `LogoWall`   | Name fallback for missing or failed artwork, tile, chip, bare or mono; grid or equal-area wrapping strip. Optional wordmark avoids a duplicate image name.                 |
+| `FallbackImage`          | Next Image props with an optional source and caller-supplied fallback. Failed sources retry when `src` changes.                                                            |
+| `IndexList`              | Link rows with decorative thumbnails on small screens and a sticky preview from `lg`; pointer and keyboard focus select the same row.                                      |
+| `BrandPanel`             | Decorative ink placeholder with three seeded compositions. Put it in a positioned, clipped image frame.                                                                    |
+| `BrandMark`              | Decorative official mark geometry, tonal or gradient, optional drift and dark-band intensity. Use the official asset for a real logo.                                      |
+| `Aurora`, `TopBlend`     | Decorative dark-band light and an eased top or bottom edge. Place in a `relative isolate` parent.                                                                          |
+| `SpotlightCard`          | Raised, outline, glass or plain surface, padding steps and an optional lift on hover and keyboard focus (`interactive`). Put a real link or button inside for interaction. |
+| `EmptyState`             | Live status region with optional decorative icon, guidance and a recovery action.                                                                                          |
 
 ## Images and optimization
 

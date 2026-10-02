@@ -28,8 +28,61 @@ tester.run("motion-tokens", rules["motion-tokens"], {
     // A transform at rest is layout, not motion.
     `<b className="-translate-x-1/2 scale-95" />`,
     `<b className="ease-initial" />`,
+    // An explicit reduced-motion opt-out.
+    `<b className="duration-hover motion-reduce:duration-0" />`,
+    // A cva base gate covers every variant.
+    `cva("transition-transform motion-reduce:transition-none", { variants: { a: { true: "hover:scale-105" } } })`,
+    // Recipes with their transition properties listed.
+    `<b className="pressable transition-[background-color,scale]" />`,
+    `<b className="hover-lift transition-[translate,box-shadow]" />`,
+    `<b className="pressable transition-transform" />`,
+    // A size change at rest, or on hover without a size transition, doesn't move anything.
+    `<b className="w-2/3 hover:w-full transition-colors" />`,
+    `<b className="transition-[width] motion-safe:group-hover/x:w-full" />`,
   ],
   invalid: [
+    {
+      code: `<a className="duration-300! transition" />`,
+      output: `<a className="duration-hover! transition" />`,
+      errors: [{ messageId: "duration" }],
+    },
+    { code: `<a className="[transition-duration:250ms]" />`, errors: [{ messageId: "duration" }] },
+    {
+      code: `<b className="transition-[width] group-hover/menu:w-full" />`,
+      errors: [{ messageId: "transform" }],
+    },
+    { code: `<b className="starting:translate-y-4" />`, errors: [{ messageId: "transform" }] },
+    { code: `<b className="[&:hover]:translate-x-1" />`, errors: [{ messageId: "transform" }] },
+    {
+      // A gate in one variant does not cover another variant's transform.
+      code: `cva("transition-transform", { variants: { a: { true: "motion-reduce:transition-none" }, b: { true: "hover:-translate-y-1" } } })`,
+      errors: [{ messageId: "transform" }],
+    },
+    {
+      // Nor does a gate in another classNames slot.
+      code: `<Card classNames={{ root: "motion-reduce:transition-none", item: "transition hover:scale-105" }} />`,
+      errors: [{ messageId: "transform" }],
+    },
+    {
+      // Object maps are followed, and a shared string is reported once.
+      code: `const tones = { a: "transition-all" }; cn(tones.a); cn(tones[x]);`,
+      errors: [{ messageId: "transitionAll" }],
+    },
+    {
+      // A class call nested in another helper is still checked.
+      code: `cn(pick(cn("transition-all")))`,
+      errors: [{ messageId: "transitionAll" }],
+    },
+    {
+      // A const class list used elsewhere is reported once, where it is defined.
+      code: `const c = cn("duration-200"); <b className={c} />`,
+      errors: [{ messageId: "duration" }],
+    },
+    {
+      code: `<b className="pressable transition-colors" />`,
+      errors: [{ messageId: "recipe" }],
+    },
+    { code: `<b className="hover-lift" />`, errors: [{ messageId: "recipe" }] },
     {
       code: `<a className="transition-colors duration-300 hover:text-fg" />`,
       output: `<a className="transition-colors duration-hover hover:text-fg" />`,
@@ -72,6 +125,7 @@ tester.run("no-raw-color", rules["no-raw-color"], {
     { code: `<a className="bg-[#fff]" />`, errors: [{ messageId: "raw" }] },
     { code: `<a className="text-[rgb(0_0_0)]" />`, errors: [{ messageId: "raw" }] },
     { code: `<stop stopColor="#AC78FF" />`, errors: [{ messageId: "attribute" }] },
+    { code: `<a className="text-shadow-gray-500" />`, errors: [{ messageId: "stock" }] },
   ],
 });
 
@@ -99,6 +153,8 @@ tester.run("client-boundary", rules["client-boundary"], {
     `"use client"; export function A() { return <Toggle onValueChange={(v) => v} />; }`,
     // Forwarding a prop to a component does not need the client.
     `export function A({ onPick }) { return <List onPick={onPick} />; }`,
+    `"use client"; import { createContext } from "react"; export const C = createContext(null);`,
+    `"use client"; import { useReducedMotion } from "framer-motion"; export function A() { const r = useReducedMotion(); return <div>{r}</div>; }`,
   ],
   invalid: [
     {
@@ -116,6 +172,18 @@ tester.run("client-boundary", rules["client-boundary"], {
     {
       code: `"use client"; export function A() { return <div />; }`,
       errors: [{ messageId: "unneeded" }],
+    },
+    {
+      code: `function handle() {} export function A() { return <Toggle onPressedChange={handle} />; }`,
+      errors: [{ messageId: "missing" }],
+    },
+    {
+      code: `import { createContext } from "react"; export const C = createContext(null);`,
+      errors: [{ messageId: "missing" }],
+    },
+    {
+      code: `export function A() { return <C.Provider value={1} />; }`,
+      errors: [{ messageId: "missing" }],
     },
   ],
 });
