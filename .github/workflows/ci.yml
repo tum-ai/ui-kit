@@ -71,6 +71,7 @@ jobs:
       - run: bun run render:design
         env:
           DESIGN_STORIES: actions-button--primary,compositions-pagehero--with-media,interactions-dialog--medium,patterns-complete-page--default
+      - run: bun run figma:build
       - run: bun run test:stories
       - run: bun run test:e2e
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -79,6 +80,7 @@ jobs:
           name: browser-reports
           path: |
             artifacts/design
+            artifacts/figma
             playwright-report
             test-results
           retention-days: 14

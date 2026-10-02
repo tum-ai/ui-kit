@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Footer, Header, SkipLink } from "@tum-ai/ui-kit/shell";
+import { Footer, Header, SkipLink } from "@tum.ai/ui-kit/shell";
 const logo = { src: "/logo.svg", width: 112, height: 36, alt: "TUM.ai" };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

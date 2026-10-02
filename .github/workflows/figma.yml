@@ -1,0 +1,59 @@
+name: Generate Figma release library
+on:
+  release:
+    types: [published]
+permissions:
+  contents: read
+concurrency:
+  group: figma-release-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+jobs:
+  generate:
+    if: ${{ !github.event.release.draft && !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify release identity
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          git merge-base --is-ancestor HEAD origin/main
+          node --input-type=module -e 'import fs from "node:fs"; const p=JSON.parse(fs.readFileSync("package.json")); if(p.name!=="@tum.ai/ui-kit" || process.env.RELEASE_TAG!==`v${p.version}`) throw Error("Release tag must match package version");'
+      - uses: ./.github/actions/setup
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test:figma
+      - run: bun run build:storybook
+      - run: bun run manifests
+      - run: bun run figma:build
+      - run: bun run figma:plugin
+        if: ${{ vars.FIGMA_PLUGIN_ID != '' }}
+        env:
+          FIGMA_PLUGIN_ID: ${{ vars.FIGMA_PLUGIN_ID }}
+      - name: Attach immutable scene data and updater
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          gh release upload "$RELEASE_TAG" artifacts/figma/figma-scene.json artifacts/figma/figma-scene.json.sha256 artifacts/figma/figma-inventory.json artifacts/figma/figma-diagnostics.json --repo tum-ai/ui-kit
+      - name: Attach registered updater
+        if: ${{ vars.FIGMA_PLUGIN_ID != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          cd artifacts/figma-plugin
+          zip -r ../figma/figma-plugin.zip code.js manifest.json ui.html
+          gh release upload "$RELEASE_TAG" ../figma/figma-plugin.zip --repo tum-ai/ui-kit
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: ${{ !cancelled() }}
+        with:
+          name: figma-generation-evidence
+          path: artifacts/figma
+          retention-days: 30

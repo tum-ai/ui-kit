@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
   FallbackImage,
-} from "@tum-ai/ui-kit";
+} from "@tum.ai/ui-kit";
 import { useState } from "react";
 export function Controls() {
   const [count, setCount] = useState(0);

@@ -2,7 +2,7 @@
 
 These components preserve the website's source API and styling at the revision in
 `extraction.json`. Application content, dates, counts, links and state stay in the
-consumer. Import runtime components from `@tum-ai/ui-kit` and load the kit's
+consumer. Import runtime components from `@tum.ai/ui-kit` and load the kit's
 Tailwind stylesheet in the consumer application.
 
 ## Page composition
@@ -20,7 +20,7 @@ buttons keep equal widths when they stack. Their `classNames` slots preserve the
 existing typography and spacing while allowing consumer overrides.
 
 ```tsx
-import { ButtonLink, PageHero, Section, SectionHeader } from "@tum-ai/ui-kit";
+import { ButtonLink, PageHero, Section, SectionHeader } from "@tum.ai/ui-kit";
 
 <PageHero
   titleId="example-title"
@@ -55,7 +55,7 @@ precision, grouping and suffix. A range or ambiguous copy such as `"24/7"`
 returns `null`. Formatting uses the same shape with English numeric separators.
 
 ```tsx
-import { CountUp, formatFigure, parseFigure } from "@tum-ai/ui-kit";
+import { CountUp, formatFigure, parseFigure } from "@tum.ai/ui-kit";
 
 const shape = parseFigure("€12,345.60M+");
 const half = shape ? formatFigure(shape.value / 2, shape) : "Unavailable";
@@ -78,7 +78,7 @@ also decorative: repeat the useful information in adjacent accessible text.
 `size` is `md` or `lg`; `drawIn` is an optional CSS entrance.
 
 ```tsx
-import { DayRuler } from "@tum-ai/ui-kit";
+import { DayRuler } from "@tum.ai/ui-kit";
 
 <p>20 days remain in this example window.</p>
 <DayRuler days={28} elapsed={8} markLabel="20 days remain" />
@@ -102,7 +102,7 @@ closed answers use `hidden="until-found"` for find-in-page support. Find-in-page
 revelation of a closed answer therefore requires hydration.
 
 ```tsx
-import { FaqList } from "@tum-ai/ui-kit";
+import { FaqList } from "@tum.ai/ui-kit";
 
 <FaqList
   items={[

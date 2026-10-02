@@ -1,4 +1,4 @@
-import { ButtonLink, Container, Heading } from "@tum-ai/ui-kit";
+import { ButtonLink, Container, Heading } from "@tum.ai/ui-kit";
 export default function About() {
   return (
     <Container as="main" id="main-content" tabIndex={-1}>
