@@ -92,7 +92,7 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                     thumbnail at 320px) breaks instead of running under it. */}
                 <HeadingTag
                   className={cn(
-                    "group-hover/row:translate-x-2 text-display-md wrap-break-word text-fg transition-[color,translate] duration-500 ease-brand motion-reduce:transition-none",
+                    "group-hover/row:translate-x-2 text-display-md wrap-break-word text-fg transition-[color,translate] duration-surface ease-brand motion-reduce:transition-none",
                     recedingTitle,
                   )}
                 >
@@ -111,7 +111,7 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                 {item.image ? (
                   <div
                     className={cn(
-                      "size-16 rounded-2xl sm:size-20 lg:hidden relative shrink-0 overflow-hidden bg-sunken transition-opacity duration-500 ease-brand motion-reduce:transition-none",
+                      "size-16 rounded-2xl sm:size-20 lg:hidden relative shrink-0 overflow-hidden bg-sunken transition-opacity duration-surface ease-brand motion-reduce:transition-none",
                       recedingMark,
                     )}
                   >
@@ -131,11 +131,11 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "size-12 sm:grid hidden shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[color,background-color,border-color,opacity] duration-300 ease-brand group-hover/row:border-fg group-hover/row:bg-fg group-hover/row:text-canvas",
+                    "size-12 sm:grid hidden shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[color,background-color,border-color,opacity] duration-hover ease-brand group-hover/row:border-fg group-hover/row:bg-fg group-hover/row:text-canvas",
                     recedingMark,
                   )}
                 >
-                  <ArrowRight className="size-4 transition-transform duration-500 ease-brand group-hover/row:-rotate-45 motion-reduce:transition-none" />
+                  <ArrowRight className="size-4 transition-transform duration-surface ease-brand group-hover/row:-rotate-45 motion-reduce:transition-none" />
                 </span>
               </div>
             </Anchor>
@@ -158,7 +158,7 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                     sizes="(min-width: 1280px) 30rem, 38vw"
                     unoptimized={item.image.unoptimized ?? isUnoptimizedRemoteImage(item.image.src)}
                     data-active={item.id === active}
-                    className="scale-[1.03] object-cover opacity-0 transition-[opacity,scale] duration-700 ease-brand data-[active=true]:scale-100 data-[active=true]:opacity-100 motion-reduce:transition-none"
+                    className="scale-[1.03] object-cover opacity-0 transition-[opacity,scale] duration-media ease-brand data-[active=true]:scale-100 data-[active=true]:opacity-100 motion-reduce:transition-none"
                     style={{ objectPosition: item.image.position }}
                   />
                 ) : null,

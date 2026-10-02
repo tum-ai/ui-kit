@@ -20,7 +20,7 @@ export const buttonStyles = cva(
   [
     "group/button gap-2 relative isolate inline-flex shrink-0 items-center justify-center overflow-hidden",
     "font-semibold rounded-full tracking-[-0.01em] whitespace-nowrap select-none",
-    "transition-[background-color,color,border-color,box-shadow,scale] duration-300 ease-brand",
+    "transition-[background-color,color,border-color,box-shadow,scale] duration-hover ease-brand",
     "disabled:pointer-events-none disabled:opacity-45 motion-safe:active:scale-[0.98]",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:shrink-0",
   ],
@@ -65,7 +65,8 @@ export type ButtonStyleProps = VariantProps<typeof buttonStyles>;
 export type ButtonArrowKind = boolean | "right" | "external" | "down";
 
 function ButtonArrow({ kind }: { kind: Exclude<ButtonArrowKind, false> }) {
-  const base = "size-4 transition-transform duration-500 ease-brand motion-reduce:transition-none";
+  const base =
+    "size-4 transition-transform duration-surface ease-brand motion-reduce:transition-none";
   if (kind === "external") {
     return (
       <ArrowUpRight

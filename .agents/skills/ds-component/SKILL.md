@@ -15,6 +15,9 @@ description: Add, change or extend a TUM.ai UI-kit component (src/components or 
    - `as` / `headingAs`, `tone` (bands only) vs `emphasis` (text)
    - `className` / `classNames`, ref as a prop
    - Base UI for interaction, semantic tokens only, TSDoc on every export and prop
+   - the micro-interaction contract (`docs/design-system.md#micro-interaction-contract`): hover,
+     focus, press and open/close states from the duration tokens and the `pressable` and
+     `hover-lift` recipes, gated for reduced motion
    - relative imports only, no application config, CMS or feature modules
    - `"use client"` only when the component itself needs it
 4. **Stories.** Colocate `<name>.stories.tsx` with an explicit `title`, `parameters.kit.exports`

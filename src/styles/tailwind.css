@@ -154,13 +154,33 @@
 
   /*
    * --- Motion ---
-   * House easing everywhere (`ease-brand`). Durations run from 300ms (hover)
-   * to 1.2s (entrances); only ambient loops (aurora, drift, the partner
-   * marquee) are longer, and those only run without reduced motion.
+   * House easing everywhere (`ease-brand`; `ease-snappy` for full-screen
+   * slides). Durations run from 150ms (press) to 1.2s (entrances); only
+   * ambient loops (aurora, drift) are longer, and those only run without
+   * reduced motion.
    */
   --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-snappy: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /*
+   * The duration scale (`duration-press` … `duration-entrance`). Components
+   * use these names, never raw milliseconds (`tumai/motion-tokens` lints it).
+   * press: an element answering a press or toggle.
+   * hover: colour, underline and arrow responses to hover and focus.
+   * surface: panels, overlays, the card lift, the header's frosting.
+   * media: image crossfades and staggered menu items.
+   * entrance: content arriving on load or scroll (the 1.2s cap stays).
+   */
+  --transition-duration-press: 150ms;
+  --transition-duration-hover: 300ms;
+  --transition-duration-surface: 500ms;
+  --transition-duration-media: 700ms;
+  --transition-duration-entrance: 1000ms;
+
+  /* A bare `transition-*` utility is already on brand. */
+  --default-transition-duration: var(--transition-duration-hover);
+  --default-transition-timing-function: var(--ease-brand);
 
   /* `backwards`: hold the start frame during the stagger delay, then release
      the element entirely, so no compositing layer outlives the animation. */
@@ -530,7 +550,13 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--spot-opacity, 0);
-    transition: opacity 0.5s var(--ease-brand);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spotlight-surface::before,
+    .spotlight-surface::after {
+      transition: opacity var(--transition-duration-surface) var(--ease-brand);
+    }
   }
 
   .spotlight-surface::before {
@@ -613,6 +639,41 @@
     @media (hover: hover) {
       :where(.group\/zoom):hover & {
         scale: 1.04;
+      }
+    }
+  }
+}
+
+/*
+ * Press feedback for anything clickable: a 3% shrink while pressed, so a
+ * tap or click lands physically. List `scale` (or use `transition-transform`)
+ * in the element's own transition. Nothing shrinks when disabled or under
+ * reduced motion.
+ */
+@utility pressable {
+  @media (prefers-reduced-motion: no-preference) {
+    &:active:not(:disabled, [data-disabled], [aria-disabled="true"]) {
+      scale: 0.97;
+    }
+  }
+}
+
+/*
+ * The 4px card lift, on hover and on keyboard focus (of the card or a link
+ * inside it) alike. List `translate`
+ * in the element's own transition. No lift under reduced motion, and no
+ * hover lift on touch-only devices.
+ */
+@utility hover-lift {
+  @media (prefers-reduced-motion: no-preference) {
+    &:focus-visible,
+    &:has(:focus-visible) {
+      translate: 0 -4px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        translate: 0 -4px;
       }
     }
   }

@@ -43,7 +43,7 @@ export function CollapsiblePanel({ className, ...props }: CollapsiblePanelProps)
   return (
     <BaseCollapsible.Panel
       className={cn(
-        "data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-500 ease-brand motion-reduce:transition-none",
+        "data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-surface ease-brand motion-reduce:transition-none",
         className,
       )}
       {...props}

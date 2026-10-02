@@ -10,6 +10,8 @@ import storybook from "eslint-plugin-storybook";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+import tumai from "./eslint-rules/index.mjs";
+
 /** Published library source: everything under src except tests, stories and test helpers. */
 const published = ["src/**/*.{ts,tsx}"];
 const notPublished = ["**/*.test.*", "**/*.stories.*", "**/testing.ts"];
@@ -120,7 +122,7 @@ export default tseslint.config(
   {
     files: published,
     ignores: notPublished,
-    plugins: { jsdoc },
+    plugins: { jsdoc, tumai },
     settings: { jsdoc: { mode: "typescript" } },
     rules: {
       "no-restricted-imports": [
@@ -168,6 +170,11 @@ export default tseslint.config(
         { definedTags: ["remarks", "defaultValue", "privateRemarks", "packageDocumentation"] },
       ],
       "jsdoc/no-types": "error",
+      // Tokens, motion and server/client boundaries (eslint-rules/, docs/standards.md).
+      "tumai/motion-tokens": "error",
+      "tumai/no-raw-color": "error",
+      "tumai/no-filter-motion": "error",
+      "tumai/client-boundary": "error",
       "jsdoc/check-alignment": "error",
       "jsdoc/no-multi-asterisks": "error",
     },

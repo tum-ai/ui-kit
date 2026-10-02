@@ -48,7 +48,14 @@ A size budget sits about 10% above the current size. Raise it in the same change
 
 ## Design and motion
 
-| Rule                                                                                           | Enforced by                                                      |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| Semantic tokens, house easing, durations from 300ms to 1.2s, `motion-safe:` on every animation | **manual** ([design system](design-system.md))                   |
-| Composition rules (nested corners, equal heights, no meta rows)                                | **manual** ([design system](design-system.md#composition-rules)) |
+| Rule                                                                                                                                                            | Enforced by                                                      |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| No raw colors (hex, `rgb()`, `oklch()` …) in classes or SVG color attributes, and no stock Tailwind palettes: semantic tokens or the violet and ink scales only | `tumai/no-raw-color`                                             |
+| Durations come from the scale (`duration-press` … `duration-entrance`), easings are `ease-brand`, `ease-snappy` or `ease-in-out-soft`, and no `transition-all`  | `tumai/motion-tokens` (autofixes raw durations)                  |
+| Every `animate-*` is `motion-safe:`, and every transform that responds to hover, focus, press or state is gated for reduced motion                              | `tumai/motion-tokens`                                            |
+| No transitioned or animated filters (Safari clips filtered boxes)                                                                                               | `tumai/no-filter-motion`                                         |
+| `"use client"` exactly where a module uses client-only hooks, DOM handlers or inline function props                                                             | `tumai/client-boundary`                                          |
+| The [micro-interaction contract](design-system.md#micro-interaction-contract): hover, focus, press, open and close states on every interactive element          | **manual** (review)                                              |
+| Composition rules (nested corners, equal heights, no meta rows)                                                                                                 | **manual** ([design system](design-system.md#composition-rules)) |
+
+The `tumai/*` rules live in `eslint-rules/` with their tests, and apply to published source. Their messages name the fix.

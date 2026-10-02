@@ -45,6 +45,10 @@ describe("cn", () => {
     ["ease-in-out", "ease-brand"],
     ["ease-brand", "ease-snappy"],
     ["animate-pulse", "animate-rise-sm"],
+    ["animate-fade", "animate-draw"],
+    ["duration-300", "duration-hover"],
+    ["duration-press", "duration-surface"],
+    ["data-[ending-style]:duration-surface", "data-[ending-style]:duration-hover"],
     ["scroll-mt-4", "scroll-mt-header"],
     ["proportional-nums", "tabular"],
   ])("resolves the custom tokens %s and %s", (first, second) => {

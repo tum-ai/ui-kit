@@ -23,6 +23,7 @@ Component library for Next.js 16, React 19 and Tailwind 4, published as `@tum.ai
 - Every export and prop has TSDoc. React 19 refs are plain props.
 - `tone` always means a band tone (`paper`, `mist`, `lavender`, `ink`, `night`, `violet`). A text color inside a band is `emphasis`.
 - Use semantic tokens (`bg-canvas`, `text-fg`, `border-hairline`, `text-highlight`), never raw hex or stock Tailwind palettes. Use Base UI for interactive behavior.
+- Motion uses the duration tokens, house easings and the `pressable` / `hover-lift` recipes, and every interactive element meets the micro-interaction contract (`docs/design-system.md#motion-rules`). The `tumai/*` lint rules enforce tokens, motion gates and `"use client"` placement.
 - Keep the existing appearance and meaningful behavior. Document intentional portability changes in `docs/portability.md`.
 - Public API, token, visual or accessibility changes need a Changeset (`bun run changeset`).
 

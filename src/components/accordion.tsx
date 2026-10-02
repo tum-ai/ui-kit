@@ -58,7 +58,7 @@ export function AccordionTrigger({
     <BaseAccordion.Header render={<HeadingTag />} className="m-0">
       <BaseAccordion.Trigger
         className={cn(
-          "group/trigger gap-6 py-6 md:py-7 flex w-full items-center justify-between text-left text-heading-md text-fg transition-colors duration-300 ease-brand hover:text-highlight",
+          "group/trigger gap-6 py-6 md:py-7 flex w-full items-center justify-between text-left text-heading-md text-fg transition-colors duration-hover ease-brand hover:text-highlight",
           className,
         )}
         {...props}
@@ -66,10 +66,10 @@ export function AccordionTrigger({
         <span>{children}</span>
         <span
           aria-hidden
-          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate] duration-500 ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
+          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate] duration-surface ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
         >
           <span className="w-3.5 absolute h-[1.5px] rounded-full bg-current" />
-          <span className="h-3.5 absolute w-[1.5px] rounded-full bg-current transition-transform duration-500 ease-brand group-data-[panel-open]/trigger:scale-y-0 motion-reduce:transition-none" />
+          <span className="h-3.5 absolute w-[1.5px] rounded-full bg-current transition-transform duration-surface ease-brand group-data-[panel-open]/trigger:scale-y-0 motion-reduce:transition-none" />
         </span>
       </BaseAccordion.Trigger>
     </BaseAccordion.Header>
@@ -95,7 +95,7 @@ export function AccordionPanel({ children, className, ...props }: AccordionPanel
   return (
     <BaseAccordion.Panel
       hiddenUntilFound
-      className="data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height] duration-500 ease-brand motion-reduce:transition-none"
+      className="data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height] duration-surface ease-brand motion-reduce:transition-none"
       {...props}
     >
       <div
