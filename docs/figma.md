@@ -1,16 +1,51 @@
-# Code to Figma preparation
+# Code-driven Figma library
 
-CSS and TypeScript remain canonical. No Figma file or library is created in this phase.
+The target is [TUM.ai UI kit](https://www.figma.com/design/ULwF4tAlAKDsPzWdQ0jiBg), in the owner-selected Lanfermann workspace. CSS and TypeScript remain canonical. Configuration is in `design/figma.config.json`.
 
-1. `bun run build:storybook && bun run manifests` generates `design/manifest.json` and `design/tokens.json` inside the static explorer. The public catalog is derived from TypeScript exports, story metadata and Storybook's actual index.
-2. `bun run render:design` exports screenshots and resolved token contexts to `artifacts/design`. Use `DESIGN_STORIES=id,id` to capture a small subset. Reference widths are 320, 390, 768 and 1440 pixels. Assets are local, fonts are awaited and motion is reduced.
-3. Later, import primitive tokens and semantic tone mappings into Figma variables/styles. Preserve alias references. Fluid values retain their CSS expressions and separate viewport-specific readings.
-4. Capture representative story render URLs, build editable components and variant sets, then map them to stable public export/story identities. Store future Figma node references in a separate mapping input rather than hand-editing generated JSON.
-5. Review generated geometry, Auto Layout, responsive behavior and naming. A screenshot is reference evidence, not an editable component or an accessibility test.
-6. Add Code Connect after components exist and the team's Figma plan supports it. It connects implementation snippets; it does not generate the library.
+## Updates without Codex
 
-Generation must update known component identities and report removed/renamed exports. Do not clone a fresh library on every run. Manual library publishing and Figma access are outside this phase.
+GitHub generates `figma-scene.json` and its SHA-256 checksum whenever a stable `v<package version>` GitHub release is published. The release commit must belong to `main`. Generation runs Node, Bun and Chromium with the pinned dependencies. It needs no Codex, AI model, Figma token or hosting account.
 
-Set `STORYBOOK_BASE_URL` to the eventual explorer URL when generating canonical links. The default is local port 6006. Stable export identities and story IDs are used in `design/figma-links.json`; populate its empty mappings only after real Figma nodes exist. Variant args come from the typed CSF stories.
+The standalone Figma updater reads those public release assets and applies them to the existing file. It executes checked-in plugin code; downloaded JSON never becomes executable code. Launch the plugin to catch up, or leave it open to listen for subsequent releases. Closing Figma or the plugin stops the listener. Use one designated updater session at a time: the document lease detects ordinary overlap but Figma does not provide atomic locks across offline collaborators.
 
-Stories with an explicit phone/tablet/desktop viewport are captured at that viewport; other stories use all four reference widths. The manifest records those restrictions, so responsive interaction plays remain meaningful. Story plays establish the rendered state, including opened dialogs.
+**Figma requires user-initiated plugin execution.** Its public plugin API does not provide a server command that launches a plugin when the editor is closed. File updates can be automatic while the plugin is open; publishing a library version to subscribers remains a separate Figma action. See the [verified API boundary](figma-automation-research.md).
+
+## Generate and inspect
+
+```sh
+bun install --frozen-lockfile
+bunx playwright install chromium
+bun run build:storybook
+bun run manifests
+bun run figma:build
+bun run figma:plugin
+```
+
+The generator starts an isolated local Storybook server. `--base-url` reuses an existing server. For a focused diagnostic capture:
+
+```sh
+bun run figma:build --base-url http://127.0.0.1:6006 \
+  --stories actions-button--primary,interactions-dialog--large
+```
+
+A filtered capture is explicitly incomplete and cannot be used by the release updater. `--diagnostic` writes evidence even when fidelity errors exist; it never produces an importable release asset from a failed capture. Generated outputs live under `artifacts/figma/` and are excluded from the npm package.
+
+Each scene records the UI-kit Git commit, package version, extraction provenance, story identities, original CSS expressions, resolved token contexts, local asset digests and translation diagnostics. Production updates reject a mismatched package, repository, file, version, commit, checksum, incomplete inventory or mandatory fidelity failure. Fluid values keep their CSS expressions and readings at 320, 390, 768 and 1440px. Tones use a separate six-mode variable collection.
+
+## Install the updater once
+
+The local development plugin uses Figma's supported Plugin API and requires the desktop editor. Register a new development plugin in Figma and retain its assigned ID. Build using `FIGMA_PLUGIN_ID=<assigned ID> bun run figma:plugin`, then import the generated manifest into the desktop editor. Keep the same registration ID for every maintainer; it identifies the document-scoped generation ledger. The exact generated paths and controls are described in `figma/plugin/README.md`.
+
+Set the same non-secret ID as GitHub repository variable `FIGMA_PLUGIN_ID` to include the ready-to-import updater in release artifacts. Never replace it with a guessed ID. No npm or Figma credentials belong in the plugin bundle.
+
+For the initial file created through MCP, the updater must receive the verified seed ledger containing existing generated identities. Without that state, generation stops on conflicting names instead of duplicating components. Keep the checkpoint export with release evidence; never infer ownership merely from a component name.
+
+## Identity, failures and ownership
+
+Stable component and token keys map to native Figma IDs. Updating content does not create a new library file or replace existing component identities. Generated properties are owned by code. Add custom design explorations outside generated components; source changes may replace generated properties.
+
+The plugin stores bounded ledger chunks on the document, so state travels with the file and is shared between registered plugin installations. Each batch records its checkpoint before continuing. An interrupted or uncertain write pauses automatic mutation; export recovery data and inspect the actual canvas before importing a reconciled checkpoint. Do not clear the ledger to make a failure disappear. Removed exports are reported as deprecations and retained for review, preserving existing instances.
+
+Automated generation checks do not establish Figma visual parity or accessibility. Review representative native renders and edited instances after changes to the translator. Browser accessibility remains enforced by the source component tests. Native capture diagnostics explicitly describe unsupported or approximate effects.
+
+Code Connect can be added after the native components are stable and published. It links implementation snippets to existing components; it does not generate or publish the library.

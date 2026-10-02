@@ -21,7 +21,7 @@ Storybook opens at `http://localhost:6006`. See [Getting started](docs/getting-s
 
 ## Consumer setup
 
-The npm package name is provisional until TUM.ai confirms scope ownership and makes the first public release. You can use the package immediately from a built tarball; no registry or hosting setup is needed.
+The npm package name is `@tum.ai/ui-kit`, under the owner-confirmed `tum.ai` organization. The first registry release is still pending. You can use the package immediately from a built tarball; no registry or hosting setup is needed.
 
 ```sh
 # In the cloned ui-kit repository:
@@ -30,24 +30,24 @@ mkdir -p artifacts
 npm pack --ignore-scripts --pack-destination artifacts
 
 # In your Next.js application (replace the absolute path):
-bun add /absolute/path/ui-kit/artifacts/tum-ai-ui-kit-0.1.0.tgz
+bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz
 ```
 
 `bun run test:consumer` builds and installs that same package format into an isolated Next application and verifies it in Chromium. The [CI package-reports artifact](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) also contains the tested tarball for each successful run; it expires after 14 days. Build locally for a permanent copy.
 
 ```tsx
-import { Button, Section, Heading } from "@tum-ai/ui-kit";
-import { Header, Footer, SkipLink } from "@tum-ai/ui-kit/shell";
+import { Button, Section, Heading } from "@tum.ai/ui-kit";
+import { Header, Footer, SkipLink } from "@tum.ai/ui-kit/shell";
 ```
 
 In the consumer's Tailwind 4 stylesheet:
 
 ```css
 @import "tailwindcss";
-@import "@tum-ai/ui-kit/tailwind.css";
-@import "@tum-ai/ui-kit/fonts.css";
+@import "@tum.ai/ui-kit/tailwind.css";
+@import "@tum.ai/ui-kit/fonts.css";
 /* Only when using the floating header and website shell: */
-@import "@tum-ai/ui-kit/shell.css";
+@import "@tum.ai/ui-kit/shell.css";
 ```
 
 The package registers its compiled JavaScript as a Tailwind class source. Keep the consumer's own normal source detection. Do not copy class safelists. Font loading is optional: consumers using `next/font` can omit `fonts.css` and define `--font-manrope` themselves.
@@ -61,7 +61,7 @@ Header/footer receive navigation, logos and content as props. Application routes
 - [Getting started](docs/getting-started.md) and [GitHub contribution workflow](docs/repository.md)
 - [Design guidelines](docs/design-system.md) and [generated API](docs/api.md)
 - [Accessibility and testing](docs/testing.md)
-- [Figma preparation](docs/figma.md)
+- [Figma generation and release updater](docs/figma.md)
 - [Releases and hosting](docs/releasing.md)
 - [Contributing](CONTRIBUTING.md)
 - [Initial verification and manual-review status](docs/verification.md)

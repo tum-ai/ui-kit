@@ -28,7 +28,7 @@ export default defineConfig({
           name: "unit",
           maxWorkers: 4,
           environment: "node",
-          include: ["src/**/*.test.ts", "test/**/*.test.ts"],
+          include: ["src/**/*.test.ts", "test/**/*.test.ts", "figma/**/*.test.{ts,mjs}"],
         },
       },
       {

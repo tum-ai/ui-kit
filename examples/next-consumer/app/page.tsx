@@ -7,7 +7,7 @@ import {
   Reveal,
   Section,
   TextLink,
-} from "@tum-ai/ui-kit";
+} from "@tum.ai/ui-kit";
 
 import { Controls } from "./controls";
 export default function Page() {

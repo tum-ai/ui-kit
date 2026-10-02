@@ -32,7 +32,7 @@ The comparison covers PageHero, Photo, Section, Container, SectionHeader, Action
 
 Reviewed renders include the complete page at phone and desktop widths, tone foundations, and the source-comparison set. The Storybook manager and complete-page preview were also inspected interactively. Normal test runs compare the reviewed baseline files; only the initial baseline-generation run used snapshot updating.
 
-The release tarball is `artifacts/tum-ai-ui-kit-0.1.0.tgz`. Machine-readable proof is in `artifacts/consumer.json`, `artifacts/parity/comparison.json`, `artifacts/design/index.json`, `coverage/coverage-summary.json` and the Playwright report. Generated artifacts are ignored by Git and can be recreated with the documented commands. The first complete [GitHub CI run](https://github.com/tum-ai/ui-kit/actions/runs/37008047722) passed on commit `bd36e0428c8c01f75ec76dfbfc74c629e463c59e`: quality, unit coverage, tarball consumer, browser stories, visual regressions and the aggregate Verify job. Current results remain available in the [CI runs](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml).
+The release tarball is `artifacts/tum.ai-ui-kit-0.1.0.tgz`. Machine-readable proof is in `artifacts/consumer.json`, `artifacts/parity/comparison.json`, `artifacts/design/index.json`, `coverage/coverage-summary.json` and the Playwright report. Generated artifacts are ignored by Git and can be recreated with the documented commands. The first complete [GitHub CI run](https://github.com/tum-ai/ui-kit/actions/runs/37008047722) passed on commit `bd36e0428c8c01f75ec76dfbfc74c629e463c59e`: quality, unit coverage, tarball consumer, browser stories, visual regressions and the aggregate Verify job. Current results remain available in the [CI runs](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml).
 
 ## Accessibility proof boundary
 
@@ -50,4 +50,12 @@ Axe cannot resolve some gradient backgrounds. In the interactive complete-page p
 
 ## External follow-up
 
-The implementation is delivered through the GitHub repository. npm publication, Figma library creation, website adoption and hosting deployment are separate follow-up work. npm scope ownership/authentication and the trusted-publisher/environment setup remain owner tasks. The owner will connect Vercel later; no Vercel account was inspected. Actual Figma library generation and website adoption remain separate phases.
+The implementation is delivered through the GitHub repository. The npm organization is `tum.ai`; the authenticated `justiiiin` account was verified as a developer during setup. The first registry publication and npm trusted-publisher setup remain pending. The GitHub `npm-publish` environment restricts publishing to protected branches and requires `jaylann` review. The owner will connect Vercel later; no Vercel account was inspected. Website adoption remains separate.
+
+## Figma release-generation verification
+
+The standalone release builder generated all 266 stories into 42 native variant families, 182 variables and 76 text styles, with zero mandatory fidelity errors. Of 1,121 editable text nodes, 881 carry source-proven font-size bindings and 799 match a foundation text style. The 331 diagnostics record explicit translation limits; most preserve measured fixed geometry where CSS layout cannot safely become Auto Layout. These are native-scene validation results, not a claim that all 4,672 generated nodes have been visually reviewed in Figma.
+
+Live Figma tests compared the real Primary, Secondary and Outline Buttons with Storybook, fixed clipped focus outlines and variable-alpha normalization, and created native variables, styles and variants, corrected a text-style ordering issue, retained existing IDs through an update and returned zero created or mutated nodes on an identical rerun. The selected workspace accepted six tone modes and four viewport modes. The complete library import, standalone plugin registration and a real GitHub-release-to-plugin update require the one-time desktop setup described in [Figma generation](figma.md). The plugin uses no Codex runtime after installation.
+
+The integrated follow-up passed 300 unit/component tests with 93.25% runtime line coverage, plus lint, formatting and types. The renamed `@tum.ai/ui-kit` tarball passed the clean Next consumer test. The final native scene includes 42 variant sets, 262 component states, 4,672 nodes and 182 variables. Real source Button rendering and a zero-write repeat were inspected; the full desktop import remains pending.

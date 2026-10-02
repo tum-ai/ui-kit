@@ -1,6 +1,6 @@
 # Media and branding
 
-Import components and their prop types from `@tum-ai/ui-kit`. They use the
+Import components and their prop types from `@tum.ai/ui-kit`. They use the
 consumer's Next.js Image runtime and the UI kit's semantic tone tokens.
 
 | Export                   | Use and variants                                                                                                                                           |

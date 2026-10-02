@@ -1,5 +1,5 @@
 {
-  "name": "@tum-ai/ui-kit",
+  "name": "@tum.ai/ui-kit",
   "version": "0.1.0",
   "description": "TUM.ai components, visual foundations and accessible Next.js patterns.",
   "type": "module",
@@ -62,9 +62,12 @@
     "render:design": "node scripts/render-design.mjs",
     "changeset": "changeset",
     "version:packages": "changeset version",
-    "verify": "bun run lint && bun run format:check && bun run typecheck && bun run test:coverage && bun run build && bun run build:storybook && bun run manifests && bun run test:stories && bun run test:e2e && bun run test:consumer",
+    "verify": "bun run lint && bun run format:check && bun run typecheck && bun run test:coverage && bun run build && bun run build:storybook && bun run manifests && bun run figma:build && bun run test:stories && bun run test:e2e && bun run test:consumer",
     "prepare": "node scripts/install-hooks.mjs",
-    "prepack": "bun run build"
+    "prepack": "bun run build",
+    "figma:build": "node scripts/build-figma.mjs",
+    "test:figma": "vitest run --project unit test/figma-*.test.ts figma/",
+    "figma:plugin": "node figma/plugin/build.mjs"
   },
   "peerDependencies": {
     "react": "^19.3.0",

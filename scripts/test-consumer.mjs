@@ -23,7 +23,7 @@ const archive = path.join(root, "artifacts", result.filename);
 const dir = await mkdtemp(path.join(tmpdir(), "tumai-ui-consumer-"));
 await cp("examples/next-consumer", dir, { recursive: true });
 const pkg = JSON.parse(await readFile(path.join(dir, "package.json"), "utf8"));
-pkg.dependencies["@tum-ai/ui-kit"] = `file:${archive}`;
+pkg.dependencies["@tum.ai/ui-kit"] = `file:${archive}`;
 await writeFile(path.join(dir, "package.json"), JSON.stringify(pkg, null, 2));
 const env = { ...process.env, NEXT_TELEMETRY_DISABLED: "1", CI: "1" };
 execFileSync("bun", ["install"], { cwd: dir, stdio: "inherit", env });
@@ -33,7 +33,7 @@ for (const [source, dest] of [
   ["tum_ai_logo_new.svg", "logo.svg"],
 ])
   await cp(
-    path.join(dir, "node_modules/@tum-ai/ui-kit/assets", source),
+    path.join(dir, "node_modules/@tum.ai/ui-kit/assets", source),
     path.join(dir, "public", dest),
   );
 execFileSync("bun", ["run", "build"], { cwd: dir, stdio: "inherit", env });

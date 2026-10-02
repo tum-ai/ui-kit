@@ -117,7 +117,7 @@ export function publicApi() {
             .join(" ") ?? "";
         return {
           name: item.name.text,
-          entry: entry.includes("shell") ? "@tum-ai/ui-kit/shell" : "@tum-ai/ui-kit",
+          entry: entry.includes("shell") ? "@tum.ai/ui-kit/shell" : "@tum.ai/ui-kit",
           runtime: !decl.isTypeOnly && !item.isTypeOnly,
           source: sourcePath,
           description,

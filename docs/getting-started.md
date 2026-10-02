@@ -38,7 +38,7 @@ npm pack --ignore-scripts --pack-destination artifacts
 From your application, using the actual absolute path:
 
 ```sh
-bun add /absolute/path/ui-kit/artifacts/tum-ai-ui-kit-0.1.0.tgz
+bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz
 ```
 
 Commit your application's dependency and lockfile changes. For another developer or CI machine, store the tarball in an accessible project/vendor location and use that stable relative path, or rebuild it from a recorded kit commit. A path to your personal checkout is not portable. After npm publication, use a fixed registry version instead. Installing the raw Git repository as a dependency is not the supported distribution path: compiled `dist` is deliberately not committed.
@@ -47,8 +47,8 @@ In `app/globals.css`, after the Tailwind import:
 
 ```css
 @import "tailwindcss";
-@import "@tum-ai/ui-kit/tailwind.css";
-@import "@tum-ai/ui-kit/fonts.css";
+@import "@tum.ai/ui-kit/tailwind.css";
+@import "@tum.ai/ui-kit/fonts.css";
 ```
 
 Keep the usual Tailwind 4 PostCSS integration in the app. The kit stylesheet registers its packaged JavaScript for class detection; no source aliases or manually copied class lists are needed. `fonts.css` is optional when your app supplies `--font-manrope` through its own font loader.
@@ -57,8 +57,8 @@ A minimal server layout:
 
 ```tsx
 import "./globals.css";
-import { MotionProvider } from "@tum-ai/ui-kit";
-import { SkipLink } from "@tum-ai/ui-kit/shell";
+import { MotionProvider } from "@tum.ai/ui-kit";
+import { SkipLink } from "@tum.ai/ui-kit/shell";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 A minimal server page:
 
 ```tsx
-import { ButtonLink, Container, Heading, Section } from "@tum-ai/ui-kit";
+import { ButtonLink, Container, Heading, Section } from "@tum.ai/ui-kit";
 
 export default function Page() {
   return (
@@ -98,7 +98,7 @@ export default function Page() {
 
 Add your own `/about` route for that link. Components with event handlers belong in a client module. Keep the root barrel as supplied; adding `"use client"` to every consumer defeats the server-compatible components. Dialog portals mount outside `app-root`, while their background inertness targets that ID; use `backgroundRootId` if your application uses a different root.
 
-For the optional floating Header and Footer, also import `@tum-ai/ui-kit/shell.css` and follow [shell usage](components/shell.md). The application supplies navigation, logos, resolved CTAs and footer content. Copy approved identity files from `node_modules/@tum-ai/ui-kit/assets` to your app's `public` directory when using URL-based logos. Observe [brand terms](../BRAND-ASSETS.md). Remote optimized images require your application's Next image configuration; see [portability](portability.md).
+For the optional floating Header and Footer, also import `@tum.ai/ui-kit/shell.css` and follow [shell usage](components/shell.md). The application supplies navigation, logos, resolved CTAs and footer content. Copy approved identity files from `node_modules/@tum.ai/ui-kit/assets` to your app's `public` directory when using URL-based logos. Observe [brand terms](../BRAND-ASSETS.md). Remote optimized images require your application's Next image configuration; see [portability](portability.md).
 
 The [Next consumer fixture](../examples/next-consumer) is an automated integration fixture: `bun run test:consumer` copies it, injects the tarball dependency and assets, and intercepts its intentionally invalid remote test URL. It is not a standalone app to run directly. Use the minimal layout/page above when starting an application.
 
@@ -111,4 +111,4 @@ bun run verify
 
 This checks formatting, types, coverage, package/explorer builds, export coverage, browser stories, accessibility, visual regressions and the packed Next consumer. Visual baselines target macOS 26; GitHub runs that lane on the matching runner. Linux runs unit and package checks in CI. See [testing](testing.md) before intentionally updating snapshots. Passing automation does not replace the [outstanding manual accessibility checks](verification.md#accessibility-proof-boundary).
 
-Hosting, npm publication and generating the editable Figma library can be connected later. None is required to explore or install a locally packed kit.
+Hosting and npm publication can be connected independently. See [Figma generation](figma.md) for the release-driven native library updater; no cloud connection is required to explore or install a locally packed kit.

@@ -6,7 +6,7 @@ indigo bands with the large logomark as a background shape, big light-weight
 Manrope headlines with tight tracking, thin rules, rounded photography, and
 calm light bands for reading. Motion is small, purposeful and always optional.
 
-- Components: `src/components` (import from `@tum-ai/ui-kit` only)
+- Components: `src/components` (import from `@tum.ai/ui-kit` only)
 - Tokens: `src/styles/tailwind.css`
 - Live reference: Storybook (development and Vercel previews only)
 - Base UI supplies interaction semantics; CSS cascade layers keep tokens and component overrides predictable. See [portability decisions](portability.md).

@@ -1,10 +1,10 @@
 # Page shell
 
-Import `Header`, `Footer`, and `SkipLink` from `@tum-ai/ui-kit/shell`. The header is a client component using Next App Router's `usePathname`; the footer and skip link are synchronous and server compatible. Load `@tum-ai/ui-kit/tailwind.css`, `@tum-ai/ui-kit/fonts.css`, and `@tum-ai/ui-kit/shell.css` in your app layout. The caller supplies every destination, text value, action and branding image.
+Import `Header`, `Footer`, and `SkipLink` from `@tum.ai/ui-kit/shell`. The header is a client component using Next App Router's `usePathname`; the footer and skip link are synchronous and server compatible. Load `@tum.ai/ui-kit/tailwind.css`, `@tum.ai/ui-kit/fonts.css`, and `@tum.ai/ui-kit/shell.css` in your app layout. The caller supplies every destination, text value, action and branding image.
 
 ```tsx
-import { Header, Footer, SkipLink } from "@tum-ai/ui-kit/shell";
-import { ButtonLink } from "@tum-ai/ui-kit";
+import { Header, Footer, SkipLink } from "@tum.ai/ui-kit/shell";
+import { ButtonLink } from "@tum.ai/ui-kit";
 
 const logo = {
   src: "/assets/tum_ai_logo_new.svg",

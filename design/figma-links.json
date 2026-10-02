@@ -1,5 +1,27 @@
 {
   "schemaVersion": 1,
-  "exports": {},
-  "stories": {}
+  "exports": {
+    "@tum.ai/ui-kit#Button": {
+      "fileKey": "ULwF4tAlAKDsPzWdQ0jiBg",
+      "nodeId": "12:6",
+      "url": "https://www.figma.com/design/ULwF4tAlAKDsPzWdQ0jiBg?node-id=12-6"
+    }
+  },
+  "stories": {
+    "actions-button--outline": {
+      "fileKey": "ULwF4tAlAKDsPzWdQ0jiBg",
+      "nodeId": "12:3",
+      "url": "https://www.figma.com/design/ULwF4tAlAKDsPzWdQ0jiBg?node-id=12-3"
+    },
+    "actions-button--primary": {
+      "fileKey": "ULwF4tAlAKDsPzWdQ0jiBg",
+      "nodeId": "12:4",
+      "url": "https://www.figma.com/design/ULwF4tAlAKDsPzWdQ0jiBg?node-id=12-4"
+    },
+    "actions-button--secondary": {
+      "fileKey": "ULwF4tAlAKDsPzWdQ0jiBg",
+      "nodeId": "12:5",
+      "url": "https://www.figma.com/design/ULwF4tAlAKDsPzWdQ0jiBg?node-id=12-5"
+    }
+  }
 }
