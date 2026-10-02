@@ -66,7 +66,7 @@ export function AccordionTrigger({
         <span>{children}</span>
         <span
           aria-hidden
-          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate] duration-surface ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
+          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate,scale] duration-surface ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-active/trigger:scale-90 motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
         >
           <span className="w-3.5 absolute h-[1.5px] rounded-full bg-current" />
           <span className="h-3.5 absolute w-[1.5px] rounded-full bg-current transition-transform duration-surface ease-brand group-data-[panel-open]/trigger:scale-y-0 motion-reduce:transition-none" />
@@ -95,12 +95,14 @@ export function AccordionPanel({ children, className, ...props }: AccordionPanel
   return (
     <BaseAccordion.Panel
       hiddenUntilFound
-      className="data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height] duration-surface ease-brand motion-reduce:transition-none"
+      className="group/panel data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height] duration-surface ease-brand motion-reduce:transition-none"
       {...props}
     >
       <div
         className={cn(
           "max-w-3xl pb-7 md:pr-14 [&_a]:font-semibold text-body text-fg-muted [&_a]:text-highlight [&_a]:underline [&_a]:underline-offset-4",
+          // The answer fades in with the height and out a little faster.
+          "transition-opacity duration-surface ease-brand group-data-[ending-style]/panel:opacity-0 group-data-[ending-style]/panel:duration-hover group-data-[starting-style]/panel:opacity-0 motion-reduce:transition-none",
           className,
         )}
       >

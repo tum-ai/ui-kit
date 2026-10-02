@@ -142,6 +142,8 @@ export function Eyebrow<T extends TextElement = "p">({
           <span className="text-fg-subtle tabular">
             {typeof index === "number" ? String(index).padStart(2, "0") : index}
           </span>
+          {/* Screen readers hear "03, Projects", not "03Projects". */}
+          <span className="sr-only">, </span>
           <span aria-hidden="true" className="w-6 h-px bg-current opacity-50" />
         </>
       ) : null}
@@ -181,7 +183,7 @@ export function Prose({ className, ...props }: ProseProps) {
         "prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-fg",
         "prose-h2:mt-14 prose-h2:text-heading-lg prose-h3:text-heading-md",
         "prose-p:text-fg-muted prose-strong:text-fg prose-li:text-fg-muted",
-        "prose-a:font-medium prose-a:text-highlight prose-a:decoration-1 prose-a:underline-offset-4 hover:prose-a:decoration-2",
+        "prose-a:font-medium prose-a:text-highlight prose-a:decoration-1 prose-a:underline-offset-4 prose-a:hover:decoration-2",
         "prose-li:marker:text-highlight prose-hr:border-hairline",
         className,
       )}

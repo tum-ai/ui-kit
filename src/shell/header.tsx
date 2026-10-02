@@ -214,7 +214,7 @@ export function Header({
               ) : null}
               <DialogTrigger
                 aria-label="Open menu"
-                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid place-items-center rounded-full transition-colors duration-hover"
+                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid pressable place-items-center rounded-full transition-[background-color,scale] duration-hover"
               >
                 <span aria-hidden className="w-4 gap-1.25 flex flex-col">
                   <span className="motion-safe:group-hover/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-hover ease-brand" />
@@ -244,7 +244,7 @@ export function Header({
             <Image {...logo} loading="lazy" className="h-6 md:h-7 w-auto" />
             <DialogClose
               aria-label="Close menu"
-              className="size-10 bg-white/10 text-white hover:bg-white/20 grid place-items-center rounded-full transition-[background-color,rotate] duration-hover ease-brand motion-safe:hover:rotate-90"
+              className="size-10 bg-white/10 text-white hover:bg-white/20 grid pressable place-items-center rounded-full transition-[background-color,rotate,scale] duration-hover ease-brand motion-safe:hover:rotate-90"
             >
               <X aria-hidden className="size-4" />
             </DialogClose>

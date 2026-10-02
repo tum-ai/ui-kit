@@ -21,7 +21,7 @@ export const buttonStyles = cva(
     "group/button gap-2 relative isolate inline-flex shrink-0 items-center justify-center overflow-hidden",
     "font-semibold rounded-full tracking-[-0.01em] whitespace-nowrap select-none",
     "transition-[background-color,color,border-color,box-shadow,scale] duration-hover ease-brand",
-    "disabled:pointer-events-none disabled:opacity-45 motion-safe:active:scale-[0.98]",
+    "pressable disabled:pointer-events-none disabled:opacity-45",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:shrink-0",
   ],
   {
@@ -74,14 +74,31 @@ function ButtonArrow({ kind }: { kind: Exclude<ButtonArrowKind, false> }) {
         className={cn(
           base,
           "group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5",
+          "group-focus-visible/button:translate-x-0.5 group-focus-visible/button:-translate-y-0.5",
         )}
       />
     );
   }
   if (kind === "down") {
-    return <ArrowDown aria-hidden className={cn(base, "group-hover/button:translate-y-0.5")} />;
+    return (
+      <ArrowDown
+        aria-hidden
+        className={cn(
+          base,
+          "group-hover/button:translate-y-0.5 group-focus-visible/button:translate-y-0.5",
+        )}
+      />
+    );
   }
-  return <ArrowRight aria-hidden className={cn(base, "group-hover/button:translate-x-1")} />;
+  return (
+    <ArrowRight
+      aria-hidden
+      className={cn(
+        base,
+        "group-hover/button:translate-x-1 group-focus-visible/button:translate-x-1",
+      )}
+    />
+  );
 }
 
 /** Props for {@link Button}: Base UI's button props plus the style variants. */

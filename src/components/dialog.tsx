@@ -162,7 +162,7 @@ function CloseButton({ label }: { label: string }) {
   return (
     <BaseDialog.Close
       aria-label={label}
-      className="mt-3 mr-3 size-10 bg-white/85 backdrop-blur hover:bg-white pointer-events-auto grid shrink-0 place-items-center rounded-full text-violet-950 shadow-soft transition-[background-color,rotate] duration-hover ease-brand motion-safe:hover:rotate-90"
+      className="mt-3 mr-3 size-10 bg-white/85 backdrop-blur hover:bg-white pointer-events-auto grid shrink-0 pressable place-items-center rounded-full text-violet-950 shadow-soft transition-[background-color,rotate,scale] duration-hover ease-brand motion-safe:hover:rotate-90"
     >
       <X aria-hidden="true" className="size-4" />
     </BaseDialog.Close>

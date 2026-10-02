@@ -1,0 +1,1117 @@
+
+Running 1112 tests using 4 workers
+
+[1/1112] [chromium] › e2e/explorer.spec.ts:21:3 › patterns-complete-page--default: browser accessibility
+[2/1112] [chromium] › e2e/explorer.spec.ts:21:3 › layout-container--default: browser accessibility
+[3/1112] [chromium] › e2e/explorer.spec.ts:21:3 › foundations-tones--all-tones: browser accessibility
+[4/1112] [chromium] › e2e/explorer.spec.ts:27:3 › @visual foundations 320
+[5/1112] [chromium] › e2e/explorer.spec.ts:35:3 › @visual complete page 320
+[6/1112] [chromium] › e2e/explorer.spec.ts:27:3 › @visual foundations 390
+[7/1112] [chromium] › e2e/explorer.spec.ts:35:3 › @visual complete page 390
+[8/1112] [chromium] › e2e/explorer.spec.ts:27:3 › @visual foundations 768
+[9/1112] [chromium] › e2e/explorer.spec.ts:35:3 › @visual complete page 768
+[10/1112] [chromium] › e2e/explorer.spec.ts:27:3 › @visual foundations 1440
+[11/1112] [chromium] › e2e/explorer.spec.ts:35:3 › @visual complete page 1440
+[12/1112] [chromium] › e2e/explorer.spec.ts:44:1 › nested dialog keeps background inert and restores focus
+[13/1112] [chromium] › e2e/explorer.spec.ts:70:1 › mobile header traps focus and restores interaction
+[14/1112] [chromium] › e2e/explorer.spec.ts:88:1 › native skip link transfers keyboard focus
+[15/1112] [chromium] › e2e/explorer.spec.ts:96:1 › native FAQ fragment opens the linked answer
+[16/1112] [chromium] › e2e/explorer.spec.ts:109:1 › nested tone focus outlines meet non-text contrast
+[17/1112] [chromium] › e2e/explorer.spec.ts:141:1 › focus outlines stay visible in forced colors
+[18/1112] [chromium] › e2e/explorer.spec.ts:163:1 › reduced motion leaves revealed content visible
+[19/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--closed: nothing moves under reduced motion
+[20/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--initially-open: nothing moves under reduced motion
+[21/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--multiple-open: nothing moves under reduced motion
+[22/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--disabled: nothing moves under reduced motion
+[23/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--long-content: nothing moves under reduced motion
+[24/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--start: nothing moves under reduced motion
+[25/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--center: nothing moves under reduced motion
+[26/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--with-status: nothing moves under reduced motion
+[27/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--wrapped-long-content: nothing moves under reduced motion
+[28/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--disabled-action: nothing moves under reduced motion
+[29/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--internal-route: nothing moves under reduced motion
+[30/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--external: nothing moves under reduced motion
+[31/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--external-same-tab: nothing moves under reduced motion
+[32/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--forced-new-tab: nothing moves under reduced motion
+[33/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--contact-and-fragments: nothing moves under reduced motion
+[34/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--long-label: nothing moves under reduced motion
+[35/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--default: nothing moves under reduced motion
+[36/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--subtle: nothing moves under reduced motion
+[37/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--vivid: nothing moves under reduced motion
+[38/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--tonal: nothing moves under reduced motion
+[39/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--gradient: nothing moves under reduced motion
+[40/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--dark-intensity: nothing moves under reduced motion
+[41/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--ambient-drift: nothing moves under reduced motion
+[42/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--first-composition: nothing moves under reduced motion
+[43/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--second-composition: nothing moves under reduced motion
+[44/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--third-composition: nothing moves under reduced motion
+[45/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--default: nothing moves under reduced motion
+[46/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--rich-content: nothing moves under reduced motion
+[47/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--long-content: nothing moves under reduced motion
+[48/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--empty: nothing moves under reduced motion
+[49/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--primary: nothing moves under reduced motion
+[50/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--secondary: nothing moves under reduced motion
+[51/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--outline: nothing moves under reduced motion
+[52/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--ghost: nothing moves under reduced motion
+[53/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--inverse: nothing moves under reduced motion
+[54/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--link: nothing moves under reduced motion
+[55/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--small: nothing moves under reduced motion
+[56/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--large: nothing moves under reduced motion
+[57/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--disabled: nothing moves under reduced motion
+[58/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--focusable-disabled: nothing moves under reduced motion
+[59/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--arrow-directions: nothing moves under reduced motion
+[60/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--icon-controls: nothing moves under reduced motion
+[61/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--long-labels: nothing moves under reduced motion
+[62/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--custom-styled-element: nothing moves under reduced motion
+[63/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--all-selected: nothing moves under reduced motion
+[64/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--specific-selection: nothing moves under reduced motion
+[65/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--without-counts: nothing moves under reduced motion
+[66/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--visible-label: nothing moves under reduced motion
+[67/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--long-labels: nothing moves under reduced motion
+[68/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--zero-count: nothing moves under reduced motion
+[69/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--closed: nothing moves under reduced motion
+[70/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--expanded: nothing moves under reduced motion
+[71/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--disabled: nothing moves under reduced motion
+[72/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--long-content: nothing moves under reduced motion
+[73/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--default: nothing moves under reduced motion
+[74/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--wide: nothing moves under reduced motion
+[75/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--narrow: nothing moves under reduced motion
+[76/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--prose-measure: nothing moves under reduced motion
+[77/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--semantic-article: nothing moves under reduced motion
+[78/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--long-content: nothing moves under reduced motion
+[79/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--copy-figure: nothing moves under reduced motion
+[80/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--numeric-figure: nothing moves under reduced motion
+[81/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--decimal-percentage: nothing moves under reduced motion
+[82/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--ungrouped: nothing moves under reduced motion
+[83/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--static-copy: nothing moves under reduced motion
+[84/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--on-scroll: nothing moves under reduced motion
+[85/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--server-safe-helpers: nothing moves under reduced motion
+[86/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--panel: nothing moves under reduced motion
+[87/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--full-bleed: nothing moves under reduced motion
+[88/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--lavender-panel: nothing moves under reduced motion
+[89/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--artwork: nothing moves under reduced motion
+[90/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--with-footer: nothing moves under reduced motion
+[91/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--long-content: nothing moves under reduced motion
+[92/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--default: nothing moves under reduced motion
+[93/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--large: nothing moves under reduced motion
+[94/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--draw-in: nothing moves under reduced motion
+[95/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--start-of-window: nothing moves under reduced motion
+[96/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--end-of-window: nothing moves under reduced motion
+[97/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--clamped-before-start: nothing moves under reduced motion
+[98/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--clamped-after-end: nothing moves under reduced motion
+[99/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--modal: nothing moves under reduced motion
+[100/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--medium: nothing moves under reduced motion
+[101/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--large: nothing moves under reduced motion
+[102/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--extra-large: nothing moves under reduced motion
+[103/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--fullscreen: nothing moves under reduced motion
+[104/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--ink-surface: nothing moves under reduced motion
+[105/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--without-corner-close: nothing moves under reduced motion
+[106/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--long-content: nothing moves under reduced motion
+[107/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--disabled-trigger: nothing moves under reduced motion
+[108/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--custom-background-root: nothing moves under reduced motion
+[109/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--controlled: nothing moves under reduced motion
+[110/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--nested: nothing moves under reduced motion
+[111/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--default: nothing moves under reduced motion
+[112/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--long-guidance: nothing moves under reduced motion
+[113/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--recovery-action: nothing moves under reduced motion
+[114/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--image: nothing moves under reduced motion
+[115/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--missing-source: nothing moves under reduced motion
+[116/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--load-error: nothing moves under reduced motion
+[117/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--retry-with-new-source: nothing moves under reduced motion
+[118/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--default: nothing moves under reduced motion
+[119/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--open-answer: nothing moves under reduced motion
+[120/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--controlled: nothing moves under reduced motion
+[121/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--deep-link: nothing moves under reduced motion
+[122/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--long-answers: nothing moves under reduced motion
+[123/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--fourth-level-headings: nothing moves under reduced motion
+[124/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--default: nothing moves under reduced motion
+[125/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--lavender: nothing moves under reduced motion
+[126/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--with-introduction: nothing moves under reduced motion
+[127/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--open-answer: nothing moves under reduced motion
+[128/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--long-content: nothing moves under reduced motion
+[129/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--tint: nothing moves under reduced motion
+[130/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--soft: nothing moves under reduced motion
+[131/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--outline: nothing moves under reduced motion
+[132/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--small: nothing moves under reduced motion
+[133/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--large: nothing moves under reduced motion
+[134/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--circle: nothing moves under reduced motion
+[135/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--interactive: nothing moves under reduced motion
+[136/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--with-media: nothing moves under reduced motion
+[137/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--long-adjacent-text: nothing moves under reduced motion
+[138/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--without-media: nothing moves under reduced motion
+[139/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--long-content: nothing moves under reduced motion
+[140/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--responsive: nothing moves under reduced motion
+[141/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--default: nothing moves under reduced motion
+[142/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--large: nothing moves under reduced motion
+[143/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--draw-in: nothing moves under reduced motion
+[144/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--all-upcoming: nothing moves under reduced motion
+[145/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--long-labels: nothing moves under reduced motion
+[146/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--default: nothing moves under reduced motion
+[147/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--large: nothing moves under reduced motion
+[148/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--copy-figures: nothing moves under reduced motion
+[149/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--long-labels: nothing moves under reduced motion
+[150/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--grid: nothing moves under reduced motion
+[151/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--strip: nothing moves under reduced motion
+[152/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--responsive-large-tiles: nothing moves under reduced motion
+[153/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--tile-variants: nothing moves under reduced motion
+[154/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--wordmark: nothing moves under reduced motion
+[155/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--missing-artwork-and-keyboard-link: nothing moves under reduced motion
+[156/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--load-error: nothing moves under reduced motion
+[157/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--default: nothing moves under reduced motion
+[158/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--with-media: nothing moves under reduced motion
+[159/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--highlighted-title: nothing moves under reduced motion
+[160/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--night: nothing moves under reduced motion
+[161/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--fit-long-word: nothing moves under reduced motion
+[162/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--medium: nothing moves under reduced motion
+[163/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--extra-large: nothing moves under reduced motion
+[164/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--marked-words-and-footer: nothing moves under reduced motion
+[165/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--custom-title: nothing moves under reduced motion
+[166/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--default: nothing moves under reduced motion
+[167/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--focal-point: nothing moves under reduced motion
+[168/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--long-content: nothing moves under reduced motion
+[169/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--responsive: nothing moves under reduced motion
+[170/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--default: nothing moves under reduced motion
+[171/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--aspect-ratios: nothing moves under reduced motion
+[172/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--bleed: nothing moves under reduced motion
+[173/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--panorama-responsive: nothing moves under reduced motion
+[174/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--eager-and-focal-point: nothing moves under reduced motion
+[175/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--long-caption: nothing moves under reduced motion
+[176/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-default: nothing moves under reduced motion
+[177/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-small: nothing moves under reduced motion
+[178/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-statement: nothing moves under reduced motion
+[179/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--tags: nothing moves under reduced motion
+[180/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--live: nothing moves under reduced motion
+[181/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--idle: nothing moves under reduced motion
+[182/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--closed: nothing moves under reduced motion
+[183/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--small-aligned-actions: nothing moves under reduced motion
+[184/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--large-aligned-actions: nothing moves under reduced motion
+[185/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--long-status: nothing moves under reduced motion
+[186/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--raised: nothing moves under reduced motion
+[187/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--glass: nothing moves under reduced motion
+[188/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--editorial: nothing moves under reduced motion
+[189/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--ruled: nothing moves under reduced motion
+[190/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--context-and-footer: nothing moves under reduced motion
+[191/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--long-content: nothing moves under reduced motion
+[192/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--without-images: nothing moves under reduced motion
+[193/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--mark: nothing moves under reduced motion
+[194/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--up: nothing moves under reduced motion
+[195/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--fade: nothing moves under reduced motion
+[196/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--scale: nothing moves under reduced motion
+[197/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--left: nothing moves under reduced motion
+[198/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--right: nothing moves under reduced motion
+[199/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--line: nothing moves under reduced motion
+[200/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--staggered-on-scroll: nothing moves under reduced motion
+[201/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--split: nothing moves under reduced motion
+[202/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--stack: nothing moves under reduced motion
+[203/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--center: nothing moves under reduced motion
+[204/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--large: nothing moves under reduced motion
+[205/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--extra-large: nothing moves under reduced motion
+[206/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--with-count: nothing moves under reduced motion
+[207/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--empty-count: nothing moves under reduced motion
+[208/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--long-content: nothing moves under reduced motion
+[209/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--paper: nothing moves under reduced motion
+[210/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--mist: nothing moves under reduced motion
+[211/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--lavender: nothing moves under reduced motion
+[212/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--ink: nothing moves under reduced motion
+[213/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--night: nothing moves under reduced motion
+[214/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--violet-statement: nothing moves under reduced motion
+[215/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--grain: nothing moves under reduced motion
+[216/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--small-spacing: nothing moves under reduced motion
+[217/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--large-spacing: nothing moves under reduced motion
+[218/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--extra-large-spacing: nothing moves under reduced motion
+[219/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--no-spacing: nothing moves under reduced motion
+[220/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--long-content: nothing moves under reduced motion
+[221/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--default: nothing moves under reduced motion
+[222/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--marked-phrase: nothing moves under reduced motion
+[223/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--custom-timing: nothing moves under reduced motion
+[224/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--repeated-words: nothing moves under reduced motion
+[225/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--long-headline: nothing moves under reduced motion
+[226/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--raised: nothing moves under reduced motion
+[227/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--outline: nothing moves under reduced motion
+[228/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--glass: nothing moves under reduced motion
+[229/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--plain: nothing moves under reduced motion
+[230/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--interactive: nothing moves under reduced motion
+[231/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--long-content: nothing moves under reduced motion
+[232/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--four-columns: nothing moves under reduced motion
+[233/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--two-columns: nothing moves under reduced motion
+[234/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--three-columns: nothing moves under reduced motion
+[235/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--small: nothing moves under reduced motion
+[236/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--medium: nothing moves under reduced motion
+[237/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--large: nothing moves under reduced motion
+[238/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--extra-large: nothing moves under reduced motion
+[239/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--formatted-numbers: nothing moves under reduced motion
+[240/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--long-labels: nothing moves under reduced motion
+[241/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--solid-rail: nothing moves under reduced motion
+[242/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--dashed-rail: nothing moves under reduced motion
+[243/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--dot-markers: nothing moves under reduced motion
+[244/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--without-rail: nothing moves under reduced motion
+[245/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--rows: nothing moves under reduced motion
+[246/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--three-columns: nothing moves under reduced motion
+[247/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--five-columns: nothing moves under reduced motion
+[248/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--icon-markers: nothing moves under reduced motion
+[249/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--long-content: nothing moves under reduced motion
+[250/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--accent: nothing moves under reduced motion
+[251/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--muted: nothing moves under reduced motion
+[252/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--with-arrow: nothing moves under reduced motion
+[253/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--external: nothing moves under reduced motion
+[254/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--in-paragraph: nothing moves under reduced motion
+[255/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--long-label: nothing moves under reduced motion
+[256/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-topblend--top: nothing moves under reduced motion
+[257/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › brand-topblend--bottom: nothing moves under reduced motion
+[258/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-medium: nothing moves under reduced motion
+[259/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-large: nothing moves under reduced motion
+[260/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-extra-large: nothing moves under reduced motion
+[261/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-hero: nothing moves under reduced motion
+[262/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--heading-scale: nothing moves under reduced motion
+[263/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--text-scale: nothing moves under reduced motion
+[264/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--emphasis: nothing moves under reduced motion
+[265/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--eyebrow-plain: nothing moves under reduced motion
+[266/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--eyebrow-sequence: nothing moves under reduced motion
+[267/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--accent-highlight: nothing moves under reduced motion
+[268/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--long-form: nothing moves under reduced motion
+[269/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--fade-highlight: nothing moves under reduced motion
+[270/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--long-headline: nothing moves under reduced motion
+[271/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--default: nothing moves under reduced motion
+[272/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--narrow: nothing moves under reduced motion
+[273/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--local-branding: nothing moves under reduced motion
+[274/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--default: nothing moves under reduced motion
+[275/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--solid: nothing moves under reduced motion
+[276/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--desktop: nothing moves under reduced motion
+[277/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--long-mobile-navigation: nothing moves under reduced motion
+[278/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--link-dismissal: nothing moves under reduced motion
+[279/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--default: nothing moves under reduced motion
+[280/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--current: nothing moves under reduced motion
+[281/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--external: nothing moves under reduced motion
+[282/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-skiplink--default: nothing moves under reduced motion
+[283/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › shell-skiplink--custom-target: nothing moves under reduced motion
+[284/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-focus--nested-tones: nothing moves under reduced motion
+[285/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-tones--all-tones: nothing moves under reduced motion
+[286/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › patterns-complete-page--default: nothing moves under reduced motion
+[287/1112] [chromium] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-spacing-and-shape--scale: nothing moves under reduced motion
+[288/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--closed: every control answers hover and press
+[289/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--initially-open: every control answers hover and press
+[290/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--multiple-open: every control answers hover and press
+[291/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--disabled: every control answers hover and press
+[292/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--long-content: every control answers hover and press
+[293/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--start: every control answers hover and press
+[294/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--center: every control answers hover and press
+[295/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--with-status: every control answers hover and press
+[296/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--wrapped-long-content: every control answers hover and press
+[297/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--disabled-action: every control answers hover and press
+[298/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--internal-route: every control answers hover and press
+[299/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--external: every control answers hover and press
+[300/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--external-same-tab: every control answers hover and press
+[301/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--forced-new-tab: every control answers hover and press
+[302/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--contact-and-fragments: every control answers hover and press
+[303/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--long-label: every control answers hover and press
+[304/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--default: every control answers hover and press
+[305/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--subtle: every control answers hover and press
+[306/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--vivid: every control answers hover and press
+[307/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--tonal: every control answers hover and press
+[308/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--gradient: every control answers hover and press
+[309/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--dark-intensity: every control answers hover and press
+[310/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--ambient-drift: every control answers hover and press
+[311/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--first-composition: every control answers hover and press
+[312/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--second-composition: every control answers hover and press
+[313/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--third-composition: every control answers hover and press
+[314/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--default: every control answers hover and press
+[315/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--rich-content: every control answers hover and press
+[316/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--long-content: every control answers hover and press
+[317/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--empty: every control answers hover and press
+[318/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--primary: every control answers hover and press
+[319/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--secondary: every control answers hover and press
+[320/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--outline: every control answers hover and press
+[321/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--ghost: every control answers hover and press
+[322/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--inverse: every control answers hover and press
+[323/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--link: every control answers hover and press
+[324/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--large: every control answers hover and press
+[325/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--small: every control answers hover and press
+[326/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--disabled: every control answers hover and press
+[327/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--focusable-disabled: every control answers hover and press
+[328/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--arrow-directions: every control answers hover and press
+[329/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--icon-controls: every control answers hover and press
+[330/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--long-labels: every control answers hover and press
+[331/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--custom-styled-element: every control answers hover and press
+[332/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--all-selected: every control answers hover and press
+[333/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--specific-selection: every control answers hover and press
+[334/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--without-counts: every control answers hover and press
+[335/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--visible-label: every control answers hover and press
+[336/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--long-labels: every control answers hover and press
+[337/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--zero-count: every control answers hover and press
+[338/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--closed: every control answers hover and press
+[339/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--expanded: every control answers hover and press
+[340/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--long-content: every control answers hover and press
+[341/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--disabled: every control answers hover and press
+[342/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--default: every control answers hover and press
+[343/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--wide: every control answers hover and press
+[344/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--prose-measure: every control answers hover and press
+[345/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--narrow: every control answers hover and press
+[346/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--long-content: every control answers hover and press
+[347/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--semantic-article: every control answers hover and press
+[348/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--copy-figure: every control answers hover and press
+[349/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--numeric-figure: every control answers hover and press
+[350/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--decimal-percentage: every control answers hover and press
+[351/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--ungrouped: every control answers hover and press
+[352/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--static-copy: every control answers hover and press
+[353/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--on-scroll: every control answers hover and press
+[354/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--server-safe-helpers: every control answers hover and press
+[355/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--panel: every control answers hover and press
+[356/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--full-bleed: every control answers hover and press
+[357/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--lavender-panel: every control answers hover and press
+[358/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--artwork: every control answers hover and press
+[359/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--with-footer: every control answers hover and press
+[360/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--long-content: every control answers hover and press
+[361/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--default: every control answers hover and press
+[362/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--large: every control answers hover and press
+[363/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--draw-in: every control answers hover and press
+[364/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--start-of-window: every control answers hover and press
+[365/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--end-of-window: every control answers hover and press
+[366/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--clamped-before-start: every control answers hover and press
+[367/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--clamped-after-end: every control answers hover and press
+[368/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--modal: every control answers hover and press
+[369/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--medium: every control answers hover and press
+[370/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--large: every control answers hover and press
+[371/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--extra-large: every control answers hover and press
+[372/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--fullscreen: every control answers hover and press
+[373/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--ink-surface: every control answers hover and press
+[374/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--without-corner-close: every control answers hover and press
+[375/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--long-content: every control answers hover and press
+[376/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--disabled-trigger: every control answers hover and press
+[377/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--custom-background-root: every control answers hover and press
+[378/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--controlled: every control answers hover and press
+[379/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--nested: every control answers hover and press
+[380/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--long-guidance: every control answers hover and press
+[381/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--default: every control answers hover and press
+[382/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--recovery-action: every control answers hover and press
+[383/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--image: every control answers hover and press
+[384/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--load-error: every control answers hover and press
+[385/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--missing-source: every control answers hover and press
+[386/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--retry-with-new-source: every control answers hover and press
+[387/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--default: every control answers hover and press
+[388/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--open-answer: every control answers hover and press
+[389/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--controlled: every control answers hover and press
+[390/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--deep-link: every control answers hover and press
+[391/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--long-answers: every control answers hover and press
+[392/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--fourth-level-headings: every control answers hover and press
+[393/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--default: every control answers hover and press
+[394/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--lavender: every control answers hover and press
+[395/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--with-introduction: every control answers hover and press
+[396/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--open-answer: every control answers hover and press
+[397/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--long-content: every control answers hover and press
+[398/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--tint: every control answers hover and press
+[399/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--soft: every control answers hover and press
+[400/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--outline: every control answers hover and press
+[401/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--small: every control answers hover and press
+[402/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--large: every control answers hover and press
+[403/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--circle: every control answers hover and press
+[404/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--interactive: every control answers hover and press
+[405/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--long-adjacent-text: every control answers hover and press
+[406/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--with-media: every control answers hover and press
+[407/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--without-media: every control answers hover and press
+[408/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--long-content: every control answers hover and press
+[409/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--responsive: every control answers hover and press
+[410/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--default: every control answers hover and press
+[411/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--large: every control answers hover and press
+[412/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--draw-in: every control answers hover and press
+[413/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--all-upcoming: every control answers hover and press
+[414/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--long-labels: every control answers hover and press
+[415/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--default: every control answers hover and press
+[416/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--large: every control answers hover and press
+[417/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--copy-figures: every control answers hover and press
+[418/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--long-labels: every control answers hover and press
+[419/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--grid: every control answers hover and press
+[420/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--strip: every control answers hover and press
+[421/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--responsive-large-tiles: every control answers hover and press
+[422/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--tile-variants: every control answers hover and press
+[423/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--wordmark: every control answers hover and press
+[424/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--missing-artwork-and-keyboard-link: every control answers hover and press
+[425/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--load-error: every control answers hover and press
+[426/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--with-media: every control answers hover and press
+[427/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--default: every control answers hover and press
+[428/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--highlighted-title: every control answers hover and press
+[429/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--night: every control answers hover and press
+[430/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--fit-long-word: every control answers hover and press
+[431/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--medium: every control answers hover and press
+[432/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--extra-large: every control answers hover and press
+[433/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--marked-words-and-footer: every control answers hover and press
+[434/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--custom-title: every control answers hover and press
+[435/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--default: every control answers hover and press
+[436/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--focal-point: every control answers hover and press
+[437/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--long-content: every control answers hover and press
+[438/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--responsive: every control answers hover and press
+[439/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--default: every control answers hover and press
+[440/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--aspect-ratios: every control answers hover and press
+[441/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--bleed: every control answers hover and press
+[442/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--panorama-responsive: every control answers hover and press
+[443/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--eager-and-focal-point: every control answers hover and press
+[444/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--long-caption: every control answers hover and press
+[445/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-default: every control answers hover and press
+[446/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-small: every control answers hover and press
+[447/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-statement: every control answers hover and press
+[448/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--tags: every control answers hover and press
+[449/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--live: every control answers hover and press
+[450/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--idle: every control answers hover and press
+[451/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--closed: every control answers hover and press
+[452/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--small-aligned-actions: every control answers hover and press
+[453/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--large-aligned-actions: every control answers hover and press
+[454/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--long-status: every control answers hover and press
+[455/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--raised: every control answers hover and press
+[456/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--glass: every control answers hover and press
+[457/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--ruled: every control answers hover and press
+[458/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--editorial: every control answers hover and press
+[459/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--context-and-footer: every control answers hover and press
+[460/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--long-content: every control answers hover and press
+[461/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--without-images: every control answers hover and press
+[462/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--mark: every control answers hover and press
+[463/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--up: every control answers hover and press
+[464/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--fade: every control answers hover and press
+[465/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--scale: every control answers hover and press
+[466/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--left: every control answers hover and press
+[467/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--right: every control answers hover and press
+[468/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--line: every control answers hover and press
+[469/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--staggered-on-scroll: every control answers hover and press
+[470/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--split: every control answers hover and press
+[471/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--stack: every control answers hover and press
+[472/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--center: every control answers hover and press
+[473/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--large: every control answers hover and press
+[474/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--extra-large: every control answers hover and press
+[475/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--with-count: every control answers hover and press
+[476/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--empty-count: every control answers hover and press
+[477/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--long-content: every control answers hover and press
+[478/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--paper: every control answers hover and press
+[479/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--mist: every control answers hover and press
+[480/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--lavender: every control answers hover and press
+[481/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--ink: every control answers hover and press
+[482/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--night: every control answers hover and press
+[483/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--violet-statement: every control answers hover and press
+[484/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--grain: every control answers hover and press
+[485/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--small-spacing: every control answers hover and press
+[486/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--large-spacing: every control answers hover and press
+[487/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--extra-large-spacing: every control answers hover and press
+[488/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--no-spacing: every control answers hover and press
+[489/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--long-content: every control answers hover and press
+[490/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--default: every control answers hover and press
+[491/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--marked-phrase: every control answers hover and press
+[492/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--custom-timing: every control answers hover and press
+[493/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--repeated-words: every control answers hover and press
+[494/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--long-headline: every control answers hover and press
+[495/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--raised: every control answers hover and press
+[496/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--outline: every control answers hover and press
+[497/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--glass: every control answers hover and press
+[498/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--plain: every control answers hover and press
+[499/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--interactive: every control answers hover and press
+[500/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--long-content: every control answers hover and press
+[501/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--four-columns: every control answers hover and press
+[502/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--two-columns: every control answers hover and press
+[503/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--three-columns: every control answers hover and press
+[504/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--small: every control answers hover and press
+[505/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--medium: every control answers hover and press
+[506/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--large: every control answers hover and press
+[507/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--extra-large: every control answers hover and press
+[508/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--formatted-numbers: every control answers hover and press
+[509/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--long-labels: every control answers hover and press
+[510/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--solid-rail: every control answers hover and press
+[511/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--dashed-rail: every control answers hover and press
+[512/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--dot-markers: every control answers hover and press
+[513/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--without-rail: every control answers hover and press
+[514/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--rows: every control answers hover and press
+[515/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--three-columns: every control answers hover and press
+[516/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--five-columns: every control answers hover and press
+[517/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--icon-markers: every control answers hover and press
+[518/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--long-content: every control answers hover and press
+[519/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--accent: every control answers hover and press
+[520/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--muted: every control answers hover and press
+[521/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--with-arrow: every control answers hover and press
+[522/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--external: every control answers hover and press
+[523/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--in-paragraph: every control answers hover and press
+[524/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--long-label: every control answers hover and press
+[525/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-topblend--top: every control answers hover and press
+[526/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › brand-topblend--bottom: every control answers hover and press
+[527/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-medium: every control answers hover and press
+[528/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-large: every control answers hover and press
+[529/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-extra-large: every control answers hover and press
+[530/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-hero: every control answers hover and press
+[531/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--heading-scale: every control answers hover and press
+[532/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--text-scale: every control answers hover and press
+[533/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--eyebrow-plain: every control answers hover and press
+[534/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--emphasis: every control answers hover and press
+[535/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--eyebrow-sequence: every control answers hover and press
+[536/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--accent-highlight: every control answers hover and press
+[537/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--fade-highlight: every control answers hover and press
+[538/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--long-form: every control answers hover and press
+[539/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--long-headline: every control answers hover and press
+[540/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--default: every control answers hover and press
+[541/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--narrow: every control answers hover and press
+[542/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--local-branding: every control answers hover and press
+[543/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--default: every control answers hover and press
+[544/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--solid: every control answers hover and press
+[545/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--desktop: every control answers hover and press
+[546/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--long-mobile-navigation: every control answers hover and press
+[547/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--link-dismissal: every control answers hover and press
+[548/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--default: every control answers hover and press
+[549/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--current: every control answers hover and press
+[550/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--external: every control answers hover and press
+[551/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-skiplink--default: every control answers hover and press
+[552/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-focus--nested-tones: every control answers hover and press
+[553/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › shell-skiplink--custom-target: every control answers hover and press
+[554/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-tones--all-tones: every control answers hover and press
+[555/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › patterns-complete-page--default: every control answers hover and press
+[556/1112] [chromium] › e2e/motion.spec.ts:204:5 › interaction states › foundations-spacing-and-shape--scale: every control answers hover and press
+[557/1112] [webkit] › e2e/explorer.spec.ts:21:3 › layout-container--default: browser accessibility
+[558/1112] [webkit] › e2e/explorer.spec.ts:21:3 › patterns-complete-page--default: browser accessibility
+[559/1112] [webkit] › e2e/explorer.spec.ts:21:3 › foundations-tones--all-tones: browser accessibility
+[560/1112] [webkit] › e2e/explorer.spec.ts:27:3 › @visual foundations 320
+[561/1112] [webkit] › e2e/explorer.spec.ts:35:3 › @visual complete page 320
+[562/1112] [webkit] › e2e/explorer.spec.ts:27:3 › @visual foundations 390
+[563/1112] [webkit] › e2e/explorer.spec.ts:35:3 › @visual complete page 390
+[564/1112] [webkit] › e2e/explorer.spec.ts:27:3 › @visual foundations 768
+[565/1112] [webkit] › e2e/explorer.spec.ts:35:3 › @visual complete page 768
+[566/1112] [webkit] › e2e/explorer.spec.ts:27:3 › @visual foundations 1440
+[567/1112] [webkit] › e2e/explorer.spec.ts:35:3 › @visual complete page 1440
+[568/1112] [webkit] › e2e/explorer.spec.ts:44:1 › nested dialog keeps background inert and restores focus
+[569/1112] [webkit] › e2e/explorer.spec.ts:70:1 › mobile header traps focus and restores interaction
+[570/1112] [webkit] › e2e/explorer.spec.ts:88:1 › native skip link transfers keyboard focus
+[571/1112] [webkit] › e2e/explorer.spec.ts:96:1 › native FAQ fragment opens the linked answer
+[572/1112] [webkit] › e2e/explorer.spec.ts:109:1 › nested tone focus outlines meet non-text contrast
+[573/1112] [webkit] › e2e/explorer.spec.ts:141:1 › focus outlines stay visible in forced colors
+[574/1112] [webkit] › e2e/explorer.spec.ts:163:1 › reduced motion leaves revealed content visible
+[575/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--closed: nothing moves under reduced motion
+[576/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--initially-open: nothing moves under reduced motion
+[577/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--disabled: nothing moves under reduced motion
+[578/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--multiple-open: nothing moves under reduced motion
+[579/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-accordion--long-content: nothing moves under reduced motion
+[580/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--start: nothing moves under reduced motion
+[581/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--center: nothing moves under reduced motion
+[582/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--wrapped-long-content: nothing moves under reduced motion
+[583/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--disabled-action: nothing moves under reduced motion
+[584/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--internal-route: nothing moves under reduced motion
+[585/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--external: nothing moves under reduced motion
+[586/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--external-same-tab: nothing moves under reduced motion
+[587/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--forced-new-tab: nothing moves under reduced motion
+[588/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--contact-and-fragments: nothing moves under reduced motion
+[589/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-anchor--long-label: nothing moves under reduced motion
+[590/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--default: nothing moves under reduced motion
+[591/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--subtle: nothing moves under reduced motion
+[592/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-actions--with-status: nothing moves under reduced motion
+[593/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-aurora--vivid: nothing moves under reduced motion
+[594/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--tonal: nothing moves under reduced motion
+[595/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--gradient: nothing moves under reduced motion
+[596/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--dark-intensity: nothing moves under reduced motion
+[597/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandmark--ambient-drift: nothing moves under reduced motion
+[598/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--first-composition: nothing moves under reduced motion
+[599/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--second-composition: nothing moves under reduced motion
+[600/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-brandpanel--third-composition: nothing moves under reduced motion
+[601/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--default: nothing moves under reduced motion
+[602/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--rich-content: nothing moves under reduced motion
+[603/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--long-content: nothing moves under reduced motion
+[604/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-bulletlist--empty: nothing moves under reduced motion
+[605/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--primary: nothing moves under reduced motion
+[606/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--secondary: nothing moves under reduced motion
+[607/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--outline: nothing moves under reduced motion
+[608/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--ghost: nothing moves under reduced motion
+[609/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--inverse: nothing moves under reduced motion
+[610/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--link: nothing moves under reduced motion
+[611/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--small: nothing moves under reduced motion
+[612/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--large: nothing moves under reduced motion
+[613/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--disabled: nothing moves under reduced motion
+[614/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--focusable-disabled: nothing moves under reduced motion
+[615/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--arrow-directions: nothing moves under reduced motion
+[616/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--icon-controls: nothing moves under reduced motion
+[617/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--long-labels: nothing moves under reduced motion
+[618/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-button--custom-styled-element: nothing moves under reduced motion
+[619/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--all-selected: nothing moves under reduced motion
+[620/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--specific-selection: nothing moves under reduced motion
+[621/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--without-counts: nothing moves under reduced motion
+[622/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--visible-label: nothing moves under reduced motion
+[623/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--long-labels: nothing moves under reduced motion
+[624/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-chipgroup--zero-count: nothing moves under reduced motion
+[625/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--closed: nothing moves under reduced motion
+[626/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--expanded: nothing moves under reduced motion
+[627/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--disabled: nothing moves under reduced motion
+[628/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-collapsible--long-content: nothing moves under reduced motion
+[629/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--default: nothing moves under reduced motion
+[630/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--wide: nothing moves under reduced motion
+[631/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--narrow: nothing moves under reduced motion
+[632/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--prose-measure: nothing moves under reduced motion
+[633/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--semantic-article: nothing moves under reduced motion
+[634/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-container--long-content: nothing moves under reduced motion
+[635/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--copy-figure: nothing moves under reduced motion
+[636/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--numeric-figure: nothing moves under reduced motion
+[637/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--decimal-percentage: nothing moves under reduced motion
+[638/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--ungrouped: nothing moves under reduced motion
+[639/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--static-copy: nothing moves under reduced motion
+[640/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--on-scroll: nothing moves under reduced motion
+[641/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-countup--server-safe-helpers: nothing moves under reduced motion
+[642/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--panel: nothing moves under reduced motion
+[643/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--full-bleed: nothing moves under reduced motion
+[644/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--lavender-panel: nothing moves under reduced motion
+[645/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--artwork: nothing moves under reduced motion
+[646/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--with-footer: nothing moves under reduced motion
+[647/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ctaband--long-content: nothing moves under reduced motion
+[648/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--default: nothing moves under reduced motion
+[649/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--large: nothing moves under reduced motion
+[650/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--draw-in: nothing moves under reduced motion
+[651/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--start-of-window: nothing moves under reduced motion
+[652/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--end-of-window: nothing moves under reduced motion
+[653/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--clamped-before-start: nothing moves under reduced motion
+[654/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-dayruler--clamped-after-end: nothing moves under reduced motion
+[655/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--modal: nothing moves under reduced motion
+[656/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--medium: nothing moves under reduced motion
+[657/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--large: nothing moves under reduced motion
+[658/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--extra-large: nothing moves under reduced motion
+[659/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--fullscreen: nothing moves under reduced motion
+[660/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--ink-surface: nothing moves under reduced motion
+[661/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--without-corner-close: nothing moves under reduced motion
+[662/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--long-content: nothing moves under reduced motion
+[663/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--disabled-trigger: nothing moves under reduced motion
+[664/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--custom-background-root: nothing moves under reduced motion
+[665/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--controlled: nothing moves under reduced motion
+[666/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › interactions-dialog--nested: nothing moves under reduced motion
+[667/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--default: nothing moves under reduced motion
+[668/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--long-guidance: nothing moves under reduced motion
+[669/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-emptystate--recovery-action: nothing moves under reduced motion
+[670/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--image: nothing moves under reduced motion
+[671/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--missing-source: nothing moves under reduced motion
+[672/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--load-error: nothing moves under reduced motion
+[673/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-fallbackimage--retry-with-new-source: nothing moves under reduced motion
+[674/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--default: nothing moves under reduced motion
+[675/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--open-answer: nothing moves under reduced motion
+[676/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--controlled: nothing moves under reduced motion
+[677/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--deep-link: nothing moves under reduced motion
+[678/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--long-answers: nothing moves under reduced motion
+[679/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqlist--fourth-level-headings: nothing moves under reduced motion
+[680/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--default: nothing moves under reduced motion
+[681/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--lavender: nothing moves under reduced motion
+[682/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--with-introduction: nothing moves under reduced motion
+[683/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--open-answer: nothing moves under reduced motion
+[684/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-faqsection--long-content: nothing moves under reduced motion
+[685/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--tint: nothing moves under reduced motion
+[686/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--soft: nothing moves under reduced motion
+[687/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--outline: nothing moves under reduced motion
+[688/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--small: nothing moves under reduced motion
+[689/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--large: nothing moves under reduced motion
+[690/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--circle: nothing moves under reduced motion
+[691/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--interactive: nothing moves under reduced motion
+[692/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-iconbadge--long-adjacent-text: nothing moves under reduced motion
+[693/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--with-media: nothing moves under reduced motion
+[694/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--without-media: nothing moves under reduced motion
+[695/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--long-content: nothing moves under reduced motion
+[696/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-indexlist--responsive: nothing moves under reduced motion
+[697/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--default: nothing moves under reduced motion
+[698/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--large: nothing moves under reduced motion
+[699/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--draw-in: nothing moves under reduced motion
+[700/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--all-upcoming: nothing moves under reduced motion
+[701/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-keydates--long-labels: nothing moves under reduced motion
+[702/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--default: nothing moves under reduced motion
+[703/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--large: nothing moves under reduced motion
+[704/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--copy-figures: nothing moves under reduced motion
+[705/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-ledger--long-labels: nothing moves under reduced motion
+[706/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--grid: nothing moves under reduced motion
+[707/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--strip: nothing moves under reduced motion
+[708/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--responsive-large-tiles: nothing moves under reduced motion
+[709/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--tile-variants: nothing moves under reduced motion
+[710/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--wordmark: nothing moves under reduced motion
+[711/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--missing-artwork-and-keyboard-link: nothing moves under reduced motion
+[712/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-logowall--load-error: nothing moves under reduced motion
+[713/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--default: nothing moves under reduced motion
+[714/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--with-media: nothing moves under reduced motion
+[715/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--highlighted-title: nothing moves under reduced motion
+[716/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--night: nothing moves under reduced motion
+[717/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--fit-long-word: nothing moves under reduced motion
+[718/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--medium: nothing moves under reduced motion
+[719/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--extra-large: nothing moves under reduced motion
+[720/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--marked-words-and-footer: nothing moves under reduced motion
+[721/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--default: nothing moves under reduced motion
+[722/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-pagehero--custom-title: nothing moves under reduced motion
+[723/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--focal-point: nothing moves under reduced motion
+[724/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--long-content: nothing moves under reduced motion
+[725/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-personcard--responsive: nothing moves under reduced motion
+[726/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--default: nothing moves under reduced motion
+[727/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--aspect-ratios: nothing moves under reduced motion
+[728/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--bleed: nothing moves under reduced motion
+[729/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--panorama-responsive: nothing moves under reduced motion
+[730/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--eager-and-focal-point: nothing moves under reduced motion
+[731/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › media-photo--long-caption: nothing moves under reduced motion
+[732/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-default: nothing moves under reduced motion
+[733/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-statement: nothing moves under reduced motion
+[734/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--pill-small: nothing moves under reduced motion
+[735/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--live: nothing moves under reduced motion
+[736/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--tags: nothing moves under reduced motion
+[737/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--closed: nothing moves under reduced motion
+[738/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--idle: nothing moves under reduced motion
+[739/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--small-aligned-actions: nothing moves under reduced motion
+[740/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--large-aligned-actions: nothing moves under reduced motion
+[741/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-pillandstatus--long-status: nothing moves under reduced motion
+[742/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--raised: nothing moves under reduced motion
+[743/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--glass: nothing moves under reduced motion
+[744/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--editorial: nothing moves under reduced motion
+[745/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--ruled: nothing moves under reduced motion
+[746/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--context-and-footer: nothing moves under reduced motion
+[747/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--long-content: nothing moves under reduced motion
+[748/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--without-images: nothing moves under reduced motion
+[749/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-quotecard--mark: nothing moves under reduced motion
+[750/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--up: nothing moves under reduced motion
+[751/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--fade: nothing moves under reduced motion
+[752/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--scale: nothing moves under reduced motion
+[753/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--left: nothing moves under reduced motion
+[754/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--right: nothing moves under reduced motion
+[755/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--line: nothing moves under reduced motion
+[756/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-reveal--staggered-on-scroll: nothing moves under reduced motion
+[757/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--split: nothing moves under reduced motion
+[758/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--stack: nothing moves under reduced motion
+[759/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--center: nothing moves under reduced motion
+[760/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--large: nothing moves under reduced motion
+[761/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--extra-large: nothing moves under reduced motion
+[762/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--with-count: nothing moves under reduced motion
+[763/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--empty-count: nothing moves under reduced motion
+[764/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-sectionheader--long-content: nothing moves under reduced motion
+[765/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--paper: nothing moves under reduced motion
+[766/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--mist: nothing moves under reduced motion
+[767/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--lavender: nothing moves under reduced motion
+[768/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--ink: nothing moves under reduced motion
+[769/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--night: nothing moves under reduced motion
+[770/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--violet-statement: nothing moves under reduced motion
+[771/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--small-spacing: nothing moves under reduced motion
+[772/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--grain: nothing moves under reduced motion
+[773/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--large-spacing: nothing moves under reduced motion
+[774/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--extra-large-spacing: nothing moves under reduced motion
+[775/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--no-spacing: nothing moves under reduced motion
+[776/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › layout-section--long-content: nothing moves under reduced motion
+[777/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--default: nothing moves under reduced motion
+[778/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--marked-phrase: nothing moves under reduced motion
+[779/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--custom-timing: nothing moves under reduced motion
+[780/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--long-headline: nothing moves under reduced motion
+[781/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › motion-splitwords--repeated-words: nothing moves under reduced motion
+[782/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--raised: nothing moves under reduced motion
+[783/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--outline: nothing moves under reduced motion
+[784/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--glass: nothing moves under reduced motion
+[785/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--plain: nothing moves under reduced motion
+[786/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--interactive: nothing moves under reduced motion
+[787/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--four-columns: nothing moves under reduced motion
+[788/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › content-spotlightcard--long-content: nothing moves under reduced motion
+[789/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--two-columns: nothing moves under reduced motion
+[790/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--three-columns: nothing moves under reduced motion
+[791/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--small: nothing moves under reduced motion
+[792/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--medium: nothing moves under reduced motion
+[793/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--large: nothing moves under reduced motion
+[794/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--extra-large: nothing moves under reduced motion
+[795/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--formatted-numbers: nothing moves under reduced motion
+[796/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-statgrid--long-labels: nothing moves under reduced motion
+[797/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--solid-rail: nothing moves under reduced motion
+[798/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--dashed-rail: nothing moves under reduced motion
+[799/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--dot-markers: nothing moves under reduced motion
+[800/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--without-rail: nothing moves under reduced motion
+[801/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--rows: nothing moves under reduced motion
+[802/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--three-columns: nothing moves under reduced motion
+[803/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--icon-markers: nothing moves under reduced motion
+[804/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--five-columns: nothing moves under reduced motion
+[805/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › compositions-steps--long-content: nothing moves under reduced motion
+[806/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--accent: nothing moves under reduced motion
+[807/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--muted: nothing moves under reduced motion
+[808/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--with-arrow: nothing moves under reduced motion
+[809/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--external: nothing moves under reduced motion
+[810/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--in-paragraph: nothing moves under reduced motion
+[811/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › actions-textlink--long-label: nothing moves under reduced motion
+[812/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-topblend--top: nothing moves under reduced motion
+[813/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › brand-topblend--bottom: nothing moves under reduced motion
+[814/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-medium: nothing moves under reduced motion
+[815/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-large: nothing moves under reduced motion
+[816/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-extra-large: nothing moves under reduced motion
+[817/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--heading-scale: nothing moves under reduced motion
+[818/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--display-hero: nothing moves under reduced motion
+[819/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--text-scale: nothing moves under reduced motion
+[820/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--emphasis: nothing moves under reduced motion
+[821/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--eyebrow-plain: nothing moves under reduced motion
+[822/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--eyebrow-sequence: nothing moves under reduced motion
+[823/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--accent-highlight: nothing moves under reduced motion
+[824/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--fade-highlight: nothing moves under reduced motion
+[825/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--long-form: nothing moves under reduced motion
+[826/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-typography--long-headline: nothing moves under reduced motion
+[827/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--default: nothing moves under reduced motion
+[828/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--narrow: nothing moves under reduced motion
+[829/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-footer--local-branding: nothing moves under reduced motion
+[830/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--default: nothing moves under reduced motion
+[831/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--solid: nothing moves under reduced motion
+[832/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--desktop: nothing moves under reduced motion
+[833/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--long-mobile-navigation: nothing moves under reduced motion
+[834/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-header--link-dismissal: nothing moves under reduced motion
+[835/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--default: nothing moves under reduced motion
+[836/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--current: nothing moves under reduced motion
+[837/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-navanchor--external: nothing moves under reduced motion
+[838/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-skiplink--default: nothing moves under reduced motion
+[839/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › shell-skiplink--custom-target: nothing moves under reduced motion
+[840/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-focus--nested-tones: nothing moves under reduced motion
+[841/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-tones--all-tones: nothing moves under reduced motion
+[842/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › patterns-complete-page--default: nothing moves under reduced motion
+[843/1112] [motion] › e2e/motion.spec.ts:114:5 › reduced motion › foundations-spacing-and-shape--scale: nothing moves under reduced motion
+[844/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--closed: every control answers hover and press
+[845/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--multiple-open: every control answers hover and press
+[846/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--initially-open: every control answers hover and press
+[847/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--disabled: every control answers hover and press
+[848/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-accordion--long-content: every control answers hover and press
+[849/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--start: every control answers hover and press
+[850/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--center: every control answers hover and press
+[851/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--with-status: every control answers hover and press
+[852/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--wrapped-long-content: every control answers hover and press
+[853/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-actions--disabled-action: every control answers hover and press
+[854/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--external: every control answers hover and press
+[855/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--internal-route: every control answers hover and press
+[856/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--external-same-tab: every control answers hover and press
+[857/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--forced-new-tab: every control answers hover and press
+[858/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--contact-and-fragments: every control answers hover and press
+[859/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-anchor--long-label: every control answers hover and press
+[860/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--default: every control answers hover and press
+[861/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--subtle: every control answers hover and press
+[862/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-aurora--vivid: every control answers hover and press
+[863/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--tonal: every control answers hover and press
+[864/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--gradient: every control answers hover and press
+[865/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--dark-intensity: every control answers hover and press
+[866/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandmark--ambient-drift: every control answers hover and press
+[867/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--first-composition: every control answers hover and press
+[868/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--second-composition: every control answers hover and press
+[869/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-brandpanel--third-composition: every control answers hover and press
+[870/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--default: every control answers hover and press
+[871/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--rich-content: every control answers hover and press
+[872/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--long-content: every control answers hover and press
+[873/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-bulletlist--empty: every control answers hover and press
+[874/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--primary: every control answers hover and press
+[875/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--secondary: every control answers hover and press
+[876/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--outline: every control answers hover and press
+[877/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--ghost: every control answers hover and press
+[878/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--inverse: every control answers hover and press
+[879/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--link: every control answers hover and press
+[880/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--small: every control answers hover and press
+[881/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--large: every control answers hover and press
+[882/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--disabled: every control answers hover and press
+[883/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--focusable-disabled: every control answers hover and press
+[884/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--arrow-directions: every control answers hover and press
+[885/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--icon-controls: every control answers hover and press
+[886/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--long-labels: every control answers hover and press
+[887/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-button--custom-styled-element: every control answers hover and press
+[888/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--all-selected: every control answers hover and press
+[889/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--specific-selection: every control answers hover and press
+[890/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--without-counts: every control answers hover and press
+[891/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--visible-label: every control answers hover and press
+[892/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--long-labels: every control answers hover and press
+[893/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-chipgroup--zero-count: every control answers hover and press
+[894/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--closed: every control answers hover and press
+[895/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--expanded: every control answers hover and press
+[896/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--disabled: every control answers hover and press
+[897/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-collapsible--long-content: every control answers hover and press
+[898/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--default: every control answers hover and press
+[899/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--wide: every control answers hover and press
+[900/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--narrow: every control answers hover and press
+[901/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--prose-measure: every control answers hover and press
+[902/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--semantic-article: every control answers hover and press
+[903/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-container--long-content: every control answers hover and press
+[904/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--copy-figure: every control answers hover and press
+[905/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--numeric-figure: every control answers hover and press
+[906/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--decimal-percentage: every control answers hover and press
+[907/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--ungrouped: every control answers hover and press
+[908/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--static-copy: every control answers hover and press
+[909/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--on-scroll: every control answers hover and press
+[910/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-countup--server-safe-helpers: every control answers hover and press
+[911/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--panel: every control answers hover and press
+[912/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--full-bleed: every control answers hover and press
+[913/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--lavender-panel: every control answers hover and press
+[914/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--artwork: every control answers hover and press
+[915/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--with-footer: every control answers hover and press
+[916/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ctaband--long-content: every control answers hover and press
+[917/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--default: every control answers hover and press
+[918/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--large: every control answers hover and press
+[919/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--draw-in: every control answers hover and press
+[920/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--start-of-window: every control answers hover and press
+[921/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--end-of-window: every control answers hover and press
+[922/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--clamped-before-start: every control answers hover and press
+[923/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-dayruler--clamped-after-end: every control answers hover and press
+[924/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--modal: every control answers hover and press
+[925/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--medium: every control answers hover and press
+[926/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--large: every control answers hover and press
+[927/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--extra-large: every control answers hover and press
+[928/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--fullscreen: every control answers hover and press
+[929/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--ink-surface: every control answers hover and press
+[930/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--without-corner-close: every control answers hover and press
+[931/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--long-content: every control answers hover and press
+[932/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--disabled-trigger: every control answers hover and press
+[933/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--custom-background-root: every control answers hover and press
+[934/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--controlled: every control answers hover and press
+[935/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › interactions-dialog--nested: every control answers hover and press
+[936/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--default: every control answers hover and press
+[937/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--long-guidance: every control answers hover and press
+[938/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-emptystate--recovery-action: every control answers hover and press
+[939/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--image: every control answers hover and press
+[940/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--missing-source: every control answers hover and press
+[941/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--load-error: every control answers hover and press
+[942/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-fallbackimage--retry-with-new-source: every control answers hover and press
+[943/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--default: every control answers hover and press
+[944/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--open-answer: every control answers hover and press
+[945/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--controlled: every control answers hover and press
+[946/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--deep-link: every control answers hover and press
+[947/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--long-answers: every control answers hover and press
+[948/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqlist--fourth-level-headings: every control answers hover and press
+[949/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--default: every control answers hover and press
+[950/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--lavender: every control answers hover and press
+[951/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--with-introduction: every control answers hover and press
+[952/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--open-answer: every control answers hover and press
+[953/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-faqsection--long-content: every control answers hover and press
+[954/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--tint: every control answers hover and press
+[955/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--soft: every control answers hover and press
+[956/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--outline: every control answers hover and press
+[957/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--small: every control answers hover and press
+[958/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--large: every control answers hover and press
+[959/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--circle: every control answers hover and press
+[960/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--interactive: every control answers hover and press
+[961/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-iconbadge--long-adjacent-text: every control answers hover and press
+[962/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--with-media: every control answers hover and press
+[963/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--without-media: every control answers hover and press
+[964/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--long-content: every control answers hover and press
+[965/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-indexlist--responsive: every control answers hover and press
+[966/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--default: every control answers hover and press
+[967/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--large: every control answers hover and press
+[968/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--draw-in: every control answers hover and press
+[969/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--all-upcoming: every control answers hover and press
+[970/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-keydates--long-labels: every control answers hover and press
+[971/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--default: every control answers hover and press
+[972/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--large: every control answers hover and press
+[973/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--copy-figures: every control answers hover and press
+[974/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-ledger--long-labels: every control answers hover and press
+[975/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--grid: every control answers hover and press
+[976/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--strip: every control answers hover and press
+[977/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--responsive-large-tiles: every control answers hover and press
+[978/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--tile-variants: every control answers hover and press
+[979/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--wordmark: every control answers hover and press
+[980/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--missing-artwork-and-keyboard-link: every control answers hover and press
+[981/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-logowall--load-error: every control answers hover and press
+[982/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--default: every control answers hover and press
+[983/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--with-media: every control answers hover and press
+[984/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--highlighted-title: every control answers hover and press
+[985/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--night: every control answers hover and press
+[986/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--fit-long-word: every control answers hover and press
+[987/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--medium: every control answers hover and press
+[988/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--marked-words-and-footer: every control answers hover and press
+[989/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--extra-large: every control answers hover and press
+[990/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-pagehero--custom-title: every control answers hover and press
+[991/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--default: every control answers hover and press
+[992/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--focal-point: every control answers hover and press
+[993/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--long-content: every control answers hover and press
+[994/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-personcard--responsive: every control answers hover and press
+[995/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--default: every control answers hover and press
+[996/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--aspect-ratios: every control answers hover and press
+[997/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--bleed: every control answers hover and press
+[998/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--panorama-responsive: every control answers hover and press
+[999/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--eager-and-focal-point: every control answers hover and press
+[1000/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › media-photo--long-caption: every control answers hover and press
+[1001/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-default: every control answers hover and press
+[1002/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-small: every control answers hover and press
+[1003/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--pill-statement: every control answers hover and press
+[1004/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--tags: every control answers hover and press
+[1005/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--live: every control answers hover and press
+[1006/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--idle: every control answers hover and press
+[1007/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--closed: every control answers hover and press
+[1008/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--small-aligned-actions: every control answers hover and press
+[1009/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--large-aligned-actions: every control answers hover and press
+[1010/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-pillandstatus--long-status: every control answers hover and press
+[1011/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--raised: every control answers hover and press
+[1012/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--glass: every control answers hover and press
+[1013/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--editorial: every control answers hover and press
+[1014/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--ruled: every control answers hover and press
+[1015/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--context-and-footer: every control answers hover and press
+[1016/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--long-content: every control answers hover and press
+[1017/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--without-images: every control answers hover and press
+[1018/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-quotecard--mark: every control answers hover and press
+[1019/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--up: every control answers hover and press
+[1020/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--fade: every control answers hover and press
+[1021/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--scale: every control answers hover and press
+[1022/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--left: every control answers hover and press
+[1023/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--right: every control answers hover and press
+[1024/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--line: every control answers hover and press
+[1025/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-reveal--staggered-on-scroll: every control answers hover and press
+[1026/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--split: every control answers hover and press
+[1027/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--stack: every control answers hover and press
+[1028/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--center: every control answers hover and press
+[1029/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--large: every control answers hover and press
+[1030/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--extra-large: every control answers hover and press
+[1031/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--with-count: every control answers hover and press
+[1032/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--empty-count: every control answers hover and press
+[1033/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-sectionheader--long-content: every control answers hover and press
+[1034/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--paper: every control answers hover and press
+[1035/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--mist: every control answers hover and press
+[1036/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--lavender: every control answers hover and press
+[1037/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--ink: every control answers hover and press
+[1038/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--night: every control answers hover and press
+[1039/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--violet-statement: every control answers hover and press
+[1040/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--grain: every control answers hover and press
+[1041/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--small-spacing: every control answers hover and press
+[1042/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--large-spacing: every control answers hover and press
+[1043/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--extra-large-spacing: every control answers hover and press
+[1044/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--no-spacing: every control answers hover and press
+[1045/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › layout-section--long-content: every control answers hover and press
+[1046/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--default: every control answers hover and press
+[1047/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--marked-phrase: every control answers hover and press
+[1048/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--custom-timing: every control answers hover and press
+[1049/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--repeated-words: every control answers hover and press
+[1050/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › motion-splitwords--long-headline: every control answers hover and press
+[1051/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--raised: every control answers hover and press
+[1052/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--outline: every control answers hover and press
+[1053/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--glass: every control answers hover and press
+[1054/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--plain: every control answers hover and press
+[1055/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--interactive: every control answers hover and press
+[1056/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › content-spotlightcard--long-content: every control answers hover and press
+[1057/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--four-columns: every control answers hover and press
+[1058/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--two-columns: every control answers hover and press
+[1059/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--three-columns: every control answers hover and press
+[1060/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--small: every control answers hover and press
+[1061/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--medium: every control answers hover and press
+[1062/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--large: every control answers hover and press
+[1063/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--extra-large: every control answers hover and press
+[1064/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--formatted-numbers: every control answers hover and press
+[1065/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-statgrid--long-labels: every control answers hover and press
+[1066/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--solid-rail: every control answers hover and press
+[1067/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--dashed-rail: every control answers hover and press
+[1068/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--dot-markers: every control answers hover and press
+[1069/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--without-rail: every control answers hover and press
+[1070/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--rows: every control answers hover and press
+[1071/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--three-columns: every control answers hover and press
+[1072/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--five-columns: every control answers hover and press
+[1073/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--icon-markers: every control answers hover and press
+[1074/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › compositions-steps--long-content: every control answers hover and press
+[1075/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--accent: every control answers hover and press
+[1076/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--muted: every control answers hover and press
+[1077/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--with-arrow: every control answers hover and press
+[1078/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--external: every control answers hover and press
+[1079/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--in-paragraph: every control answers hover and press
+[1080/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › actions-textlink--long-label: every control answers hover and press
+[1081/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-topblend--top: every control answers hover and press
+[1082/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › brand-topblend--bottom: every control answers hover and press
+[1083/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-medium: every control answers hover and press
+[1084/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-large: every control answers hover and press
+[1085/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-extra-large: every control answers hover and press
+[1086/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--display-hero: every control answers hover and press
+[1087/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--heading-scale: every control answers hover and press
+[1088/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--text-scale: every control answers hover and press
+[1089/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--emphasis: every control answers hover and press
+[1090/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--eyebrow-plain: every control answers hover and press
+[1091/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--eyebrow-sequence: every control answers hover and press
+[1092/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--accent-highlight: every control answers hover and press
+[1093/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--fade-highlight: every control answers hover and press
+[1094/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--long-form: every control answers hover and press
+[1095/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-typography--long-headline: every control answers hover and press
+[1096/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--default: every control answers hover and press
+[1097/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--narrow: every control answers hover and press
+[1098/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-footer--local-branding: every control answers hover and press
+[1099/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--default: every control answers hover and press
+[1100/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--solid: every control answers hover and press
+[1101/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--desktop: every control answers hover and press
+[1102/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--long-mobile-navigation: every control answers hover and press
+[1103/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-header--link-dismissal: every control answers hover and press
+[1104/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--default: every control answers hover and press
+[1105/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--current: every control answers hover and press
+[1106/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-navanchor--external: every control answers hover and press
+[1107/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-skiplink--default: every control answers hover and press
+[1108/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › shell-skiplink--custom-target: every control answers hover and press
+[1109/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-focus--nested-tones: every control answers hover and press
+[1110/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-tones--all-tones: every control answers hover and press
+[1111/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › patterns-complete-page--default: every control answers hover and press
+[1112/1112] [motion] › e2e/motion.spec.ts:204:5 › interaction states › foundations-spacing-and-shape--scale: every control answers hover and press
+  539 skipped
+  573 passed (2.4m)
