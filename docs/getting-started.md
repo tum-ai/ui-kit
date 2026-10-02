@@ -25,23 +25,17 @@ Stop an existing dev server before starting the static server on the same port.
 
 ## Install in a Next.js application now
 
-The initial verified combination is Next 16.3.6, React/React DOM 19.3.0 and Tailwind 4.3.3. Use compatible peer versions from `package.json`. npm publication is a later account setup step; the repository already builds the complete installable package.
+The initial verified combination is Next 16.3.6, React/React DOM 19.3.0 and Tailwind 4.3.3. Use compatible peer versions from `package.json`. Version 0.1.0 is available publicly on npm; installing it does not require npm login.
 
-From the kit checkout:
-
-```sh
-bun run build
-mkdir -p artifacts
-npm pack --ignore-scripts --pack-destination artifacts
-```
-
-From your application, using the actual absolute path:
+From your application:
 
 ```sh
-bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz
+bun add --exact @tum.ai/ui-kit@0.1.0
 ```
 
-Commit your application's dependency and lockfile changes. For another developer or CI machine, store the tarball in an accessible project/vendor location and use that stable relative path, or rebuild it from a recorded kit commit. A path to your personal checkout is not portable. After npm publication, use a fixed registry version instead. Installing the raw Git repository as a dependency is not the supported distribution path: compiled `dist` is deliberately not committed.
+Commit your application's dependency and lockfile changes. Installing the raw Git repository as a dependency is not supported: compiled `dist` is deliberately not committed.
+
+To test an unpublished change, run `bun run build` and `npm pack --ignore-scripts --pack-destination artifacts` in the kit checkout, then install the resulting tarball with `bun add /absolute/path/ui-kit/artifacts/tum.ai-ui-kit-0.1.0.tgz`. Keep a shared tarball in a stable project/vendor location when other developers or CI need it; a path to your personal checkout is not portable.
 
 In `app/globals.css`, after the Tailwind import:
 
@@ -111,4 +105,4 @@ bun run verify
 
 This checks formatting, types, coverage, package/explorer builds, export coverage, browser stories, accessibility, visual regressions and the packed Next consumer. Visual baselines target macOS 26; GitHub runs that lane on the matching runner. Linux runs unit and package checks in CI. See [testing](testing.md) before intentionally updating snapshots. Passing automation does not replace the [outstanding manual accessibility checks](verification.md#accessibility-proof-boundary).
 
-Hosting and npm publication can be connected independently. See [Figma generation](figma.md) for the release-driven native library updater; no cloud connection is required to explore or install a locally packed kit.
+Hosting remains a separate, owner-managed setup step. See [Figma generation](figma.md) for the release-driven native library updater; no cloud connection is required to explore or install a locally packed kit.
