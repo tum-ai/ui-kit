@@ -54,6 +54,11 @@
     "./tailwind.css": "./dist/styles/tailwind.css",
     "./fonts.css": "./dist/styles/fonts.css",
     "./shell.css": "./dist/styles/shell.css",
+    "./halftone": {
+      "types": "./dist/halftone/index.d.ts",
+      "import": "./dist/halftone/index.js"
+    },
+    "./halftone.css": "./dist/styles/halftone.css",
     "./assets/*": "./assets/*",
     "./package.json": "./package.json"
   },
@@ -67,7 +72,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "check:package": "publint --strict && attw --pack . --profile esm-only --exclude-entrypoints ./tailwind.css ./fonts.css ./shell.css \"./assets/*\"",
+    "check:package": "publint --strict && attw --pack . --profile esm-only --exclude-entrypoints ./tailwind.css ./fonts.css ./shell.css ./halftone.css \"./assets/*\"",
     "check:size": "size-limit",
     "check:unused": "knip",
     "check:api": "node scripts/generate-api.mjs && git diff --exit-code -- docs/api.md",

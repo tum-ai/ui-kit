@@ -84,6 +84,8 @@ Dialog portals mount outside `app-root`, while dialogs make that ID inert. Use `
 
 For the floating `Header` and `Footer`, also import `@tum.ai/ui-kit/shell.css` and follow the [shell notes](components/shell.md). The application supplies navigation, logos, resolved CTAs and footer content.
 
+For the Makeathon's halftone dot field and sun, import `@tum.ai/ui-kit/halftone` and `@tum.ai/ui-kit/halftone.css` ([halftone notes](components/halftone.md)). Neither needs the kit's Tailwind theme.
+
 To use the official logo files by URL, copy them from `node_modules/@tum.ai/ui-kit/assets` into your app's `public` directory. Follow the [brand guide](brand.md) and the [brand asset terms](../BRAND-ASSETS.md).
 
 Optimized remote images need the application's own Next.js `images.remotePatterns`; see [portability](portability.md).

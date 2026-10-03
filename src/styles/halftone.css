@@ -1,0 +1,117 @@
+/*
+ * The halftone field and the sun (`@tum.ai/ui-kit/halftone`). Plain CSS that
+ * needs neither Tailwind nor the kit's theme, so an app with its own design
+ * system can import just this file next to the components.
+ *
+ * The sun ramp was sampled from the 2025 and 2026 Makeathon posters: pale
+ * gold at the top, ember at the bottom. It belongs to the sun and the dots;
+ * it is not a general accent.
+ */
+@layer base {
+  :root {
+    --sun-100: #fff18b;
+    --sun-200: #ffe07a;
+    --sun-300: #fdd06a;
+    --sun-400: #febc5c;
+    --sun-500: #f0a85a;
+    --sun-600: #d9905b;
+    --sun-700: #b97855;
+    --sun-800: #8f614c;
+    --sun-900: #5e4340;
+  }
+}
+
+@layer components {
+  .halftone {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .halftone-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.1s var(--ease-brand, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  .halftone[data-halftone="webgl"] .halftone-canvas {
+    opacity: 1;
+  }
+
+  /*
+   * Server-rendered dots for visitors without JavaScript or WebGL. Hidden while
+   * the live field loads, so the two never show one after the other. Callers
+   * reshape them with `--halftone-mask` (the default keeps the centre clear),
+   * `--halftone-cell` and `--halftone-dot`.
+   */
+  .halftone-fallback {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle,
+      var(--halftone-dot, rgb(217 144 91 / 0.5)) 0 1.3px,
+      transparent 1.8px
+    );
+    background-size: var(--halftone-cell, 14px) var(--halftone-cell, 14px);
+    mask-image: var(
+      --halftone-mask,
+      radial-gradient(ellipse 74% 70% at 50% 46%, transparent 32%, #000 96%)
+    );
+    opacity: 0;
+    transition: opacity 1.1s var(--ease-brand, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  .halftone:is([data-halftone="css"], [data-halftone="lost"]) .halftone-fallback {
+    opacity: 0.75;
+  }
+
+  @media (scripting: none) {
+    .halftone-fallback {
+      opacity: 0.75;
+    }
+  }
+
+  /*
+   * The sun: the posters' gradient dissolving into the horizon, with a soft
+   * glow behind it. The glow is a sibling of the disc because the disc's mask
+   * would clip it. Size and position come from the caller.
+   */
+  .sun {
+    position: absolute;
+    display: block;
+    aspect-ratio: 1;
+  }
+
+  .sun-glow {
+    position: absolute;
+    inset: -150%;
+    border-radius: 9999px;
+    background: radial-gradient(
+      closest-side,
+      rgb(254 188 92 / 0.3),
+      rgb(217 144 91 / 0.12) 42%,
+      transparent 74%
+    );
+  }
+
+  .sun-disc {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(
+      180deg,
+      var(--sun-100) 0%,
+      var(--sun-300) 28%,
+      var(--sun-400) 50%,
+      var(--sun-600) 68%,
+      var(--sun-800) 84%,
+      var(--sun-900) 100%
+    );
+    mask-image: linear-gradient(180deg, #000 56%, transparent 97%);
+  }
+}

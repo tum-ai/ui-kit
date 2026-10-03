@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../src/styles/tailwind.css";
 @import "../src/styles/fonts.css";
+@import "../src/styles/halftone.css";
 @source "../stories";
 @source "../src";
 body {

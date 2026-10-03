@@ -12,7 +12,7 @@ async function fix(dir) {
     if (entry.isDirectory()) await fix(p);
     else if (/\.(js|ts)$/.test(p)) {
       let s = await readFile(p, "utf8");
-      s = s.replace(/((?:from\s*|import\s*)["'])(\.\.?\/[^"']+)(["'])/g, (all, a, b, c) =>
+      s = s.replace(/((?:from\s*|import\s*\(?\s*)["'])(\.\.?\/[^"']+)(["'])/g, (all, a, b, c) =>
         /\.[a-z]+$/.test(b) ? all : `${a}${b}.js${c}`,
       );
       await writeFile(p, s);
