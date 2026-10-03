@@ -53,8 +53,9 @@ Add a Changeset (`bun run changeset`) when public behavior, tokens, appearance o
 
 - Commits and pull request titles use [Conventional Commits](https://www.conventionalcommits.org/) with a lowercase summary of at most 72 characters, for example `fix(dialog): restore focus after nested close`.
 - Keep each pull request focused, and don't reformat unrelated files.
-- Fill in the pull request template. Describe visual and accessibility impact, and list which manual checks you ran and which you didn't.
-- The `Verify` check and a maintainer review are required. Pull requests are squash-merged.
+- Fill in the pull request template completely. Describe visual and accessibility impact, and list which manual checks you ran and which you didn't. Tick every verification box, or leave it unticked with `n/a` and a reason.
+- If your change touches `src/` or `assets/` (tests, stories and `testing.ts` excluded), add at least two screenshots of the affected stories, phone (390) and desktop (1440), to the Screenshots section. If nothing visible changed, ask for the `no-visual-change` label. The `Validate PR body` check enforces both.
+- The `Verify`, `Validate PR title`, `Validate PR body` and `Dependency Review` checks and an approving review from the code owner are required. Pull requests are squash-merged.
 
 The [GitHub workflow](docs/repository.md) describes CI, branch protection and dependency updates. [Releases](docs/releasing.md) explains how maintainers publish.
 

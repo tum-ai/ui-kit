@@ -32,6 +32,7 @@ Component library for Next.js 16, React 19 and Tailwind 4, published as `@tum.ai
 - Preserve unrelated changes in the working tree.
 - Don't commit, push, publish to npm, create releases or deploy unless the person you are working for asks.
 - Commits and pull request titles are Conventional Commits with lowercase summaries of at most 72 characters.
+- `main` changes only through pull requests the code owner approves (`docs/repository.md`). Fill in `.github/pull_request_template.md` completely; `Validate PR body` checks it. A change to `src/` or `assets/` (tests, stories and `testing.ts` excluded) needs phone (390) and desktop (1440) screenshots of the affected stories under `## Screenshots`, or the `no-visual-change` label. Attach them with `gh pr create --attach phone.png --attach desktop.png` (or `gh pr edit --attach`) and check they ended up in the Screenshots table.
 - Report which checks actually ran. Never claim an unrun manual accessibility check passed.
 
 ## Parallel agents
