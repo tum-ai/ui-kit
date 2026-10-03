@@ -6,7 +6,9 @@ The [TUM.ai UI kit Figma library](https://www.figma.com/design/ULwF4tAlAKDsPzWdQ
 
 Publishing a stable GitHub release tagged `v<package version>` triggers a workflow. It generates `figma-scene.json` and its SHA-256 checksum and attaches both to the release. The release commit must belong to `main`. Generation runs Node, Bun and Chromium with the pinned dependencies, and needs no Figma token or hosting account.
 
-The standalone Figma updater plugin reads those public release assets and applies them to the existing library file. It runs checked-in plugin code; downloaded JSON never becomes executable code.
+The release workflow also commits byte-identical scene/checksum files under `releases/v<version>/` on the dedicated `figma-release-data` branch. Direct GitHub release downloads omit the CORS headers needed by Figma. The updater resolves the data branch to an immutable commit, downloads through `raw.githubusercontent.com`, and verifies the bytes against the release asset digests and sizes. Existing version directories cannot be overwritten.
+
+The standalone Figma updater plugin applies this verified data to the existing library file. It runs checked-in plugin code; downloaded JSON never becomes executable code.
 
 - Launching the plugin catches the file up to the latest release.
 - Leaving the plugin open makes it listen for new releases.
@@ -14,6 +16,12 @@ The standalone Figma updater plugin reads those public release assets and applie
 - Run one updater session at a time. The document lease detects ordinary overlap, but Figma offers no atomic locks across offline collaborators.
 
 **Figma requires a person to launch plugins.** Its public plugin API has no server command that runs a plugin while the editor is closed. File updates are automatic only while the plugin is open. Publishing a library version to subscribers remains a separate, manual Figma action.
+
+## Running remotely
+
+A dedicated remote Mac or Windows desktop could run the same updater with a signed-in Figma editor. It would need a persistent session, restart handling and monitoring. This removes the dependency on a maintainer's personal computer; it does not turn the plugin into a headless service. No remote host is configured by this repository.
+
+Figma's hosted MCP server can write without Figma Desktop, but access requires an approved client and OAuth. A generic GitHub Actions script with a REST token is not a documented replacement. A deterministic runner inside the genuine VS Code runtime is a candidate: VS Code exposes tool invocation outside chat, so model generation may be avoidable. This route is unverified. Before adopting it, prove cold-start authentication, unattended invocation, image/font fidelity, stable identities and interrupted-write recovery. Figma currently documents image/custom-font limitations and manual component publication. See [remote setup](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/), [write limitations](https://developers.figma.com/docs/figma-mcp-server/write-to-canvas/), and [VS Code tool invocation](https://code.visualstudio.com/api/references/vscode-api#lm.invokeTool).
 
 ## Generate and inspect
 
@@ -65,7 +73,7 @@ The plugin stores the ledger in bounded chunks of document plugin data. The stat
 
 ## Design decisions and limits
 
-Several Figma surfaces were evaluated. Only a conventional plugin can both build native components and run without extra accounts:
+The installed updater uses the conventional Plugin API. Figma also supports native cloud writes through its remote MCP server, subject to approved-client authentication and the limits below:
 
 | Surface                   | Can do                                                                | Cannot do                                                   |
 | ------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -100,3 +108,13 @@ None of these proves that the library was published to subscribers.
 Code Connect can be added once the native components are stable and published.
 
 References: [plugin execution](https://developers.figma.com/docs/plugins/how-plugins-run/), [plugin data](https://developers.figma.com/docs/plugins/api/properties/nodes-setplugindata/), [Variables REST API](https://developers.figma.com/docs/rest-api/variables-endpoints/), [MCP write limitations](https://developers.figma.com/docs/figma-mcp-server/write-to-canvas/#current-limitations).
+
+## Release-data maintenance
+
+The workflow serializes data-branch writes. Its publisher verifies local bytes against already-uploaded release assets and the release tag before committing both files atomically. An identical retry is read-only; different content at an existing version fails. Reference updates never force-push. To backfill a previously published release after downloading its original assets:
+
+```sh
+node scripts/publish-figma-data.mjs v0.1.0 /path/to/original-release-assets
+```
+
+Keep only scene/checksum data on this branch. It does not affect the npm package or main's working tree, but its history adds Git storage; monitor growth before the 30 MiB scene limit becomes restrictive. Keep the registered updater installed from current main when fixing transport/runtime issues; the JSON schema and package identity remain independent of its bundle version.
