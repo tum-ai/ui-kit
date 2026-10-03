@@ -2,7 +2,13 @@
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   // The published entries (package.json "exports" point at their dist builds).
   // Build, release and Figma tooling is run by path, so every script is an entry.
-  "entry": ["src/index.ts!", "src/shell/index.ts!", "scripts/**/*.{mjs,ts}", "figma/**/*.mjs"],
+  "entry": [
+    "src/index.ts!",
+    "src/shell/index.ts!",
+    "src/halftone/index.ts!",
+    "scripts/**/*.{mjs,ts}",
+    "figma/**/*.mjs",
+  ],
   "project": [
     "src/**/*.{ts,tsx,css}!",
     "docs/**/*.mdx",

@@ -85,7 +85,12 @@ function linkText(part, source) {
   return label || `\`${name}\``;
 }
 export function publicApi() {
-  return ["src/index.ts", "src/shell/index.ts"].flatMap((entry) => {
+  const entries = {
+    "src/index.ts": "@tum.ai/ui-kit",
+    "src/shell/index.ts": "@tum.ai/ui-kit/shell",
+    "src/halftone/index.ts": "@tum.ai/ui-kit/halftone",
+  };
+  return Object.keys(entries).flatMap((entry) => {
     const file = ts.createSourceFile(
       entry,
       readFileSync(entry, "utf8"),
@@ -130,7 +135,7 @@ export function publicApi() {
             .join(" ") ?? "";
         return {
           name: item.name.text,
-          entry: entry.includes("shell") ? "@tum.ai/ui-kit/shell" : "@tum.ai/ui-kit",
+          entry: entries[entry],
           runtime: !decl.isTypeOnly && !item.isTypeOnly,
           source: sourcePath,
           description,
