@@ -19,7 +19,7 @@ bun install --frozen-lockfile
 bun run dev                                        # Storybook at http://localhost:6006
 ```
 
-`bun install` installs the repository's Git hooks. They check Conventional Commit messages and format staged files with lint-staged. They never touch unstaged files.
+`bun install` installs the repository's Git hooks: commit messages are checked for Conventional Commits, `pre-commit` lints and formats staged files with lint-staged, and `pre-push` runs `bun run typecheck` and `bun run check:unused`. They never touch unstaged files.
 
 ## Make a change
 
@@ -45,9 +45,9 @@ bunx playwright install --with-deps chromium webkit   # once
 bun run verify
 ```
 
-Then open the explorer at phone and desktop widths and check the affected stories. Testing details, visual baselines and the manual accessibility checklist are in [testing](docs/testing.md).
+The full list of enforced rules is in [engineering standards](docs/standards.md). Then open the explorer at phone and desktop widths and check the affected stories. Testing details, visual baselines and the manual accessibility checklist are in [testing](docs/testing.md).
 
-Add a Changeset (`bun run changeset`) when public behavior, tokens, appearance or accessibility change. Regenerate API documentation with `bun run manifests`.
+Add a Changeset (`bun run changeset`) when public behavior, tokens, appearance or accessibility change. Regenerate API documentation with `node scripts/generate-api.mjs`; `bun run check:api` fails when it is stale.
 
 ## Commits and pull requests
 

@@ -55,7 +55,7 @@ export const LongContent: Story = {
   args: {
     items: [
       {
-        ...items[0],
+        ...items[0]!,
         title: "InterdisciplinaryResearchCollaboration",
         description:
           "A destination with a long title and several sentences of supporting content, used to check how the typography wraps beside the thumbnail on narrow screens.",

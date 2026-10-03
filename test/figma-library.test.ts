@@ -32,15 +32,15 @@ test("native variant grouping keeps story identities and separates multi-control
     pages: [{ children: [primary, secondary, examples] }],
   };
   organizeLibrary(scene);
-  expect(scene.pages[0].children).toHaveLength(2);
-  const set = scene.pages[0].children[0];
+  expect(scene.pages[0]!.children).toHaveLength(2);
+  const set = scene.pages[0]!.children[0]!;
   expect(set.type).toBe("COMPONENT_SET");
   expect(set.key).toBe("family:actions-button");
   expect(set.children.map((n: { key: string }) => n.key)).toEqual([
     "story:primary",
     "story:secondary",
   ]);
-  expect(scene.pages[0].children[1]).toBe(examples);
+  expect(scene.pages[0]!.children[1]).toBe(examples);
   expect(primary.name).toBe("Story=primary");
 });
 

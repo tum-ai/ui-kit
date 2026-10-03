@@ -67,7 +67,7 @@ export function stubObservers() {
 
   return {
     /** Reports `elements` as intersecting to the observers that watch them. */
-    intersect(...elements: Element[]) {
+    intersect: (...elements: Element[]) => {
       for (const record of [...observers]) {
         const entries = elements
           .filter((element) => record.targets.has(element))

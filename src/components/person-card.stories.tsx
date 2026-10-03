@@ -52,7 +52,7 @@ export const Responsive: Story = {
   globals: { viewport: { value: "phone", isRotated: false } },
   args: {
     children: (
-      <a href="/profile" className="text-highlight underline">
+      <a href="/profile" className="text-highlight underline transition-colors hover:text-fg">
         Read the profile
       </a>
     ),

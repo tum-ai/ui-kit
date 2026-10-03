@@ -7,7 +7,7 @@ import { Anchor } from "./anchor";
 import { isExternalHref } from "./internal";
 
 const textLinkStyles = cva(
-  "group/link gap-1.5 font-semibold inline-flex items-center transition-colors duration-300 ease-brand",
+  "group/link gap-1.5 font-semibold inline-flex items-center transition-colors duration-hover ease-brand",
   {
     variants: {
       /** `accent` for links in copy, `muted` for dense lists (footer, meta rows). */
@@ -59,13 +59,13 @@ export function TextLink({
       className={cn(textLinkStyles({ emphasis }), className)}
       {...props}
     >
-      <span className="pb-0.5 bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 ease-brand group-hover/link:bg-[length:100%_1px] group-focus-visible/link:bg-[length:100%_1px] motion-reduce:transition-none">
+      <span className="pb-0.5 bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-surface ease-brand group-hover/link:bg-[length:100%_1px] group-focus-visible/link:bg-[length:100%_1px] motion-reduce:transition-none">
         {children}
       </span>
       {arrow ? (
         <Icon
           aria-hidden="true"
-          className="size-4 group-hover/link:translate-x-0.5 transition-transform duration-500 ease-brand motion-reduce:transition-none"
+          className="size-4 group-hover/link:translate-x-0.5 group-focus-visible/link:translate-x-0.5 transition-transform duration-surface ease-brand motion-reduce:transition-none"
         />
       ) : null}
     </Anchor>

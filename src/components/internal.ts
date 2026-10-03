@@ -7,7 +7,12 @@
 import { Children, isValidElement, type ReactNode } from "react";
 
 /** A child with the key React would give it, for re-wrapping in a list. */
-export type KeyedChild = { key: string; node: ReactNode };
+export type KeyedChild = {
+  /** Stable key for the re-wrapped element. */
+  key: string;
+  /** The child as React flattened it. */
+  node: ReactNode;
+};
 
 /**
  * Flattens `children` and pairs each child with a stable key: an element
@@ -17,11 +22,12 @@ export type KeyedChild = { key: string; node: ReactNode };
  */
 export function keyedChildren(children: ReactNode): KeyedChild[] {
   const seen = new Map<string, number>();
+  // eslint-disable-next-line @eslint-react/no-children-to-array -- flattening text and elements into keyed units is the point here
   return Children.toArray(children).map((node) => {
     if (isValidElement(node) && node.key !== null) {
-      return { key: String(node.key), node };
+      return { key: node.key, node };
     }
-    const text = String(node);
+    const text = textKey(node, "node");
     const count = seen.get(text) ?? 0;
     seen.set(text, count + 1);
     return { key: `text:${text}:${count}`, node };

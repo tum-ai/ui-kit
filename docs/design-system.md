@@ -63,12 +63,12 @@ dark and light bands alike.
 
 Custom utilities (`@utility` in `src/styles/tailwind.css`): `grain` (film grain on dark
 bands), `zoom-media` (the one hover zoom for card media; put `group/zoom` on the
-element whose hover starts it), `scroll-mt-header` (anchor targets land below
+element whose hover starts it), `pressable` and `hover-lift` (the press and card-lift recipes, see [recipes](#recipes)), `scroll-mt-header` (anchor targets land below
 the fixed header), `tabular`, `mask-fade-x`, `rounded-signature`,
 `text-gradient-brand`.
 
 Custom variant: `card-hover:` applies while the enclosing card (`group/card`),
-link or button is hovered, on devices that can hover. `IconBadge interactive`
+link or button is hovered (on devices that can hover) or has keyboard focus. `IconBadge interactive`
 uses it, so a badge reacts inside any clickable surface without a group name.
 
 ## Typography
@@ -123,9 +123,10 @@ the top of `src/components/index.ts`, which wins if the two disagree.
   `@deprecated` alias that names its replacement for one release, then goes.
 - **`"use client"`** only where the component itself uses state, effects or
   event handlers; Base UI parts are client components already.
-- **Motion:** house easing (`ease-brand`), at most 1.2s outside ambient loops,
-  and nothing moves under `prefers-reduced-motion` (`motion-safe:` or
-  `motion-reduce:`).
+- **Motion:** the duration tokens (`duration-press` … `duration-entrance`),
+  house easing (`ease-brand`), at most 1.2s outside ambient loops, and nothing
+  moves under `prefers-reduced-motion` (`motion-safe:` or `motion-reduce:`).
+  See [motion rules](#motion-rules); `tumai/motion-tokens` lints them.
 - **Links go through `Anchor`:** routes use next/link; http(s) opens a new
   tab with `rel="noopener noreferrer"` and a screen-reader hint; mailto:, tel:
   and in-page anchors stay plain `<a>`. `ButtonLink`, `TextLink` and
@@ -201,11 +202,49 @@ Motion
 
 ## Motion rules
 
+Motion is small, crisp and never bouncy: one move per interaction. Every interactive surface answers the pointer and the keyboard, and state changes transition instead of snapping.
+
+### Tokens
+
+| Duration            | Value  | Use                                                                                                            |
+| ------------------- | ------ | -------------------------------------------------------------------------------------------------------------- |
+| `duration-press`    | 150ms  | The press itself (`pressable`)                                                                                 |
+| `duration-hover`    | 300ms  | Colour, tint and opacity responses to hover and focus, and exits (`data-[ending-style]:duration-hover`)        |
+| `duration-surface`  | 500ms  | Anything that travels or draws (arrow nudges, underline draws, icon turns, the card lift), panels and overlays |
+| `duration-media`    | 700ms  | Image crossfades, staggered menu items                                                                         |
+| `duration-entrance` | 1000ms | Transition-based arrivals; the keyframe entrances (`rise`, `fade`, `draw`, `Reveal`) run 0.8–1.1s              |
+
+Easings: `ease-brand` (`cubic-bezier(0.22,1,0.36,1)`) everywhere, `ease-snappy` for full-screen slides and `ease-in-out-soft` for ambient loops. A bare `transition-*` utility already uses `duration-hover` and `ease-brand`. Raw milliseconds, other easings and `transition-all` fail lint (`tumai/motion-tokens`, which also autofixes `duration-300` and friends to their names). `motion-reduce:duration-0` stays allowed as an opt-out.
+
+### Recipes
+
+- `pressable`: a 3% shrink while pressed, for anything clickable. The press takes `duration-press` and the release eases back at the element's own duration. List `scale` in the element's transition (lint checks it).
+- `hover-lift`: the 4px card lift on hover and on keyboard focus of the card or of a link or button inside it. List `translate` in the element's transition (lint checks it).
+- `zoom-media`: the slow 1.04 image zoom inside a `group/zoom` card, on hover and on keyboard focus of the card or of a link or button inside it.
+- `card-hover:`: a variant (not motion) for parts that react while the enclosing card, link or button is hovered (on devices that can hover) or has keyboard focus, on itself or on a link or button inside it. Gate any transform inside it with `motion-safe:`.
+
+`pressable`, `hover-lift` and `zoom-media` do nothing under reduced motion, and the hover parts do nothing on touch-only devices.
+
+### Micro-interaction contract
+
+Every interactive element has these states, built from the tokens and recipes above:
+
+- **Hover** (on devices that can hover): a colour, tint or underline response at `duration-hover`, or a small move (an arrow nudge, the lift) at `duration-surface`.
+- **Focus-visible:** the global focus ring, plus the same response as hover where hover moves something (lift, nudge, the header pill).
+- **Press:** `pressable`, or a fill change for controls that toggle.
+- **Disabled:** dimmed, with no hover or press response.
+- **Open and close** for overlays and panels: an entrance at `duration-surface` and an exit that is faster than the entrance (`data-[ending-style]:duration-hover`).
+- **State changes** (selected, expanded, counted) transition; they don't snap.
+
+Under reduced motion nothing animates: transforms are gated by `motion-safe:` (they don't happen) or `motion-reduce:transition-none` (they happen instantly), and colour responses stay. Prefer `motion-safe:` for anything that travels.
+
+### Rules
+
 - Above the fold, use the CSS utilities (`motion-safe:animate-rise`, `-rise-sm`, `-fade`) or `SplitWords`. Never use `Reveal` there: it waits for hydration.
 - Below the fold, use `Reveal`. Only elements that start below the viewport are hidden, so server-rendered HTML and no-JS visitors always see content.
-- Animate only `transform` and `opacity`. Avoid `filter` on anything containing text or large areas: Safari clips filtered elements to their box (cutting descenders) and large blurs stutter on phones. Any filter must be released when the animation ends. A short blur on logo images (not text) is fine: a logo wall may blur the outgoing and incoming artwork through a swap. Use the house easing `ease-brand` (`cubic-bezier(0.22,1,0.36,1)`). Keep durations between 300ms (hover) and 1.2s (entrances).
-- Prefix every looping or entrance animation with `motion-safe:`. Components already handle reduced motion themselves.
-- Hover effects should be small: slow image zoom (1.04, `zoom-media`), arrow nudges, a 4px card lift, spotlight. Nothing bouncy.
+- Move things only with `transform` and `opacity`; colours may fade, and a disclosure's height is the one layout animation. A size or position utility that transitions on interaction must be gated for reduced motion like a transform (lint checks it). Avoid `filter` on anything containing text or large areas: Safari clips filtered elements to their box (cutting descenders) and large blurs stutter on phones. Any filter must be released when the animation ends. A short blur on logo images (not text) is fine: a logo wall may blur the outgoing and incoming artwork through a swap. Filters transitioned on interaction fail lint (`tumai/no-filter-motion`).
+- Prefix every looping or entrance animation with `motion-safe:`, and gate every transform that responds to interaction (`motion-safe:hover:…`, or `motion-reduce:transition-none` on the same element). Lint enforces both.
+- Hover effects stay small: slow image zoom (1.04, `zoom-media`), arrow nudges, a 4px card lift, spotlight. Nothing bouncy.
 - framer-motion runs inside `LazyMotion strict`: import `m`, not `motion`.
 
 ## Composition rules

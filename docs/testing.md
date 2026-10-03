@@ -6,13 +6,18 @@
 | ---------------------------------------- | --------------------------------------------------------------------------- |
 | `bun run lint` / `bun run format:check`  | Static semantics, boundaries and formatting                                 |
 | `bun run typecheck`                      | Public implementation, tests and stories                                    |
+| `bun run check:unused`                   | Unused files, exports and dependencies (knip)                               |
+| `bun run check:api`                      | Regenerate `docs/api.md` and fail if it differs from the version in Git     |
+| `bun run check:package` / `check:size`   | publint, attw type resolution and bundle size budgets (after `build`)       |
 | `bun run test` / `bun run test:coverage` | Vitest node/jsdom, with 80% component and 90% helper line floors            |
 | `bun run test:stories`                   | Every story in Chromium, plays and strict axe                               |
 | `bun run build:storybook`                | Production explorer                                                         |
 | `bun run manifests`                      | Generate catalog/tokens/API documentation and validate export coverage      |
-| `bun run test:e2e`                       | Chromium/WebKit browser and visual cases                                    |
+| `bun run test:e2e`                       | Chromium/WebKit browser and visual cases, plus the per-story motion audits  |
 | `bun run test:consumer`                  | Pack, install outside the checkout, compile a real Next app and exercise it |
 | `bun run render:design`                  | Deterministic component render bundle for design review                     |
+
+The rules these commands enforce are listed in [engineering standards](standards.md).
 
 Every new public component needs documented props, a story, a behavioral test where meaningful, and accessible supported examples. Compound primitives are shown together. Nonvisual helper exceptions must name their documentation/testing coverage.
 
@@ -21,6 +26,12 @@ Every new public component needs documented props, a story, a behavioral test wh
 The Storybook addon fails on applicable WCAG 2/2.1/2.2 A/AA violations. It scans body so portal dialogs are included. Interaction stories scan open states. Jsdom disables color contrast and landmark checks because it cannot lay out a real page; browser stories and E2E cover those constraints. A passing axe run does not establish conformance.
 
 Violet bands support a restricted palette: do not demonstrate known-invalid combinations and silence axe.
+
+### Motion and interaction audits
+
+`e2e/motion.spec.ts` walks every story in the built explorer, up to 16 controls per story. With reduced motion (the `chromium` project) it hovers and tabs through each story, opens and closes up to 6 disclosures, dialogs and menus, and fails if any animation or transition moves, resizes, repositions or clips something; colour and opacity fades may run. Shell and pattern stories run again at 390px, where the mobile header appears. With motion on (the `motion` project) it fails if a visible link or button looks the same hovered as at rest, not counting movement (which reduced motion removes), or if a `pressable` control does not shrink while pressed. It doesn't sample framer-motion's frame-by-frame updates, every interaction or every width, so the manual reduced-motion check still applies. Mark an element (or a wrapper) `data-static-hover` only when it brings no styling by design, as the unstyled `Anchor` does.
+
+`test/contrast.test.ts` computes each tone's token contrast from `src/styles/tailwind.css`, so a token change that breaks AA fails without a browser.
 
 ### Manual accessibility checks
 
@@ -31,8 +42,8 @@ Automated checks do not establish WCAG conformance. Axe cannot resolve some grad
 | Keyboard                          | Logical order, visible focus, overlays trap focus and return it to the trigger  |
 | Screen reader (VoiceOver or NVDA) | Names, roles, dialog announcements, external-link hints                         |
 | 200% zoom and 400% reflow         | No clipped content or horizontal scrolling at 320 CSS pixels                    |
-| Forced colors                     | Focus rings, borders and icons remain visible                                   |
-| Reduced motion                    | Entrances, reveals, counters and marquees are static                            |
+| Forced colors                     | Focus rings, borders, icons and selected states remain visible                  |
+| Reduced motion                    | Nothing moves in flows the audit doesn't reach; counters and reveals read well  |
 | Real iPhone Safari                | The [iPhone checklist](../.agents/skills/ui-verify/references/iphone-safari.md) |
 | Gradient and image backgrounds    | Text contrast in every rendered state                                           |
 

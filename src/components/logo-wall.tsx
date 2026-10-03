@@ -111,7 +111,7 @@ const logoTileStyles = cva("group/logo inline-flex items-center justify-center",
       variant: ["tile", "chip"],
       linked: true,
       className:
-        "transition-[background-color,box-shadow] duration-300 ease-brand hover:bg-violet-50 hover:ring-2 hover:ring-violet-500 focus-visible:bg-violet-50 motion-reduce:transition-none",
+        "pressable transition-[background-color,box-shadow,scale] duration-hover ease-brand hover:bg-violet-50 hover:ring-2 hover:ring-violet-500 focus-visible:bg-violet-50 motion-reduce:transition-none",
     },
   ],
   defaultVariants: {
@@ -132,7 +132,7 @@ const logoImageStyles = cva("h-auto w-auto max-w-full object-contain", {
       bare: "",
       // Multiply drops the white matte; the colour returns with the link's
       // hover or focus (a swap, not a transition: only opacity animates).
-      mono: "size-full opacity-75 mix-blend-multiply grayscale transition-opacity duration-300 ease-brand group-hover/logo:opacity-100 group-hover/logo:grayscale-0 group-focus-visible/logo:opacity-100 group-focus-visible/logo:grayscale-0 motion-reduce:transition-none",
+      mono: "size-full opacity-75 mix-blend-multiply grayscale transition-opacity duration-hover ease-brand group-hover/logo:opacity-100 group-hover/logo:grayscale-0 group-focus-visible/logo:opacity-100 group-focus-visible/logo:grayscale-0 motion-reduce:transition-none",
     },
     size: { sm: "", md: "", lg: "", xl: "" },
     responsive: { true: "", false: "" },
@@ -172,7 +172,7 @@ const logoNameStyles = cva("font-semibold", {
       tile: "",
       chip: "text-label-sm tracking-[-0.01em]",
       bare: "",
-      mono: "text-center text-label opacity-75 transition-opacity duration-300 ease-brand group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-reduce:transition-none",
+      mono: "text-center text-label opacity-75 transition-opacity duration-hover ease-brand group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-reduce:transition-none",
     },
     lockup: { true: "", false: "" },
   },
@@ -187,7 +187,7 @@ const logoNameStyles = cva("font-semibold", {
 });
 
 /** Props for {@link LogoTile}. */
-export type LogoTileProps = LogoItem &
+export type LogoTileProps = Omit<LogoItem, "aspectRatio"> &
   Omit<VariantProps<typeof logoTileStyles>, "linked"> & {
     /** Load the artwork eagerly, e.g. inside a moving marquee. */
     eager?: boolean;
@@ -313,7 +313,7 @@ export type LogoWallProps = VariantProps<typeof logoWallStyles> & {
 export function LogoWall({ logos, layout, columns, size = "md", label, className }: LogoWallProps) {
   return (
     <ul aria-label={label} className={cn(logoWallStyles({ layout, columns }), className)}>
-      {logos.map((logo) => {
+      {logos.map(({ aspectRatio, ...logo }) => {
         if (layout !== "strip") {
           return (
             <li key={logo.name} className="flex">
@@ -321,7 +321,7 @@ export function LogoWall({ logos, layout, columns, size = "md", label, className
             </li>
           );
         }
-        const box = getStripLogoBox(logo.aspectRatio);
+        const box = getStripLogoBox(aspectRatio);
         return (
           <li
             key={logo.name}

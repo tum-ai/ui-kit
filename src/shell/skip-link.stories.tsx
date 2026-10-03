@@ -14,7 +14,7 @@ const meta = {
       <SkipLink {...args} />
       <header className="pt-16">
         <nav aria-label="Example navigation">
-          <a href="#details" className="text-highlight">
+          <a href="#details" className="text-highlight transition-colors hover:text-fg">
             Navigation before the content
           </a>
         </nav>
@@ -36,7 +36,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     const link = canvas.getByRole("link", { name: "Skip to content" });
     // Reset between story plays so the first Tab follows the page's natural order.
-    (canvasElement.ownerDocument.activeElement as HTMLElement)?.blur();
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
     await userEvent.tab();
     await expect(link).toHaveFocus();
     await waitFor(() => expect(link.getBoundingClientRect().top).toBeGreaterThanOrEqual(0));

@@ -3,10 +3,12 @@ import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { Container } from "./container";
-import { FaqList, type FaqListProps } from "./faq-list";
+import { type FaqItem, FaqList, type FaqListProps } from "./faq-list";
 import { Section } from "./section";
 
-const items = [
+// A tuple, so `items[1]` is known to exist; every story item has an anchor id.
+type StoryItem = FaqItem & { id: string };
+const items: [StoryItem, StoryItem, StoryItem] = [
   {
     id: "kit-faq-overview",
     question: "How does this list work?",
@@ -100,7 +102,7 @@ export const DeepLink: Story = {
       <Container size="narrow">
         <p className="mb-6 text-small text-fg-muted">Use the link to open the matching question.</p>
         <a
-          className="mb-8 inline-block text-highlight underline underline-offset-4"
+          className="mb-8 inline-block text-highlight underline underline-offset-4 transition-colors hover:text-fg"
           href="#kit-faq-link"
         >
           Jump to the linking answer
@@ -112,7 +114,7 @@ export const DeepLink: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const previous = window.location.href;
-    const previousState = window.history.state;
+    const previousState: unknown = window.history.state;
     const linked = new URL(previous);
     linked.hash = items[1].id;
     await expect(canvas.getByRole("link", { name: "Jump to the linking answer" })).toHaveAttribute(

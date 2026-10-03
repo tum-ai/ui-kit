@@ -87,7 +87,7 @@ export function Footer({
                       <li key={link.href}>
                         <NavAnchor
                           {...link}
-                          className="-my-1.5 py-1.5 inline-block text-small text-fg-muted transition-colors duration-300 hover:text-fg"
+                          className="-my-1.5 py-1.5 inline-block text-small text-fg-muted transition-colors duration-hover hover:text-fg"
                         />
                       </li>
                     ))}

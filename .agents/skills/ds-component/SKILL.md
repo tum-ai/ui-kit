@@ -15,6 +15,9 @@ description: Add, change or extend a TUM.ai UI-kit component (src/components or 
    - `as` / `headingAs`, `tone` (bands only) vs `emphasis` (text)
    - `className` / `classNames`, ref as a prop
    - Base UI for interaction, semantic tokens only, TSDoc on every export and prop
+   - the micro-interaction contract (`docs/design-system.md#micro-interaction-contract`): hover,
+     focus, press and open/close states from the duration tokens and the `pressable` and
+     `hover-lift` recipes, gated for reduced motion
    - relative imports only, no application config, CMS or feature modules
    - `"use client"` only when the component itself needs it
 4. **Stories.** Colocate `<name>.stories.tsx` with an explicit `title`, `parameters.kit.exports`
@@ -25,7 +28,7 @@ description: Add, change or extend a TUM.ai UI-kit component (src/components or 
    portals and edge cases; avoid snapshot-only tests.
 6. **Exports and docs.** New exports go through `src/index.ts` or `src/shell/index.ts`. When
    several agents work in parallel, the integrating agent owns these. Update `docs/components/*.md`.
-   Run `bun run manifests` to regenerate `docs/api.md` (never hand-edit it).
+   Run `node scripts/generate-api.mjs` to regenerate `docs/api.md` (never hand-edit it; `bun run check:api` fails when it is stale).
 7. **Check.** Run `bun run lint`, `bun run typecheck` and `bunx vitest run --project dom <test>`.
    Run the `ui-verify` skill for visual changes. Add a Changeset (`bun run changeset`) for public
    API, token, visual or accessibility changes.

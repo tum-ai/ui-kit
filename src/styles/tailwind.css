@@ -154,13 +154,35 @@
 
   /*
    * --- Motion ---
-   * House easing everywhere (`ease-brand`). Durations run from 300ms (hover)
-   * to 1.2s (entrances); only ambient loops (aurora, drift, the partner
-   * marquee) are longer, and those only run without reduced motion.
+   * House easing everywhere (`ease-brand`; `ease-snappy` for full-screen
+   * slides). Durations run from 150ms (press) to 1.2s (entrances); only
+   * ambient loops (aurora, drift, the live pulse ring) are longer, and those
+   * only run without reduced motion.
    */
   --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-snappy: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /*
+   * The duration scale (`duration-press` … `duration-entrance`). Components
+   * use these names, never raw milliseconds (`tumai/motion-tokens` lints it).
+   * press: an element answering a press (`pressable` uses it).
+   * hover: colour, tint and opacity responses to hover and focus, and exits.
+   * surface: anything that travels or draws (arrow nudges, underline draws,
+   *   icon turns, the card lift), panels, overlays, the header's frosting.
+   * media: image crossfades and staggered menu items.
+   * entrance: transition-based arrivals. The keyframe entrances (`rise`,
+   *   `fade`, `draw`, Reveal) run 0.8–1.1s; the 1.2s cap stays.
+   */
+  --transition-duration-press: 150ms;
+  --transition-duration-hover: 300ms;
+  --transition-duration-surface: 500ms;
+  --transition-duration-media: 700ms;
+  --transition-duration-entrance: 1000ms;
+
+  /* A bare `transition-*` utility is already on brand. */
+  --default-transition-duration: var(--transition-duration-hover);
+  --default-transition-timing-function: var(--ease-brand);
 
   /* `backwards`: hold the start frame during the stagger delay, then release
      the element entirely, so no compositing layer outlives the animation. */
@@ -368,7 +390,7 @@
     color-scheme: dark;
   }
 
-  /* Brand violet band: fg and fg-muted reach 4.9:1; fg-subtle (4.2:1) is for large type only. */
+  /* Brand violet band: every text token reaches AA on canvas and raised (test/contrast.test.ts); still keep the band to large type and use it sparingly. */
   [data-tone="violet"] {
     --tone-canvas: var(--tone-violet);
     --tone-focus: var(--color-ink-950);
@@ -530,7 +552,13 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--spot-opacity, 0);
-    transition: opacity 0.5s var(--ease-brand);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spotlight-surface::before,
+    .spotlight-surface::after {
+      transition: opacity var(--transition-duration-surface) var(--ease-brand);
+    }
   }
 
   .spotlight-surface::before {
@@ -615,20 +643,67 @@
         scale: 1.04;
       }
     }
+
+    /* Keyboard focus on the card, or on its link or button, zooms as hover does. */
+    :where(.group\/zoom):is(:focus-visible, :has(:is(a, button):focus-visible)) & {
+      scale: 1.04;
+    }
+  }
+}
+
+/*
+ * Press feedback for anything clickable: a 3% shrink while pressed, so a
+ * tap or click lands physically. The press takes `duration-press`; the
+ * release eases back at the element's own duration. List `scale` (or use
+ * `transition-transform`) in the element's own transition; lint checks it.
+ * Nothing shrinks when disabled or under reduced motion.
+ */
+@utility pressable {
+  @media (prefers-reduced-motion: no-preference) {
+    &:active:not(:disabled, [data-disabled], [aria-disabled="true"]) {
+      scale: 0.97;
+      transition-duration: var(--transition-duration-press);
+    }
+  }
+}
+
+/*
+ * The 4px card lift, on hover and on keyboard focus of the card or of a link
+ * or button inside it (not of a text field, which is focus-visible on every
+ * click). List `translate` in the element's own transition; lint checks it.
+ * No lift under reduced motion, and no hover lift on touch-only devices.
+ */
+@utility hover-lift {
+  @media (prefers-reduced-motion: no-preference) {
+    &:focus-visible,
+    &:has(:is(a, button):focus-visible) {
+      translate: 0 -4px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        translate: 0 -4px;
+      }
+    }
   }
 }
 
 /*
  * `card-hover:` applies while the enclosing card (`group/card`), link or
- * button is hovered, on devices that can hover. Used by <IconBadge
- * interactive>, so a badge reacts inside any clickable surface without the
- * caller adding a group name.
+ * button is hovered (on devices that can hover) or has keyboard focus, on
+ * itself or on a link or button inside it. Used by <IconBadge interactive>,
+ * so a badge reacts inside any clickable surface without the caller adding a
+ * group name.
  */
 @custom-variant card-hover {
   @media (hover: hover) {
     :where(.group\/card, a, button):hover & {
       @slot;
     }
+  }
+
+  :where(.group\/card, a, button):is(:focus-visible, :has(:is(a, button):focus-visible)) & {
+    @slot;
   }
 }
 

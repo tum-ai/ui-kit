@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  // The published entries (package.json "exports" point at their dist builds).
+  // Build, release and Figma tooling is run by path, so every script is an entry.
+  "entry": ["src/index.ts!", "src/shell/index.ts!", "scripts/**/*.{mjs,ts}", "figma/**/*.mjs"],
+  "project": [
+    "src/**/*.{ts,tsx,css}!",
+    "docs/**/*.mdx",
+    "scripts/**/*.mjs",
+    "figma/**/*.mjs",
+    "test/**/*.ts",
+  ],
+  "ignoreDependencies": [
+    // Resolved from the root by the consumer example's PostCSS config.
+    "@tailwindcss/postcss",
+    // Run through githooks/pre-commit.
+    "lint-staged",
+    // Language server for the editor and assistant LSP integration.
+    "typescript-language-server",
+  ],
+}

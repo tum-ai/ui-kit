@@ -120,12 +120,12 @@ test("nested tone focus outlines meet non-text contrast", async ({ page }) => {
       function light(color: string) {
         context.fillStyle = color;
         context.fillRect(0, 0, 1, 1);
-        const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
-        const [red, green, blue] = [r, g, b].map((n) => {
-          n /= 255;
+        const data = context.getImageData(0, 0, 1, 1).data;
+        const linear = (channel = 0) => {
+          const n = channel / 255;
           return n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4;
-        });
-        return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+        };
+        return 0.2126 * linear(data[0]) + 0.7152 * linear(data[1]) + 0.0722 * linear(data[2]);
       }
       const a = light(style.outlineColor),
         b = light(background);
@@ -136,6 +136,28 @@ test("nested tone focus outlines meet non-text contrast", async ({ page }) => {
     });
     expect(ratio.width).toBe("3px");
     expect(ratio.ratio, `${tone} focus contrast`).toBeGreaterThanOrEqual(3);
+  }
+});
+test("focus outlines stay visible in forced colors", async ({ page, browserName }) => {
+  test.skip(browserName !== "chromium", "Forced-colors emulation is Chromium-only.");
+  await page.emulateMedia({ forcedColors: "active" });
+  await story(page, "foundations-focus--nested-tones");
+  for (const tone of ["paper", "mist", "lavender", "ink", "night", "violet"]) {
+    const button = page.getByTestId(`focus-${tone}`);
+    await button.focus();
+    const outline = await button.evaluate((el) => {
+      const style = getComputedStyle(el);
+      const section = el.closest("section");
+      return {
+        style: style.outlineStyle,
+        width: style.outlineWidth,
+        color: style.outlineColor,
+        background: section ? getComputedStyle(section).backgroundColor : "",
+      };
+    });
+    expect(outline.style, `${tone} outline style`).not.toBe("none");
+    expect(outline.width, `${tone} outline width`).toBe("3px");
+    expect(outline.color, `${tone} outline color`).not.toBe(outline.background);
   }
 });
 test("reduced motion leaves revealed content visible", async ({ page }) => {

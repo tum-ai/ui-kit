@@ -50,6 +50,7 @@ export function toHaveNoViolations(results: AxeResults) {
 
 declare module "vitest" {
   // Type parameters must match Vitest's own `Matchers` declaration exactly.
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- declaration merging needs an interface
   interface Matchers<
     R extends void | Promise<void> = void | Promise<void>,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Must match Vitest declaration merging.

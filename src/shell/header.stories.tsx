@@ -47,7 +47,10 @@ const meta = {
           <section id="contact" className="mt-24">
             <h2 className="text-display-md">Start a conversation.</h2>
             <p className="mt-4 text-body">The caller owns this content and its destinations.</p>
-            <a href="#main-content" className="mt-6 inline-block text-highlight">
+            <a
+              href="#main-content"
+              className="mt-6 inline-block text-highlight transition-colors hover:text-fg"
+            >
               Back to content
             </a>
           </section>
@@ -68,9 +71,9 @@ async function waitForMenuEntrance(menu: HTMLElement) {
       .getAnimations({ subtree: true })
       .map((animation) => animation.finished.catch(() => undefined)),
   );
-  await waitFor(() => {
+  await waitFor(async () => {
     for (const row of menu.querySelectorAll("nav li")) {
-      expect(getComputedStyle(row).opacity).toBe("1");
+      await expect(getComputedStyle(row).opacity).toBe("1");
     }
   });
 }
