@@ -465,7 +465,8 @@ export function normalizeCapture(
       style.rotate &&
       style.rotate !== "none" &&
       style.rotate !== "0deg" &&
-      !(item.svg && style.rotate === "180deg")
+      // SVG icons are drawn turned (scripts/figma/browser.mjs).
+      !item.svg
     )
       issue(item, "CSS_ROTATE", `Individual rotation ${style.rotate} is unsupported.`);
     if (style.scale && style.scale !== "none" && style.scale !== "1")

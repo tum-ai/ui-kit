@@ -81,10 +81,11 @@ describe("Eyebrow", () => {
     expect(eyebrow?.querySelector('[aria-hidden="true"]')).toBeNull();
   });
 
-  test("pads a numeric index and hides the separator rule", async () => {
+  test("pads a numeric index, hides the rule and keeps the words apart", async () => {
     const { container } = render(<Eyebrow index={3}>Projects</Eyebrow>);
     const eyebrow = container.firstElementChild;
-    expect(eyebrow).toHaveTextContent(/^03Projects$/);
+    // toHaveTextContent collapses whitespace, so the hidden separator reads as ", ".
+    expect(eyebrow).toHaveTextContent(/^03, Projects$/);
     expect(eyebrow?.querySelector('[aria-hidden="true"]')).toBeEmptyDOMElement();
     expect(await axe(container)).toHaveNoViolations();
   });

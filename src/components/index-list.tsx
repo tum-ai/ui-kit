@@ -92,7 +92,7 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                     thumbnail at 320px) breaks instead of running under it. */}
                 <HeadingTag
                   className={cn(
-                    "group-hover/row:translate-x-2 text-display-md wrap-break-word text-fg transition-[color,translate] duration-surface ease-brand motion-reduce:transition-none",
+                    "group-hover/row:translate-x-2 group-focus-visible/row:translate-x-2 text-display-md wrap-break-word text-fg transition-[color,translate] duration-surface ease-brand motion-reduce:transition-none",
                     recedingTitle,
                   )}
                 >
@@ -131,11 +131,11 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "size-12 sm:grid hidden shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[color,background-color,border-color,opacity] duration-hover ease-brand group-hover/row:border-fg group-hover/row:bg-fg group-hover/row:text-canvas",
+                    "size-12 sm:grid hidden shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[color,background-color,border-color,opacity] duration-hover ease-brand group-hover/row:border-fg group-hover/row:bg-fg group-hover/row:text-canvas group-focus-visible/row:border-fg group-focus-visible/row:bg-fg group-focus-visible/row:text-canvas",
                     recedingMark,
                   )}
                 >
-                  <ArrowRight className="size-4 transition-transform duration-surface ease-brand group-hover/row:-rotate-45 motion-reduce:transition-none" />
+                  <ArrowRight className="size-4 transition-transform duration-surface ease-brand group-hover/row:-rotate-45 group-focus-visible/row:-rotate-45 motion-reduce:transition-none" />
                 </span>
               </div>
             </Anchor>

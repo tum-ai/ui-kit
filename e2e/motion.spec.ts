@@ -263,7 +263,16 @@ test.describe("interaction states", () => {
         // Centre it, so a fixed header never sits between the pointer and the control.
         await control.evaluate((el) => {
           el.scrollIntoView({ block: "center", behavior: "instant" });
+          // Rest means neither hovered nor focused: a story may leave a control
+          // focused, and focus already shows the hover look (focus parity).
+          (document.activeElement as HTMLElement | null)?.blur();
         });
+        // A control shown only while focused (the skip link) has no hover to check.
+        const parked = await control.evaluate((el) => {
+          const box = el.getBoundingClientRect();
+          return box.bottom <= 0 || box.right <= 0;
+        });
+        if (parked) continue;
         const rest = await snapshot(page, control, false);
         const hovered = await snapshot(page, control, true);
         if (rest === hovered) {

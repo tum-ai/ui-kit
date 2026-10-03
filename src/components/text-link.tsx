@@ -65,7 +65,7 @@ export function TextLink({
       {arrow ? (
         <Icon
           aria-hidden="true"
-          className="size-4 group-hover/link:translate-x-0.5 transition-transform duration-surface ease-brand motion-reduce:transition-none"
+          className="size-4 group-hover/link:translate-x-0.5 group-focus-visible/link:translate-x-0.5 transition-transform duration-surface ease-brand motion-reduce:transition-none"
         />
       ) : null}
     </Anchor>

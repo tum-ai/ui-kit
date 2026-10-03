@@ -60,11 +60,11 @@ export function ChipGroup({
         <Toggle
           key={option.value}
           value={option.value}
-          className="group/chip h-10 gap-2 px-4 font-semibold inline-flex items-center rounded-full border border-hairline-strong text-small text-fg-muted transition-[background-color,color,border-color,scale] duration-hover ease-brand hover:border-fg/45 hover:text-fg data-[pressed]:border-transparent data-[pressed]:bg-fg data-[pressed]:text-canvas data-[pressed]:hover:bg-fg/92 motion-safe:active:scale-[0.97]"
+          className="group/chip h-10 gap-2 px-4 font-semibold inline-flex pressable items-center rounded-full border border-hairline-strong text-small text-fg-muted transition-[background-color,color,border-color,scale] duration-hover ease-brand hover:border-fg/45 hover:text-fg data-[pressed]:border-transparent data-[pressed]:bg-fg data-[pressed]:text-canvas data-[pressed]:hover:bg-fg/92"
         >
           {option.label}
           {option.count !== undefined ? (
-            <span className="min-w-5 px-1.5 rounded-full bg-fg/10 text-center text-meta tabular transition-colors group-data-[pressed]/chip:bg-canvas group-data-[pressed]/chip:text-fg">
+            <span className="min-w-5 px-1.5 rounded-full bg-fg/10 text-center text-meta tabular transition-colors duration-hover group-data-[pressed]/chip:bg-canvas group-data-[pressed]/chip:text-fg">
               {option.count}
             </span>
           ) : null}

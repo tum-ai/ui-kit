@@ -111,7 +111,7 @@ const logoTileStyles = cva("group/logo inline-flex items-center justify-center",
       variant: ["tile", "chip"],
       linked: true,
       className:
-        "transition-[background-color,box-shadow] duration-hover ease-brand hover:bg-violet-50 hover:ring-2 hover:ring-violet-500 focus-visible:bg-violet-50 motion-reduce:transition-none",
+        "pressable transition-[background-color,box-shadow,scale] duration-hover ease-brand hover:bg-violet-50 hover:ring-2 hover:ring-violet-500 focus-visible:bg-violet-50 motion-reduce:transition-none",
     },
   ],
   defaultVariants: {

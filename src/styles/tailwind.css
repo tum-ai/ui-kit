@@ -643,6 +643,11 @@
         scale: 1.04;
       }
     }
+
+    /* Keyboard focus on the card, or on its link or button, zooms as hover does. */
+    :where(.group\/zoom):is(:focus-visible, :has(:is(a, button):focus-visible)) & {
+      scale: 1.04;
+    }
   }
 }
 
@@ -685,15 +690,20 @@
 
 /*
  * `card-hover:` applies while the enclosing card (`group/card`), link or
- * button is hovered, on devices that can hover. Used by <IconBadge
- * interactive>, so a badge reacts inside any clickable surface without the
- * caller adding a group name.
+ * button is hovered (on devices that can hover) or has keyboard focus, on
+ * itself or on a link or button inside it. Used by <IconBadge interactive>,
+ * so a badge reacts inside any clickable surface without the caller adding a
+ * group name.
  */
 @custom-variant card-hover {
   @media (hover: hover) {
     :where(.group\/card, a, button):hover & {
       @slot;
     }
+  }
+
+  :where(.group\/card, a, button):is(:focus-visible, :has(:is(a, button):focus-visible)) & {
+    @slot;
   }
 }
 
