@@ -57,7 +57,10 @@ export const Interactive: Story = {
         <p className="mt-3 text-body text-fg-muted">
           A card may contain a real link for navigation.
         </p>
-        <a href="/research" className="mt-6 inline-block text-highlight underline">
+        <a
+          href="/research"
+          className="mt-6 inline-block text-highlight underline transition-colors hover:text-fg"
+        >
           Explore research
         </a>
       </>

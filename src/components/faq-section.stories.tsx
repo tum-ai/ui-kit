@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { FaqSection } from "./faq-section";
 import { TextLink } from "./text-link";
@@ -41,9 +41,14 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole("region", { name: "Frequently asked questions" })).toBeVisible();
     await userEvent.click(canvas.getByRole("button", { name: "Where should I begin?" }));
-    await expect(
-      canvas.getByText("Start with the question that best describes what you need to understand."),
-    ).toBeVisible();
+    // The answer fades in with its height.
+    await waitFor(() =>
+      expect(
+        canvas.getByText(
+          "Start with the question that best describes what you need to understand.",
+        ),
+      ).toBeVisible(),
+    );
   },
 };
 export const Lavender: Story = { args: { tone: "lavender" } };

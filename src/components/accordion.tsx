@@ -66,7 +66,7 @@ export function AccordionTrigger({
         <span>{children}</span>
         <span
           aria-hidden
-          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate] duration-surface ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
+          className="size-10 relative grid shrink-0 place-items-center rounded-full border border-hairline-strong text-fg transition-[background-color,border-color,color,rotate,scale] duration-surface ease-brand group-hover/trigger:border-fg/50 group-data-[panel-open]/trigger:border-transparent group-data-[panel-open]/trigger:bg-fg group-data-[panel-open]/trigger:text-canvas motion-safe:group-active/trigger:scale-95 motion-safe:group-data-[panel-open]/trigger:rotate-180 motion-reduce:transition-none"
         >
           <span className="w-3.5 absolute h-[1.5px] rounded-full bg-current" />
           <span className="h-3.5 absolute w-[1.5px] rounded-full bg-current transition-transform duration-surface ease-brand group-data-[panel-open]/trigger:scale-y-0 motion-reduce:transition-none" />
@@ -85,17 +85,21 @@ export type AccordionPanelProps = Omit<
   children: ReactNode;
   /**
    * Classes for the answer's content box. The panel element itself only
-   * animates its height, so padding and type go here.
+   * animates its height and opacity, so padding and type go here.
    */
   className?: string;
 };
 
-/** The answer; its height eases open and closed (instant under reduced motion). */
+/**
+ * The answer; it fades with its height as it opens, and closes a little faster
+ * (instant under reduced motion). The fade sits on the panel, so Base UI's
+ * find-in-page reveal, which skips the panel's transition, shows a match at once.
+ */
 export function AccordionPanel({ children, className, ...props }: AccordionPanelProps) {
   return (
     <BaseAccordion.Panel
       hiddenUntilFound
-      className="data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height] duration-surface ease-brand motion-reduce:transition-none"
+      className="data-[ending-style]:h-0 data-[starting-style]:h-0 h-(--accordion-panel-height) overflow-hidden transition-[height,opacity] duration-surface ease-brand data-[ending-style]:opacity-0 data-[ending-style]:duration-hover data-[starting-style]:opacity-0 motion-reduce:transition-none"
       {...props}
     >
       <div

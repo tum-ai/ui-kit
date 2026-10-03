@@ -156,7 +156,7 @@ export function Header({
             <Anchor
               href={homeHref}
               aria-label={homeLabel}
-              className="flex shrink-0 items-center rounded-full"
+              className="-mx-2 px-2 -my-1.5 py-1.5 hover:bg-white/[0.09] flex shrink-0 items-center rounded-full transition-colors duration-hover"
             >
               <Image {...logo} preload className="h-6 md:h-7 w-auto" />
             </Anchor>
@@ -214,11 +214,11 @@ export function Header({
               ) : null}
               <DialogTrigger
                 aria-label="Open menu"
-                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid place-items-center rounded-full transition-colors duration-hover"
+                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid pressable place-items-center rounded-full transition-[background-color,scale] duration-hover"
               >
                 <span aria-hidden className="w-4 gap-1.25 flex flex-col">
-                  <span className="motion-safe:group-hover/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-hover ease-brand" />
-                  <span className="h-[1.5px] w-full origin-left scale-x-[0.667] rounded-full bg-current transition-transform duration-hover ease-brand group-hover/menu:scale-x-100 motion-reduce:transition-none" />
+                  <span className="motion-safe:group-hover/menu:translate-x-0.5 motion-safe:group-focus-visible/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-hover ease-brand" />
+                  <span className="h-[1.5px] w-full origin-left scale-x-[0.667] rounded-full bg-current transition-transform duration-hover ease-brand group-hover/menu:scale-x-100 group-focus-visible/menu:scale-x-100 motion-reduce:transition-none" />
                 </span>
               </DialogTrigger>
             </div>
@@ -244,7 +244,7 @@ export function Header({
             <Image {...logo} loading="lazy" className="h-6 md:h-7 w-auto" />
             <DialogClose
               aria-label="Close menu"
-              className="size-10 bg-white/10 text-white hover:bg-white/20 grid place-items-center rounded-full transition-[background-color,rotate] duration-hover ease-brand motion-safe:hover:rotate-90"
+              className="size-10 bg-white/10 text-white hover:bg-white/20 grid pressable place-items-center rounded-full transition-[background-color,rotate,scale] duration-hover ease-brand motion-safe:hover:rotate-90 motion-safe:focus-visible:rotate-90"
             >
               <X aria-hidden className="size-4" />
             </DialogClose>
@@ -279,7 +279,7 @@ export function Header({
                       </span>
                       <ArrowUpRight
                         aria-hidden
-                        className="size-5 -translate-x-1 group-hover/item:translate-x-0 shrink-0 opacity-0 transition-[opacity,translate] duration-hover ease-brand group-hover/item:opacity-100 motion-reduce:transition-none"
+                        className="size-5 -translate-x-1 group-hover/item:translate-x-0 group-focus-visible/item:translate-x-0 shrink-0 opacity-0 transition-[opacity,translate] duration-hover ease-brand group-hover/item:opacity-100 group-focus-visible/item:opacity-100 motion-reduce:transition-none"
                       />
                     </NavAnchor>
                   </li>

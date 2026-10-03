@@ -68,7 +68,7 @@ the fixed header), `tabular`, `mask-fade-x`, `rounded-signature`,
 `text-gradient-brand`.
 
 Custom variant: `card-hover:` applies while the enclosing card (`group/card`),
-link or button is hovered, on devices that can hover. `IconBadge interactive`
+link or button is hovered (on devices that can hover) or has keyboard focus. `IconBadge interactive`
 uses it, so a badge reacts inside any clickable surface without a group name.
 
 ## Typography
@@ -220,8 +220,8 @@ Easings: `ease-brand` (`cubic-bezier(0.22,1,0.36,1)`) everywhere, `ease-snappy` 
 
 - `pressable`: a 3% shrink while pressed, for anything clickable. The press takes `duration-press` and the release eases back at the element's own duration. List `scale` in the element's transition (lint checks it).
 - `hover-lift`: the 4px card lift on hover and on keyboard focus of the card or of a link or button inside it. List `translate` in the element's transition (lint checks it).
-- `zoom-media`: the slow 1.04 image zoom inside a `group/zoom` card.
-- `card-hover:`: a variant (not motion) for parts that react while the enclosing card, link or button is hovered, on devices that can hover. Gate any transform inside it with `motion-safe:`.
+- `zoom-media`: the slow 1.04 image zoom inside a `group/zoom` card, on hover and on keyboard focus of the card or of a link or button inside it.
+- `card-hover:`: a variant (not motion) for parts that react while the enclosing card, link or button is hovered (on devices that can hover) or has keyboard focus, on itself or on a link or button inside it. Gate any transform inside it with `motion-safe:`.
 
 `pressable`, `hover-lift` and `zoom-media` do nothing under reduced motion, and the hover parts do nothing on touch-only devices.
 

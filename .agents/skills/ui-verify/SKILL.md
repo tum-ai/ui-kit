@@ -8,10 +8,12 @@ description: Verify the rendered result of a TUM.ai UI-kit change in real browse
 1. Build or run Storybook (`bun run dev`, or `bun run build:storybook` and
    `node scripts/serve.mjs storybook-static 6006`). Inspect the affected stories at 320, 390, 768
    and 1440px.
-2. Exercise keyboard navigation, open overlays, focus return, reduced motion, long content and
+2. Exercise keyboard navigation, open overlays, focus return, reduced-motion readability (movement
+   itself is audited by `e2e/motion.spec.ts`), hover, focus and press states, long content and
    fallback media.
-3. Run `bun run test:stories` (Chromium and strict axe) and `bun run test:e2e` (Chromium and WebKit,
-   visual baselines). Look at every changed screenshot before accepting it. Normal runs never
+3. Run `bun run test:stories` (Chromium and strict axe) and `bun run test:e2e` (Chromium and WebKit
+   visual baselines, plus the per-story motion audits: reduced motion in the `chromium` project and
+   hover and press states in the `motion` project; needs `bun run build:storybook` first). Look at every changed screenshot before accepting it. Normal runs never
    update baselines; see `docs/testing.md`.
 4. For CSS or asset changes that consumers see, run `bun run test:consumer`.
 5. For ad hoc screenshots of stories at extra widths, use `references/sweep.md`.
