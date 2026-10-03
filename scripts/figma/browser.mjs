@@ -454,7 +454,9 @@ export function extractRenderedDom({ storyId, tokenNames = [], pseudoBoxes = {} 
       source: { domPath: key, pseudo: name, parentBounds },
     };
   }
-  const excluded = new Set(["SCRIPT", "STYLE", "LINK", "META", "NOSCRIPT", "TEMPLATE"]);
+  // A canvas is drawn at runtime (the halftone field's WebGL) and has no
+  // editable native form; the frame around it keeps its place in the scene.
+  const excluded = new Set(["SCRIPT", "STYLE", "LINK", "META", "NOSCRIPT", "TEMPLATE", "CANVAS"]);
   function domSelector(element) {
     const parts = [];
     while (element?.nodeType === Node.ELEMENT_NODE) {
