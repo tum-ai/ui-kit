@@ -18,7 +18,10 @@ description: Pre-pull-request acceptance check for the TUM.ai UI kit. Use before
 4. Check that a Changeset exists for any public API, token, visual or accessibility change.
 5. Run the read-only reviewers on the affected files: `design-reviewer`, `a11y-reviewer` and
    `docs-sync`.
-6. Write the PR summary using `.github/pull_request_template.md`. List the checks that actually ran
-   and the manual checks that did not (see `docs/testing.md`).
+6. Write the PR summary using `.github/pull_request_template.md`, filled in completely: every
+   verification box ticked or marked `n/a` with a reason (`Validate PR body` checks it). List the
+   checks that actually ran and the manual checks that did not (see `docs/testing.md`).
+7. For changes to `src/` or `assets/`, screenshot the affected stories at 390 and 1440 (see
+   `ui-verify`) and attach them with `gh pr create --attach`, so they land under `## Screenshots`.
 
 Don't commit, push, publish or open the PR unless the user asks.

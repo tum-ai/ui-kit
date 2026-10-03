@@ -23,7 +23,9 @@ The [CI workflow](https://github.com/tum-ai/ui-kit/actions/workflows/ci.yml) run
 - **package**: publint and type-resolution checks, bundle size budgets, and the packed tarball installed into an isolated Next.js consumer
 - **browser**: browser stories with axe, visual regressions and the Figma scene build
 
-Pull requests into `main` need one approving review from a [code owner](../.github/CODEOWNERS), resolved conversations and a passing `Verify` check on an up-to-date branch. New commits dismiss stale approvals. Force pushes and branch deletion are disabled on `main`.
+Two more checks run on every pull request: **Validate PR title** (Conventional Commits) and **Validate PR body** ([`scripts/pr-body.mjs`](../scripts/pr-body.mjs)). The body check requires the template's sections to be filled in and every verification box to be ticked or marked `n/a` with a reason. A pull request that changes `src/` or `assets/` (tests, stories and `testing.ts` excluded) needs at least two screenshots of the affected stories, phone (390) and desktop (1440), unless it carries the `no-visual-change` label. Dependabot pull requests skip the body check.
+
+The [`main` ruleset](../.github/rulesets/main.json) requires pull requests with one approving review from a [code owner](../.github/CODEOWNERS), resolved conversations, and passing `Verify`, `Validate PR title`, `Validate PR body` and `Dependency Review` checks on an up-to-date branch. New commits dismiss stale approvals. History stays linear, pull requests are squash-merged only, and force pushes and branch deletion are disabled. Repository admins can merge a pull request without the review but can't push to `main` directly. The file is the source of truth for the ruleset applied in the repository settings; keep the two in sync.
 
 Include migration notes and a Changeset for public API, token or visual changes. Design and API changes should explain the visual and accessibility impact.
 
