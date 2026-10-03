@@ -502,6 +502,56 @@
   }
 
   /*
+   * DayRuler's draw-in (`drawIn`): the ticks rise left to right
+   * (`--tick-delay`), the fill draws alongside, then the mark and its label
+   * fade in. `idle` plays on first paint (server HTML and rulers that start
+   * on screen); `pending` holds every part at its start frame until the
+   * ruler scrolls into view, and `done` plays it from there. The rise is
+   * `scale`, the fill `transform`, so neither fights the parts' `translate`.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-draw]:not([data-draw="pending"]) {
+      & [data-tick] {
+        transform-origin: bottom;
+        animation: tick-rise var(--transition-duration-media) var(--ease-brand) both;
+        animation-delay: var(--tick-delay, 0ms);
+      }
+
+      & [data-fill] {
+        animation: var(--animate-draw);
+      }
+
+      & :is([data-today], [data-mark-label]) {
+        animation: var(--animate-fade);
+        animation-delay: 900ms;
+      }
+    }
+
+    [data-draw="pending"] {
+      & [data-tick] {
+        scale: 1 0;
+      }
+
+      & [data-fill] {
+        transform: scaleX(0);
+      }
+
+      & :is([data-today], [data-mark-label]) {
+        opacity: 0;
+      }
+    }
+  }
+
+  @keyframes tick-rise {
+    from {
+      scale: 1 0;
+    }
+    to {
+      scale: none;
+    }
+  }
+
+  /*
    * Soft seams between neighbouring bands of close tints (light next to
    * light, dark next to dark): the lower band fades in from the previous
    * band's color instead of starting with a hard edge. Light/dark contrasts

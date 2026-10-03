@@ -1,7 +1,10 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps, ReactNode } from "react";
+import { type ComponentProps, type CSSProperties, type ReactNode, useRef } from "react";
 
 import { cn } from "../lib/cn";
+import { useEntrance } from "./entrance";
 
 const rulerStyles = cva("relative", {
   variants: {
@@ -42,7 +45,12 @@ export type DayRulerProps = Omit<ComponentProps<"div">, "children"> &
      * centred on the mark, and flush with the ruler's end near either edge.
      */
     markLabel?: ReactNode;
-    /** Draw the fill once on load, for a ruler above the fold. */
+    /**
+     * Draw the ruler in once, the first time it scrolls into view (at once
+     * when it starts on screen): the ticks rise from left to right with the
+     * fill, then the mark and its label fade in. Server HTML is fully drawn,
+     * and nothing moves under reduced motion.
+     */
     drawIn?: boolean;
   };
 
@@ -53,12 +61,17 @@ export type DayRulerProps = Omit<ComponentProps<"div">, "children"> &
  */
 const LABEL_EDGE = 0.15;
 
+/** How long the ticks take to start rising, first to last, under `drawIn` (ms). */
+const TICK_STAGGER = 600;
+
 /**
  * A window of days as a ruler: one tick per day, taller ticks every week,
  * and a fill from the first tick to today's with a mark on it, so how much
  * of the window is gone reads at a glance. Built from whole days, not
  * eyeballed. Decorative (`aria-hidden`): state the same fact in text beside
- * it, such as "27 days left".
+ * it, such as "27 days left". With `drawIn` it carries `data-draw`
+ * (`idle`, `pending` below the fold, `done` once in view); the motion is
+ * CSS keyed on it (`tailwind.css`).
  */
 export function DayRuler({
   days,
@@ -76,8 +89,16 @@ export function DayRuler({
   const at = (day: number) => `${(day / span) * 100}%`;
   const ticks = Array.from({ length: span + 1 }, (_, day) => day);
   const share = done / span;
+  const ownRef = useRef<HTMLDivElement>(null);
+  const draw = useEntrance(ownRef, drawIn);
   return (
-    <div aria-hidden="true" className={className} {...props}>
+    <div
+      ref={ownRef}
+      aria-hidden="true"
+      data-draw={drawIn ? draw : undefined}
+      className={className}
+      {...props}
+    >
       {markLabel ? (
         <div className={markLabelStyles({ size })}>
           <span
@@ -85,7 +106,6 @@ export function DayRuler({
             className={cn(
               "top-0 absolute whitespace-nowrap",
               share >= LABEL_EDGE && share <= 1 - LABEL_EDGE && "-translate-x-1/2",
-              drawIn && "[animation-delay:900ms] motion-safe:animate-fade",
             )}
             style={
               share < LABEL_EDGE
@@ -103,28 +123,30 @@ export function DayRuler({
         {ticks.map((day) => (
           <span
             key={day}
+            data-tick=""
             className={tickStyles({
               week: day % 7 === 0 || day === span,
               elapsed: day <= done,
             })}
-            style={{ left: at(day) }}
+            style={
+              drawIn
+                ? ({
+                    left: at(day),
+                    "--tick-delay": `${Math.round((day / span) * TICK_STAGGER)}ms`,
+                  } as CSSProperties)
+                : { left: at(day) }
+            }
           />
         ))}
         <span className="inset-x-0 bottom-0 absolute h-px bg-hairline-strong" />
         <span
           data-fill=""
-          className={cn(
-            "bottom-0 left-0 h-0.5 absolute origin-left bg-highlight",
-            drawIn && "motion-safe:animate-draw",
-          )}
+          className="bottom-0 left-0 h-0.5 absolute origin-left bg-highlight"
           style={{ width: at(done) }}
         />
         <span
           data-today=""
-          className={cn(
-            "bottom-0 size-2.5 absolute -translate-x-1/2 translate-y-1/2 rounded-full bg-highlight ring-4 ring-canvas",
-            drawIn && "[animation-delay:900ms] motion-safe:animate-fade",
-          )}
+          className="bottom-0 size-2.5 absolute -translate-x-1/2 translate-y-1/2 rounded-full bg-highlight ring-4 ring-canvas"
           style={{ left: at(done) }}
         />
       </div>
