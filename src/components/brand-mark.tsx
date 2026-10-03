@@ -75,9 +75,11 @@ export function BrandMark({
             y2="291.39"
             gradientUnits="userSpaceOnUse"
           >
+            {/* eslint-disable tumai/no-raw-color -- the logomark gradient is fixed brand artwork, not a UI color */}
             <stop offset=".05" stopColor="#3D2175" />
             <stop offset=".35" stopColor="#9B6BEA" />
             <stop offset="1" stopColor="#AC78FF" />
+            {/* eslint-enable tumai/no-raw-color */}
           </linearGradient>
         </defs>
       ) : null}

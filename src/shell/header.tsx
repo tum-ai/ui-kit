@@ -147,7 +147,7 @@ export function Header({
         <div className="md:w-[min(82rem,calc(100%-2*var(--gutter)+2rem))] mx-auto w-[min(82rem,calc(100%-1.25rem))]">
           <div
             className={cn(
-              "h-14 gap-2 pr-2 pl-4 text-white md:pl-5 pointer-events-auto relative flex items-center rounded-full border transition-[background-color,border-color,box-shadow] duration-500 ease-brand",
+              "h-14 gap-2 pr-2 pl-4 text-white md:pl-5 pointer-events-auto relative flex items-center rounded-full border transition-[background-color,border-color,box-shadow] duration-surface ease-brand",
               frosted
                 ? "border-white/10 backdrop-blur-xl bg-ink-950/75 shadow-[0_16px_40px_-18px_var(--color-ink-950)] shadow-ink-950/80 backdrop-saturate-150"
                 : "border-transparent bg-transparent",
@@ -156,7 +156,7 @@ export function Header({
             <Anchor
               href={homeHref}
               aria-label={homeLabel}
-              className="flex shrink-0 items-center rounded-full"
+              className="-mx-2 px-2 -my-1.5 py-1.5 hover:bg-white/[0.09] flex shrink-0 items-center rounded-full transition-colors duration-hover"
             >
               <Image {...logo} preload className="h-6 md:h-7 w-auto" />
             </Anchor>
@@ -169,7 +169,7 @@ export function Header({
             >
               <span
                 aria-hidden
-                className="left-0 h-9 bg-white/[0.09] pointer-events-none absolute top-1/2 w-(--pill-w) translate-x-(--pill-x) -translate-y-1/2 rounded-full opacity-[var(--pill-o,0)] transition-[translate,width,opacity] duration-300 ease-brand motion-reduce:transition-none"
+                className="left-0 h-9 bg-white/[0.09] pointer-events-none absolute top-1/2 w-(--pill-w) translate-x-(--pill-x) -translate-y-1/2 rounded-full opacity-[var(--pill-o,0)] transition-[translate,width,opacity] duration-hover ease-brand motion-reduce:transition-none"
               />
               {navigation.map(({ href, label, external }) => {
                 const active = isActive(href);
@@ -184,7 +184,7 @@ export function Header({
                     onFocus={movePill}
                     onBlur={hidePill}
                     className={cn(
-                      "px-3.5 py-2 font-semibold text-small/normal relative shrink-0 rounded-full whitespace-nowrap transition-colors duration-300",
+                      "px-3.5 py-2 font-semibold text-small/normal relative shrink-0 rounded-full whitespace-nowrap transition-colors duration-hover",
                       active ? "text-white" : "hover:text-white text-minimal-gray",
                     )}
                   >
@@ -214,11 +214,11 @@ export function Header({
               ) : null}
               <DialogTrigger
                 aria-label="Open menu"
-                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid place-items-center rounded-full transition-colors duration-300"
+                className="group/menu size-10 bg-white/10 text-white hover:bg-white/20 xl:hidden grid pressable place-items-center rounded-full transition-[background-color,scale] duration-hover"
               >
                 <span aria-hidden className="w-4 gap-1.25 flex flex-col">
-                  <span className="group-hover/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-brand" />
-                  <span className="h-[1.5px] w-2/3 rounded-full bg-current transition-[width] duration-300 ease-brand group-hover/menu:w-full" />
+                  <span className="motion-safe:group-hover/menu:translate-x-0.5 motion-safe:group-focus-visible/menu:translate-x-0.5 h-[1.5px] w-full rounded-full bg-current transition-transform duration-hover ease-brand" />
+                  <span className="h-[1.5px] w-full origin-left scale-x-[0.667] rounded-full bg-current transition-transform duration-hover ease-brand group-hover/menu:scale-x-100 group-focus-visible/menu:scale-x-100 motion-reduce:transition-none" />
                 </span>
               </DialogTrigger>
             </div>
@@ -244,7 +244,7 @@ export function Header({
             <Image {...logo} loading="lazy" className="h-6 md:h-7 w-auto" />
             <DialogClose
               aria-label="Close menu"
-              className="size-10 bg-white/10 text-white hover:bg-white/20 grid place-items-center rounded-full transition-[background-color,rotate] duration-300 ease-brand motion-safe:hover:rotate-90"
+              className="size-10 bg-white/10 text-white hover:bg-white/20 grid pressable place-items-center rounded-full transition-[background-color,rotate,scale] duration-hover ease-brand motion-safe:hover:rotate-90 motion-safe:focus-visible:rotate-90"
             >
               <X aria-hidden className="size-4" />
             </DialogClose>
@@ -258,7 +258,7 @@ export function Header({
                   <li
                     key={href}
                     style={{ transitionDelay: `${90 + Math.min(index, 10) * 45}ms` }}
-                    className="group-data-[starting-style]/menu-panel:translate-x-8 transition-[opacity,translate] duration-700 ease-brand group-data-[starting-style]/menu-panel:opacity-0 motion-reduce:transition-none"
+                    className="group-data-[starting-style]/menu-panel:translate-x-8 transition-[opacity,translate] duration-media ease-brand group-data-[starting-style]/menu-panel:opacity-0 motion-reduce:transition-none"
                   >
                     <NavAnchor
                       href={href}
@@ -266,7 +266,7 @@ export function Header({
                       external={external}
                       aria-current={active ? "page" : undefined}
                       onClick={() => setOpen(false)}
-                      className="group/item py-4 flex items-center justify-between border-b border-hairline text-heading-lg text-fg transition-colors duration-300 hover:text-highlight"
+                      className="group/item py-4 flex items-center justify-between border-b border-hairline text-heading-lg text-fg transition-colors duration-hover hover:text-highlight"
                     >
                       <span className="min-w-0 gap-3 flex items-center">
                         <span className="min-w-0 break-words">{label}</span>
@@ -279,7 +279,7 @@ export function Header({
                       </span>
                       <ArrowUpRight
                         aria-hidden
-                        className="size-5 -translate-x-1 group-hover/item:translate-x-0 shrink-0 opacity-0 transition-[opacity,translate] duration-300 ease-brand group-hover/item:opacity-100 motion-reduce:transition-none"
+                        className="size-5 -translate-x-1 group-hover/item:translate-x-0 group-focus-visible/item:translate-x-0 shrink-0 opacity-0 transition-[opacity,translate] duration-hover ease-brand group-hover/item:opacity-100 group-focus-visible/item:opacity-100 motion-reduce:transition-none"
                       />
                     </NavAnchor>
                   </li>
@@ -306,7 +306,7 @@ export function Header({
                   <NavAnchor
                     {...link}
                     onClick={() => setOpen(false)}
-                    className="transition-colors duration-300 hover:text-fg"
+                    className="transition-colors duration-hover hover:text-fg"
                   />
                 </li>
               ))}

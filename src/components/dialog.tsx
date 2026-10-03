@@ -103,7 +103,7 @@ export const DialogClose = BaseDialog.Close;
 const popupStyles = cva(
   [
     "relative w-full bg-canvas text-fg outline-none",
-    "transition-[opacity,translate,scale] duration-500 ease-brand motion-reduce:transition-none",
+    "transition-[opacity,translate,scale] duration-surface ease-brand motion-reduce:transition-none",
   ],
   {
     variants: {
@@ -117,7 +117,7 @@ const popupStyles = cva(
         modal: [
           "overflow-clip rounded-4xl shadow-lift",
           "data-[starting-style]:translate-y-8 data-[starting-style]:scale-[0.97] data-[starting-style]:opacity-0",
-          "data-[ending-style]:translate-y-4 data-[ending-style]:opacity-0 data-[ending-style]:duration-300",
+          "data-[ending-style]:translate-y-4 data-[ending-style]:opacity-0 data-[ending-style]:duration-hover",
         ],
         fullscreen: [
           "top-0 right-0 fixed isolate z-50 h-lvh overflow-y-auto overscroll-contain ease-snappy",
@@ -162,7 +162,7 @@ function CloseButton({ label }: { label: string }) {
   return (
     <BaseDialog.Close
       aria-label={label}
-      className="mt-3 mr-3 size-10 bg-white/85 backdrop-blur hover:bg-white pointer-events-auto grid shrink-0 place-items-center rounded-full text-violet-950 shadow-soft transition-[background-color,rotate] duration-300 ease-brand motion-safe:hover:rotate-90"
+      className="mt-3 mr-3 size-10 bg-white/85 backdrop-blur hover:bg-white pointer-events-auto grid shrink-0 pressable place-items-center rounded-full text-violet-950 shadow-soft transition-[background-color,rotate,scale] duration-hover ease-brand motion-safe:hover:rotate-90 motion-safe:focus-visible:rotate-90"
     >
       <X aria-hidden="true" className="size-4" />
     </BaseDialog.Close>
@@ -207,7 +207,7 @@ export function DialogContent({
 
   return (
     <BaseDialog.Portal>
-      <BaseDialog.Backdrop className="inset-x-0 top-0 fixed z-50 h-lvh bg-ink-950/65 backdrop-blur-[6px] transition-opacity duration-500 ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none" />
+      <BaseDialog.Backdrop className="inset-x-0 top-0 fixed z-50 h-lvh bg-ink-950/65 backdrop-blur-[6px] transition-opacity duration-surface ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none" />
       {variant === "fullscreen" ? (
         popup
       ) : (

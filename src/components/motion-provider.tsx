@@ -1,3 +1,4 @@
+// eslint-disable-next-line tumai/client-boundary -- `domAnimation` holds functions, which a server layout cannot pass to LazyMotion
 "use client";
 
 import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";

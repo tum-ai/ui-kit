@@ -33,7 +33,7 @@ const iconBadgeStyles = cva("inline-grid shrink-0 place-items-center text-highli
      */
     interactive: {
       true: [
-        "transition-[background-color,color,rotate] duration-500 ease-brand motion-reduce:transition-none",
+        "transition-[background-color,color,rotate] duration-surface ease-brand motion-reduce:transition-none",
         "card-hover:text-white card-hover:bg-violet-600 motion-safe:card-hover:-rotate-6",
       ],
       false: "",

@@ -20,8 +20,8 @@ export const buttonStyles = cva(
   [
     "group/button gap-2 relative isolate inline-flex shrink-0 items-center justify-center overflow-hidden",
     "font-semibold rounded-full tracking-[-0.01em] whitespace-nowrap select-none",
-    "transition-[background-color,color,border-color,box-shadow,scale] duration-300 ease-brand",
-    "disabled:pointer-events-none disabled:opacity-45 motion-safe:active:scale-[0.98]",
+    "transition-[background-color,color,border-color,box-shadow,scale] duration-hover ease-brand",
+    "disabled:pointer-events-none disabled:opacity-45",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:shrink-0",
   ],
   {
@@ -50,6 +50,11 @@ export const buttonStyles = cva(
       // Text-height links get a finger-sized hit area; the negative margin
       // keeps their layout box unchanged.
       { variant: "link", className: "-my-3 px-0 py-3 h-auto" },
+      // Filled and outlined buttons press; a text link (like TextLink) doesn't.
+      {
+        variant: ["primary", "secondary", "outline", "ghost", "inverse"],
+        className: "pressable",
+      },
     ],
     defaultVariants: { variant: "primary", size: "md" },
   },
@@ -65,7 +70,8 @@ export type ButtonStyleProps = VariantProps<typeof buttonStyles>;
 export type ButtonArrowKind = boolean | "right" | "external" | "down";
 
 function ButtonArrow({ kind }: { kind: Exclude<ButtonArrowKind, false> }) {
-  const base = "size-4 transition-transform duration-500 ease-brand motion-reduce:transition-none";
+  const base =
+    "size-4 transition-transform duration-surface ease-brand motion-reduce:transition-none";
   if (kind === "external") {
     return (
       <ArrowUpRight
@@ -73,14 +79,31 @@ function ButtonArrow({ kind }: { kind: Exclude<ButtonArrowKind, false> }) {
         className={cn(
           base,
           "group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5",
+          "group-focus-visible/button:translate-x-0.5 group-focus-visible/button:-translate-y-0.5",
         )}
       />
     );
   }
   if (kind === "down") {
-    return <ArrowDown aria-hidden className={cn(base, "group-hover/button:translate-y-0.5")} />;
+    return (
+      <ArrowDown
+        aria-hidden
+        className={cn(
+          base,
+          "group-hover/button:translate-y-0.5 group-focus-visible/button:translate-y-0.5",
+        )}
+      />
+    );
   }
-  return <ArrowRight aria-hidden className={cn(base, "group-hover/button:translate-x-1")} />;
+  return (
+    <ArrowRight
+      aria-hidden
+      className={cn(
+        base,
+        "group-hover/button:translate-x-1 group-focus-visible/button:translate-x-1",
+      )}
+    />
+  );
 }
 
 /** Props for {@link Button}: Base UI's button props plus the style variants. */

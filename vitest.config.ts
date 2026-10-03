@@ -28,7 +28,12 @@ export default defineConfig({
           name: "unit",
           maxWorkers: 4,
           environment: "node",
-          include: ["src/**/*.test.ts", "test/**/*.test.ts", "figma/**/*.test.{ts,mjs}"],
+          include: [
+            "src/**/*.test.ts",
+            "test/**/*.test.ts",
+            "figma/**/*.test.{ts,mjs}",
+            "eslint-rules/**/*.test.mjs",
+          ],
         },
       },
       {

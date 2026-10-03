@@ -27,9 +27,12 @@ const cardStyles = cva("group/card rounded-3xl relative isolate text-fg", {
       md: "p-6 md:p-7",
       lg: "p-7 md:p-9",
     },
-    /** A 4px lift and a stronger shadow on hover (still under reduced motion). */
+    /**
+     * A 4px lift (on hover and keyboard focus; none under reduced motion) and a
+     * stronger shadow and border, for a card that is a link.
+     */
     interactive: {
-      true: "hover:-translate-y-1 motion-reduce:hover:translate-y-0 transition-[translate,box-shadow,border-color,background-color] duration-500 ease-brand hover:border-hairline-strong hover:shadow-lift",
+      true: "hover-lift transition-[translate,box-shadow,border-color,background-color] duration-surface ease-brand hover:border-hairline-strong hover:shadow-lift has-focus-visible:border-hairline-strong has-focus-visible:shadow-lift",
       false: "",
     },
   },

@@ -22,7 +22,10 @@ function ToneSpecimen() {
             <p className="text-eyebrow">{tone}</p>
             <h2 className="mt-6 text-heading-lg">Ideas become things.</h2>
             <p className="mt-4 text-body text-fg-muted">Build with the right foundations.</p>
-            <a href="#principles" className="mt-6 inline-block text-body text-highlight underline">
+            <a
+              href="#principles"
+              className="mt-6 inline-block text-body text-highlight underline transition-colors hover:text-fg hover:decoration-2"
+            >
               Explore the principles
             </a>
           </section>

@@ -102,7 +102,7 @@ export const DeepLink: Story = {
       <Container size="narrow">
         <p className="mb-6 text-small text-fg-muted">Use the link to open the matching question.</p>
         <a
-          className="mb-8 inline-block text-highlight underline underline-offset-4"
+          className="mb-8 inline-block text-highlight underline underline-offset-4 transition-colors hover:text-fg"
           href="#kit-faq-link"
         >
           Jump to the linking answer
