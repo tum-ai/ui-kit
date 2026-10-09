@@ -3,6 +3,7 @@ import { test } from "vitest";
 import {
   batchKeys,
   compileBatch,
+  contentHash,
   createLedger,
   mergeLedgerPatch,
   planDeprecations,
@@ -10,16 +11,25 @@ import {
 import { fakeFigma } from "./fixtures/fake-figma.mjs";
 import { pilotScene } from "./fixtures/pilot.mjs";
 import { validateScene } from "./schema.mjs";
+import { reconcileBatch } from "./runtime.mjs";
+import { sha256 } from "./hash.mjs";
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 async function run(
   scene,
   figma,
   ledger = createLedger({ fileKey: figma.fileKey, package: scene.package }),
+  native = false,
 ) {
   const results = [];
   for (const key of batchKeys(scene)) {
-    const compiled = compileBatch(scene, ledger, { fileKey: figma.fileKey, batchKey: key });
-    const result = await new AsyncFunction("figma", compiled.code)(figma);
+    const compiled = compileBatch(scene, ledger, {
+      fileKey: figma.fileKey,
+      batchKey: key,
+      transport: native ? "native" : "mcp",
+    });
+    const result = native
+      ? await reconcileBatch(figma, compiled.payload, sha256)
+      : await new AsyncFunction("figma", compiled.code)(figma);
     assert.ok(JSON.stringify(result).length < 20000, "response remains under tool limit");
     ledger = mergeLedgerPatch(ledger, result.ledgerPatch);
     results.push(result);
@@ -358,4 +368,210 @@ test("derived Auto Layout and wrapping text dimensions may settle after a batch 
       (result) => result.createdNodeIds.length === 0 && result.mutatedNodeIds.length === 0,
     ),
   );
+});
+
+function typographyFixture(naturalWidth = 108.25) {
+  const scene = pilotScene();
+  const label = scene.pages[0].children[0].children[0].children[0];
+  label.source = { css: { "white-space": "nowrap" } };
+  const figma = fakeFigma();
+  const createText = figma.createText;
+  figma.createText = () => {
+    const node = createText();
+    let mode = "NONE";
+    Object.defineProperty(node, "textAutoResize", {
+      get: () => mode,
+      set(value) {
+        mode = value;
+        if (value === "WIDTH_AND_HEIGHT") {
+          this.width = naturalWidth;
+          this.height = 24;
+        }
+      },
+    });
+    const resize = node.resize.bind(node);
+    node.resize = (width, height) => {
+      resize(width, height);
+      mode = "NONE";
+    };
+    return node;
+  };
+  return { scene, label, figma };
+}
+
+test("CSS nowrap uses native intrinsic width after resize while ordinary text retains fixed width", async () => {
+  const { scene, label, figma } = typographyFixture();
+  const geometry = JSON.stringify({
+    width: label.width,
+    height: label.height,
+    x: label.x,
+    y: label.y,
+  });
+  const first = await run(scene, figma, undefined, true);
+  assert.equal(first.error, undefined);
+  const node = figma.snapshot().nodes.get(first.ledger.entities[label.key].id);
+  assert.equal(node.textAutoResize, "WIDTH_AND_HEIGHT");
+  assert.equal(node.width, 108.25);
+  const normal = figma.snapshot().nodes.get(first.ledger.entities["pilot/button/Outline/label"].id);
+  assert.equal(normal.textAutoResize, "HEIGHT");
+  assert.equal(normal.width, 108);
+  assert.equal(node.parent.width, 156);
+  assert.equal(
+    JSON.stringify({ width: label.width, height: label.height, x: label.x, y: label.y }),
+    geometry,
+  );
+  const writes = figma.writes;
+  const replay = await run(scene, figma, first.ledger, true);
+  assert.equal(replay.error, undefined);
+  assert.equal(figma.writes, writes);
+  assert.equal(replay.ledger.entities[label.key].id, node.id);
+  node.textAutoResize = "NONE";
+  const drift = await run(scene, figma, replay.ledger, true);
+  assert.match(drift.error.message, /native content drifted/);
+});
+
+test("nowrap reports real additional clipping without changing fonts or containing geometry", async () => {
+  const { scene, label, figma } = typographyFixture(180);
+  const component = scene.pages[0].children[0].children[0];
+  component.clipsContent = true;
+  const result = await run(scene, figma, undefined, true);
+  assert.match(result.error.message, /TEXT_METRICS_OVERFLOW/);
+  const node = figma.snapshot().nodes.get(result.ledger.entities[label.key].id);
+  assert.equal(node.parent.width, 156);
+  assert.equal(node.fontSize, 15);
+  assert.equal(node.characters, label.text.characters);
+});
+
+test("text sizing policy migrates a verified legacy baseline and preserves native identity", async () => {
+  const { scene, label, figma } = typographyFixture();
+  delete label.textStyle;
+  delete label.propertyReferences;
+  label.fills = [];
+  label.source.css["white-space"] = "normal";
+  const first = await run(scene, figma, undefined, true);
+  assert.equal(first.error, undefined);
+  const record = first.ledger.entities[label.key];
+  const node = figma.snapshot().nodes.get(record.id);
+  node.textAutoResize = "NONE";
+  delete record.textSizingMode;
+  // Version-2 baseline written by the previous engine after resize reset autosizing.
+  record.nativeFingerprint = contentHash({
+    name: node.name,
+    width: node.width,
+    bindings: {},
+    fills: [],
+    strokes: [],
+    effects: [],
+    characters: node.characters,
+    textStyleId: "",
+    ...label.text,
+    textAutoResize: "NONE",
+  });
+  label.source.css["white-space"] = "nowrap";
+  node.resize = () => {
+    throw Error("A sizing-only migration must preserve source geometry");
+  };
+  node.setTextStyleIdAsync = async () => {
+    throw Error("A sizing-only migration must preserve styles");
+  };
+  const migrated = await run(scene, figma, first.ledger, true);
+  assert.equal(migrated.error, undefined);
+  assert.equal(migrated.ledger.entities[label.key].id, record.id);
+  assert.equal(node.textAutoResize, "WIDTH_AND_HEIGHT");
+  assert.equal(migrated.ledger.entities[label.key].textSizingMode, "WIDTH_AND_HEIGHT");
+  const replay = await run(scene, figma, migrated.ledger, true);
+  assert.equal(replay.error, undefined);
+  assert.ok(replay.results.every((r) => r.mutatedNodeIds.length === 0));
+});
+
+test("a sizing-policy migration refuses to overwrite manual edits to the legacy baseline", async () => {
+  const { scene, label, figma } = typographyFixture();
+  label.source.css["white-space"] = "normal";
+  const first = await run(scene, figma, undefined, true);
+  const record = first.ledger.entities[label.key];
+  delete record.textSizingMode;
+  const node = figma.snapshot().nodes.get(record.id);
+  node.characters = "Designer edit";
+  label.source.css["white-space"] = "nowrap";
+  const result = await run(scene, figma, first.ledger, true);
+  assert.match(result.error.message, /native content drifted/);
+  assert.equal(node.characters, "Designer edit");
+  assert.equal(node.textAutoResize, "HEIGHT");
+});
+
+test("only captured single-line inline fragments gain intrinsic sizing; paragraphs and wrapped fragments do not", async () => {
+  for (const [display, block, lineCount, expected] of [
+    ["inline", false, 1, "WIDTH_AND_HEIGHT"],
+    ["inline-block", false, 1, "WIDTH_AND_HEIGHT"],
+    ["inline-flex", false, 1, "WIDTH_AND_HEIGHT"],
+    ["inline-block", false, 2, "HEIGHT"],
+    ["inline-block", true, 1, "HEIGHT"],
+    ["block", false, 1, "HEIGHT"],
+  ]) {
+    const { scene, label, figma } = typographyFixture();
+    label.source = {
+      block,
+      lineRects: Array.from({ length: lineCount }, () => ({ width: 108, height: 24 })),
+      css: { display, "white-space": "normal" },
+    };
+    const result = await run(scene, figma, undefined, true);
+    assert.equal(result.error, undefined);
+    const node = figma.snapshot().nodes.get(result.ledger.entities[label.key].id);
+    assert.equal(node.textAutoResize, expected, `${display}, block=${block}, lines=${lineCount}`);
+    assert.equal(node.width, expected === "HEIGHT" ? 108 : 108.25);
+  }
+});
+
+test("painted glyphs that fit remain valid even when the intrinsic text box rounds beyond its clip", async () => {
+  const { scene, label, figma } = typographyFixture(154);
+  const component = scene.pages[0].children[0].children[0];
+  component.width = 152.859;
+  component.height = 46.5;
+  component.clipsContent = true;
+  label.width = 153.359;
+  label.height = 22.5;
+  const createText = figma.createText;
+  figma.createText = () => {
+    const node = createText();
+    Object.defineProperty(node, "absoluteBoundingBox", {
+      get: () => ({ x: 512, y: 620, width: node.width, height: node.height }),
+    });
+    node.absoluteRenderBounds = { x: 513.04999, y: 620, width: 151.6969, height: 20 };
+    return node;
+  };
+  const createComponent = figma.createComponent;
+  figma.createComponent = () => {
+    const node = createComponent();
+    Object.defineProperty(node, "absoluteBoundingBox", {
+      get: () => ({ x: 512, y: 608, width: node.width, height: node.height }),
+    });
+    return node;
+  };
+  const first = await run(scene, figma, undefined, true);
+  assert.equal(first.error, undefined);
+  const node = figma.snapshot().nodes.get(first.ledger.entities[label.key].id);
+  assert.equal(node.width, 154);
+  assert.equal(node.parent.width, 152.859);
+  assert.equal(node.textAutoResize, "WIDTH_AND_HEIGHT");
+  const replay = await run(scene, figma, first.ledger, true);
+  assert.equal(replay.error, undefined);
+  assert.ok(replay.results.every((result) => result.mutatedNodeIds.length === 0));
+  node.absoluteRenderBounds.width = 155;
+  assert.match(
+    (await run(scene, figma, replay.ledger, true)).error.message,
+    /TEXT_METRICS_OVERFLOW.*paint/,
+  );
+});
+
+test("intrinsic geometry fallback allows one-pixel native rounding without widening the clip", async () => {
+  const { scene, label, figma } = typographyFixture(154);
+  const component = scene.pages[0].children[0].children[0];
+  component.width = 152.859;
+  component.clipsContent = true;
+  label.width = 153.359;
+  const result = await run(scene, figma, undefined, true);
+  assert.equal(result.error, undefined);
+  const node = figma.snapshot().nodes.get(result.ledger.entities[label.key].id);
+  assert.equal(node.parent.width, 152.859);
+  assert.equal(node.width, 154);
 });
