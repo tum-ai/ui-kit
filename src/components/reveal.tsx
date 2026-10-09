@@ -1,8 +1,8 @@
 "use client";
 
-import { type CSSProperties, type ElementType, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ElementType, useRef } from "react";
 
-import { prefersReducedMotion } from "./internal";
+import { useEntrance } from "./entrance";
 import { useComposedRef } from "./refs";
 import type { BlockElement, PolymorphicProps } from "./types";
 
@@ -12,8 +12,6 @@ import type { BlockElement, PolymorphicProps } from "./types";
  * from the left.
  */
 export type RevealVariant = "up" | "fade" | "scale" | "left" | "right" | "line";
-
-type RevealState = "idle" | "pending" | "done";
 
 /** Props for {@link Reveal}. */
 export type RevealProps<T extends BlockElement = "div"> = PolymorphicProps<
@@ -25,30 +23,6 @@ export type RevealProps<T extends BlockElement = "div"> = PolymorphicProps<
     delay?: number;
   }
 >;
-
-/* One shared observer for every Reveal on the page. */
-const listeners = new WeakMap<Element, () => void>();
-let sharedObserver: IntersectionObserver | null = null;
-
-function observe(node: Element, onEnter: () => void) {
-  sharedObserver ??= new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        listeners.get(entry.target)?.();
-        listeners.delete(entry.target);
-        sharedObserver?.unobserve(entry.target);
-      }
-    },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
-  );
-  listeners.set(node, onEnter);
-  sharedObserver.observe(node);
-  return () => {
-    listeners.delete(node);
-    sharedObserver?.unobserve(node);
-  };
-}
 
 /**
  * Scroll-triggered entrance. Progressive enhancement by construction:
@@ -69,17 +43,7 @@ export function Reveal<T extends BlockElement = "div">({
 }: RevealProps<T>) {
   const ownRef = useRef<HTMLElement>(null);
   const composedRef = useComposedRef<HTMLElement>(ownRef, ref);
-  const [state, setState] = useState<RevealState>("idle");
-
-  useEffect(() => {
-    const node = ownRef.current;
-    if (!node) return;
-    if (prefersReducedMotion()) return;
-    if (node.getBoundingClientRect().top < window.innerHeight * 0.94) return;
-
-    setState("pending");
-    return observe(node, () => setState("done"));
-  }, []);
+  const state = useEntrance(ownRef);
 
   const Component = (as ?? "div") as ElementType;
   return (

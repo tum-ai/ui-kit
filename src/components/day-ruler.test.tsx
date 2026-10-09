@@ -1,8 +1,15 @@
 import { axe } from "@test/axe";
-import { render } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { act, render } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { DayRuler } from "./day-ruler";
+import { placeBelowFold, stubMatchMedia, stubObservers } from "./testing";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 
 const ticks = (container: HTMLElement) =>
   Array.from(container.querySelectorAll<HTMLElement>("[style*='left']")).filter(
@@ -46,6 +53,41 @@ describe("DayRuler", () => {
     expect(label(10)).toEqual({ left: "50%", right: "" });
     expect(label(1)).toEqual({ left: "0px", right: "" });
     expect(label(19)).toEqual({ left: "", right: "0px" });
+  });
+
+  test("draws in only with drawIn, and its server HTML is fully drawn", () => {
+    expect(renderToString(<DayRuler days={14} elapsed={3} />)).not.toContain("data-draw");
+    const html = renderToString(<DayRuler days={14} elapsed={7} drawIn />);
+    expect(html).toContain('data-draw="idle"');
+    expect(html).not.toContain("pending");
+    expect(html).toContain("--tick-delay:300ms");
+  });
+
+  test("plays at once when it starts on screen", () => {
+    stubMatchMedia();
+    stubObservers();
+    const { container } = render(<DayRuler days={14} elapsed={3} drawIn />);
+    expect(container.firstElementChild).toHaveAttribute("data-draw", "idle");
+  });
+
+  test("waits below the fold until it scrolls into view", () => {
+    stubMatchMedia();
+    const { intersect } = stubObservers();
+    placeBelowFold();
+    const { container } = render(<DayRuler days={14} elapsed={3} drawIn />);
+    const ruler = container.firstElementChild as HTMLElement;
+    expect(ruler).toHaveAttribute("data-draw", "pending");
+
+    act(() => intersect(ruler));
+    expect(ruler).toHaveAttribute("data-draw", "done");
+  });
+
+  test("never holds anything back under reduced motion", () => {
+    stubMatchMedia({ reducedMotion: true });
+    stubObservers();
+    placeBelowFold();
+    const { container } = render(<DayRuler days={14} elapsed={3} drawIn />);
+    expect(container.firstElementChild).toHaveAttribute("data-draw", "idle");
   });
 
   test("is hidden from assistive tech, labels included", async () => {

@@ -74,7 +74,10 @@ date.
 each midnight, longer weekly ticks, a progress fill and a mark. Values outside
 the window clamp to the ends. Its optional start, end and mark labels are
 also decorative: repeat the useful information in adjacent accessible text.
-`size` is `md` or `lg`; `drawIn` is an optional CSS entrance.
+`size` is `md` or `lg`. `drawIn` draws the ruler in once, the first time it
+scrolls into view (at once when it starts on screen): ticks rise left to right
+with the fill, then the mark and its label fade in. Server HTML is fully drawn
+and reduced motion skips it.
 
 ```tsx
 import { DayRuler } from "@tum.ai/ui-kit";

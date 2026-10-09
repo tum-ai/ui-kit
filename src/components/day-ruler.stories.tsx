@@ -43,6 +43,21 @@ export const Default: Story = {
 };
 export const Large: Story = { args: { size: "lg" } };
 export const DrawIn: Story = { args: { size: "lg", drawIn: true } };
+/** Below the fold: the ruler waits, then draws in once it scrolls into view. */
+export const DrawInOnScroll: Story = {
+  args: { size: "lg", drawIn: true },
+  render: (args) => (
+    <Section spacing="md">
+      <Container size="narrow">
+        <p className="text-lead text-fg">
+          Scroll down: the ruler draws in when it comes into view.
+        </p>
+        <div className="h-[150vh]" aria-hidden="true" />
+        <DayRuler {...args} />
+      </Container>
+    </Section>
+  ),
+};
 export const StartOfWindow: Story = { args: { elapsed: 0, markLabel: "The window opens here" } };
 export const EndOfWindow: Story = { args: { elapsed: 28, markLabel: "The window closes here" } };
 export const ClampedBeforeStart: Story = { args: { elapsed: -3, markLabel: "Before the window" } };
