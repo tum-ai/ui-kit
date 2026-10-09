@@ -31,6 +31,14 @@ export type IndexListItem = {
     /** CSS crop position. */
     position?: string;
     /**
+     * Intrinsic size. The preview and thumbnail crop the photo to their own
+     * shape, so the requested width follows its aspect ratio; without a size
+     * a 3:2 landscape is assumed.
+     */
+    width?: number;
+    /** Intrinsic height; see `width`. */
+    height?: number;
+    /**
      * Skip optimization. Defaults to true for absolute http(s) sources.
      * Set false to opt in and configure the consumer app's `images.remotePatterns`.
      */
@@ -53,6 +61,27 @@ const recedingTitle =
   "group-hover/index:group-data-[active=false]/item:text-fg-muted group-has-[a:focus-visible]/index:group-data-[active=false]/item:text-fg-muted";
 const recedingMark =
   "group-hover/index:group-data-[active=false]/item:opacity-45 group-has-[a:focus-visible]/index:group-data-[active=false]/item:opacity-45";
+
+/**
+ * `sizes` for a photo cropped with `object-cover` into a frame `frameWidth`
+ * wide (`[value, unit]` per breakpoint) and `frameAspect` (width / height):
+ * a photo wider than the frame fills its height, so it draws wider than the
+ * frame by the ratio of the two aspects.
+ */
+function coverSizes(
+  image: NonNullable<IndexListItem["image"]>,
+  frameAspect: number,
+  widths: { media?: string; width: number; unit: "rem" | "vw" }[],
+) {
+  const aspect = image.width && image.height ? image.width / image.height : 3 / 2;
+  const scale = Math.max(1, aspect / frameAspect);
+  return widths
+    .map(({ media, width, unit }) => {
+      const size = `${Math.ceil(width * scale)}${unit}`;
+      return media ? `${media} ${size}` : size;
+    })
+    .join(", ");
+}
 
 /**
  * A typographic index of destinations: full-width link rows with a large
@@ -119,7 +148,7 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                       src={item.image.src}
                       alt=""
                       fill
-                      sizes="5rem"
+                      sizes={coverSizes(item.image, 1, [{ width: 5, unit: "rem" }])}
                       unoptimized={
                         item.image.unoptimized ?? isUnoptimizedRemoteImage(item.image.src)
                       }
@@ -155,7 +184,11 @@ export function IndexList({ items, headingAs: HeadingTag = "h3", className }: In
                     src={item.image.src}
                     alt=""
                     fill
-                    sizes="(min-width: 1280px) 30rem, 38vw"
+                    sizes={coverSizes(item.image, 4 / 5, [
+                      // 5 of 12 columns of the 80rem container.
+                      { media: "(min-width: 1280px)", width: 31, unit: "rem" },
+                      { width: 38, unit: "vw" },
+                    ])}
                     unoptimized={item.image.unoptimized ?? isUnoptimizedRemoteImage(item.image.src)}
                     data-active={item.id === active}
                     className="scale-[1.03] object-cover opacity-0 transition-[opacity,scale] duration-media ease-brand data-[active=true]:scale-100 data-[active=true]:opacity-100 motion-reduce:transition-none"
