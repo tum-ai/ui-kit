@@ -169,21 +169,27 @@ function CloseButton({ label }: { label: string }) {
   );
 }
 
-/** The brand-black scrim behind a dialog. */
-const scrimStyles = "bg-ink-950/65 backdrop-blur-[6px]";
+/**
+ * Places a modal's portal at the scroll position the dialog opened at. The
+ * page is scroll-locked while it is open, so the portal covers the screen.
+ */
+function pinToScroll(node: HTMLElement | null) {
+  if (node) node.style.top = `${window.scrollY}px`;
+}
 
 /**
- * The dialog surface, portalled with its backdrop. The backdrop spans the
- * large viewport (h-lvh) so it also dims the areas behind Safari's status
- * bar and toolbar (docs/browser-quirks.md).
- * Safari tints both bars from a fixed element's own background and
- * backdrop filter, blended over the brand-black root canvas. A `modal`
- * dialog paints its scrim on an absolute child instead, which Safari
- * doesn't sample, so the bars stay translucent over the dimmed page.
- * A `fullscreen` dialog's backdrop takes the dialog's tone while it is
- * open, and `shell.css` gives the root canvas that tone too, so both bars
- * match the panel. Both revert as closing starts (`data-open` drops), so the
- * closing fade is the usual brand-black scrim.
+ * The dialog surface, portalled with its backdrop (docs/browser-quirks.md).
+ * Safari: any fixed element at the screen's edges makes Safari paint its
+ * status bar and toolbar solid, in that element's colour or the brand-black
+ * root canvas. So a `modal` dialog has no fixed layers: its portal is pinned
+ * absolutely at the scroll position, and Base UI's internal overlay, the
+ * backdrop and the viewport are absolute inside it. The bars stay
+ * translucent, and the backdrop bleeds past both edges to dim the page
+ * behind them.
+ * A `fullscreen` dialog stays fixed: its backdrop takes the dialog's tone
+ * while it is open, and `shell.css` gives the root canvas that tone too, so
+ * both bars match the panel. Both revert as closing starts (`data-open`
+ * drops), so the closing fade is the usual brand-black scrim.
  */
 export function DialogContent({
   children,
@@ -219,25 +225,28 @@ export function DialogContent({
   );
 
   return (
-    <BaseDialog.Portal>
+    <BaseDialog.Portal
+      ref={fullscreen ? undefined : pinToScroll}
+      // Base UI renders its internal overlay with an inline `position: fixed`.
+      className={
+        fullscreen ? undefined : "inset-x-0 absolute z-50 h-lvh [&>[data-base-ui-inert]]:absolute!"
+      }
+    >
       <BaseDialog.Backdrop
         data-tone={fullscreen ? tone : undefined}
         className={cn(
-          "inset-x-0 top-0 fixed z-50 h-lvh transition-opacity duration-surface ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none",
-          fullscreen && scrimStyles,
-          fullscreen && "data-[open]:bg-canvas/65",
+          "inset-x-0 z-50 bg-ink-950/65 backdrop-blur-[6px] transition-opacity duration-surface ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none",
+          fullscreen
+            ? "top-0 fixed h-lvh data-[open]:bg-canvas/65"
+            : "-top-40 absolute h-[calc(100lvh+20rem)]",
         )}
-      >
-        {fullscreen ? null : (
-          <span aria-hidden="true" data-scrim="" className={cn("inset-0 absolute", scrimStyles)} />
-        )}
-      </BaseDialog.Backdrop>
+      />
       {fullscreen ? (
         popup
       ) : (
         // The viewport uses the dynamic height (h-dvh) so the dialog always
         // sits in the visible area, never under Safari's toolbar.
-        <BaseDialog.Viewport className="inset-x-0 top-0 p-3 sm:p-6 sm:[align-items:safe_center] fixed z-50 flex h-dvh [align-items:safe_end] justify-center overflow-y-auto overscroll-contain">
+        <BaseDialog.Viewport className="inset-x-0 top-0 p-3 sm:p-6 sm:[align-items:safe_center] absolute z-50 flex h-dvh [align-items:safe_end] justify-center overflow-y-auto overscroll-contain">
           {popup}
         </BaseDialog.Viewport>
       )}

@@ -116,16 +116,20 @@ describe("Dialog", () => {
     expect(backdrop).toHaveAttribute("data-tone", dialog.getAttribute("data-tone"));
   });
 
-  test("modal backdrop paints its scrim on a child Safari doesn't tint its bars from", async () => {
+  test("modal layers are absolute in a portal pinned at the scroll position", async () => {
+    window.scrollY = 240;
     const { dialog } = await openDialog();
     expect(dialog).toHaveAttribute("data-variant", "modal");
     const backdrop = document.querySelector('[role="presentation"][data-open]');
-    expect(backdrop).toBeInTheDocument();
     expect(backdrop).not.toHaveAttribute("data-tone");
-    expect(backdrop?.className).not.toMatch(/\bbg-|backdrop-blur/);
-    const scrim = backdrop?.querySelector("[data-scrim]");
-    expect(scrim).toHaveAttribute("aria-hidden", "true");
-    expect(scrim).toHaveClass("absolute", "bg-ink-950/65", "backdrop-blur-[6px]");
+    // Safari paints its bars solid behind any fixed layer at the edges.
+    expect(backdrop).toHaveClass("absolute", "bg-ink-950/65");
+    expect(backdrop).not.toHaveClass("fixed");
+    const portal = backdrop?.parentElement;
+    expect(portal).toHaveClass("absolute", "[&>[data-base-ui-inert]]:absolute!");
+    expect(portal).toHaveStyle({ top: "240px" });
+    expect(backdrop?.nextElementSibling).toHaveClass("absolute");
+    window.scrollY = 0;
   });
 
   test("a canceled uncontrolled open leaves the background interactive", async () => {
