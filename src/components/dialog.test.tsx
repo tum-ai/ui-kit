@@ -116,12 +116,16 @@ describe("Dialog", () => {
     expect(backdrop).toHaveAttribute("data-tone", dialog.getAttribute("data-tone"));
   });
 
-  test("modal backdrop keeps the brand-black scrim", async () => {
+  test("modal backdrop paints its scrim on a child Safari doesn't tint its bars from", async () => {
     const { dialog } = await openDialog();
     expect(dialog).toHaveAttribute("data-variant", "modal");
     const backdrop = document.querySelector('[role="presentation"][data-open]');
     expect(backdrop).toBeInTheDocument();
     expect(backdrop).not.toHaveAttribute("data-tone");
+    expect(backdrop?.className).not.toMatch(/\bbg-|backdrop-blur/);
+    const scrim = backdrop?.querySelector("[data-scrim]");
+    expect(scrim).toHaveAttribute("aria-hidden", "true");
+    expect(scrim).toHaveClass("absolute", "bg-ink-950/65", "backdrop-blur-[6px]");
   });
 
   test("a canceled uncontrolled open leaves the background interactive", async () => {

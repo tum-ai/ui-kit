@@ -43,6 +43,12 @@ collapses and expands, so the visible viewport changes height while the large vi
   bar and toolbar (`src/components/dialog.tsx`, `DialogContent`).
 - Modal dialogs are laid out in the dynamic viewport (`h-dvh`), so they always sit in the visible
   area and never under the toolbar.
+- Safari samples a fixed element's own `background-color` and `backdrop-filter` and blends them
+  over the root canvas. A modal's `ink-950/65` backdrop over the brand-black canvas turned both bars
+  into near-black slabs above and below the dimmed page. The modal backdrop is now a bare fixed box,
+  and its scrim is painted on an absolute `aria-hidden` child (`data-scrim`), which Safari does not
+  sample. The bars stay translucent, and the dimmed page shows through them
+  (`src/components/dialog.tsx`).
 - The mobile menu is the ds `DialogContent variant="fullscreen"`: a flat ink panel over the whole
   large viewport, so no page shows below it. Its content uses `min-h-lvh` with a bottom padding of
   `100lvh - 100dvh`, so the last row can still scroll above the toolbar on small phones and in
