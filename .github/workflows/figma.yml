@@ -5,8 +5,9 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: figma-release-${{ github.event.release.tag_name }}
+  group: figma-release-data
   cancel-in-progress: false
+  queue: max
 jobs:
   generate:
     if: ${{ !github.event.release.draft && !github.event.release.prerelease }}
@@ -41,16 +42,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
-          gh release upload "$RELEASE_TAG" artifacts/figma/figma-scene.json artifacts/figma/figma-scene.json.sha256 artifacts/figma/figma-inventory.json artifacts/figma/figma-diagnostics.json --repo tum-ai/ui-kit
+          node scripts/upload-release-assets.mjs "$RELEASE_TAG" artifacts/figma/figma-scene.json artifacts/figma/figma-scene.json.sha256 artifacts/figma/figma-inventory.json artifacts/figma/figma-diagnostics.json
+      - name: Publish browser-readable release data
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: node scripts/publish-figma-data.mjs "$RELEASE_TAG" artifacts/figma
       - name: Attach registered updater
         if: ${{ vars.FIGMA_PLUGIN_ID != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
-          cd artifacts/figma-plugin
-          zip -r ../figma/figma-plugin.zip code.js manifest.json ui.html
-          gh release upload "$RELEASE_TAG" ../figma/figma-plugin.zip --repo tum-ai/ui-kit
+          python3 scripts/package-figma-plugin.py
+          node scripts/upload-release-assets.mjs "$RELEASE_TAG" artifacts/figma/figma-plugin.zip
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
         with:

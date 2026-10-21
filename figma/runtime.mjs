@@ -71,6 +71,18 @@ export async function reconcileBatch(figma, input, hash) {
     }
     return out;
   };
+  const textSizingMode = (spec) => {
+    const source = spec.source;
+    // An inline text fragment's captured width is glyph measurement, not a paragraph wrap width.
+    const intrinsicInline =
+      source?.block === false &&
+      source.lineRects?.length === 1 &&
+      ["inline", "inline-block", "inline-flex"].includes(source.css?.display) &&
+      !/[\r\n\u2028\u2029]/.test(spec.text?.characters ?? "");
+    return source?.css?.["white-space"] === "nowrap" || intrinsicInline
+      ? "WIDTH_AND_HEIGHT"
+      : (spec.text?.textAutoResize ?? "NONE");
+  };
   const fingerprint = (spec, object) => {
     const record = records[spec.key],
       kind = record.kind;
@@ -103,14 +115,16 @@ export async function reconcileBatch(figma, input, hash) {
         if (value.boundVariables?.color) delete value.color;
         return value;
       };
+      // The marker also identifies the previous sizing policy during an in-place migration.
+      const textResize = record.textSizingMode ?? spec.text?.textAutoResize;
       const dynamicWidth =
         ["FILL", "HUG"].includes(spec.layoutSizingHorizontal) ||
-        spec.text?.textAutoResize === "WIDTH_AND_HEIGHT" ||
+        textResize === "WIDTH_AND_HEIGHT" ||
         (spec.layout?.primaryAxisSizingMode === "AUTO" && spec.layout.mode === "HORIZONTAL") ||
         (spec.layout?.counterAxisSizingMode === "AUTO" && spec.layout.mode === "VERTICAL");
       const dynamicHeight =
         ["FILL", "HUG"].includes(spec.layoutSizingVertical) ||
-        ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(spec.text?.textAutoResize) ||
+        ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(textResize) ||
         (spec.layout?.primaryAxisSizingMode === "AUTO" && spec.layout.mode === "VERTICAL") ||
         (spec.layout?.counterAxisSizingMode === "AUTO" && spec.layout.mode === "HORIZONTAL");
       for (const field of [
@@ -212,6 +226,7 @@ export async function reconcileBatch(figma, input, hash) {
       if (spec.text) {
         snapshot.characters = object.characters;
         snapshot.textStyleId = object.textStyleId;
+        if (record.textSizingMode) snapshot.textAutoResize = object.textAutoResize;
         for (const field of Object.keys(spec.text))
           if (
             field !== "ranges" &&
@@ -256,17 +271,27 @@ export async function reconcileBatch(figma, input, hash) {
             : value;
     return hash(JSON.stringify(sorted(snapshot)));
   };
-  const needs = (spec) =>
+  const needsSource = (spec) =>
     records[spec.key]?.hash !== hashes[spec.key] ||
     (!["page", "property"].includes(records[spec.key]?.kind) &&
       (!records[spec.key]?.nativeFingerprint || records[spec.key]?.nativeFingerprintVersion !== 2));
+  const needs = (spec) =>
+    needsSource(spec) || (spec.text && records[spec.key]?.textSizingMode !== textSizingMode(spec));
   const verifyUnchanged = (spec, object) => {
-    if (!needs(spec) && records[spec.key].nativeFingerprint !== fingerprint(spec, object))
+    const record = records[spec.key];
+    // A typography-policy migration must not overwrite manual edits hidden by a new marker.
+    if (
+      record?.hash === hashes[spec.key] &&
+      record.nativeFingerprint &&
+      record.nativeFingerprintVersion === 2 &&
+      record.nativeFingerprint !== fingerprint(spec, object)
+    )
       fail(
         `Managed native content drifted: ${spec.key}. Inspect the canvas before reconciling code-owned properties.`,
       );
   };
   const recordFingerprint = (spec, object) => {
+    if (spec.type === "TEXT") records[spec.key].textSizingMode = textSizingMode(spec);
     records[spec.key].nativeFingerprint = fingerprint(spec, object);
     records[spec.key].nativeFingerprintVersion = 2;
   };
@@ -415,7 +440,7 @@ export async function reconcileBatch(figma, input, hash) {
     const record = records[spec.key];
     const changed = needs(spec);
     verifyUnchanged(spec, node);
-    if (changed) {
+    if (needsSource(spec)) {
       await currentFonts(node);
       mark(node);
       // Clear only previously generator-owned bindings that disappeared.
@@ -427,7 +452,7 @@ export async function reconcileBatch(figma, input, hash) {
         node.fontName = spec.text.fontName;
         if (!spec.textStyle && record.textStyle) await node.setTextStyleIdAsync("");
         for (const [field, value] of Object.entries(spec.text))
-          if (field !== "ranges") node[field] = value;
+          if (!["ranges", "textAutoResize"].includes(field)) node[field] = value;
         if (spec.textStyle) await node.setTextStyleIdAsync(records[spec.textStyle].id);
       }
       if (spec.layout) {
@@ -544,6 +569,9 @@ export async function reconcileBatch(figma, input, hash) {
         );
         node.setExplicitVariableModeForCollection(collection, collectionRecord.modeIds[mode]);
       }
+      // resize(), layout sizing and font bindings can reset native text autosizing.
+      // Apply the final policy after those writes; never widen the containing frame or change glyphs.
+      if (spec.type === "TEXT") node.textAutoResize = textSizingMode(spec);
       if (spec.propertyReferences) {
         const references = {};
         for (const [field, key] of Object.entries(spec.propertyReferences))
@@ -556,6 +584,81 @@ export async function reconcileBatch(figma, input, hash) {
       record.effectStyle = spec.effectStyle;
       record.propertyReferences = spec.propertyReferences;
       record.modeCollections = Object.keys(spec.variableModes ?? {});
+    } else if (changed) {
+      // The unchanged source has a verified baseline: migrate only its sizing behavior.
+      await currentFonts(node);
+      mark(node);
+      node.textAutoResize = textSizingMode(spec);
+    }
+    if (spec.type === "TEXT" && textSizingMode(spec) === "WIDTH_AND_HEIGHT") {
+      if (node.textAutoResize !== "WIDTH_AND_HEIGHT")
+        fail(`TEXT_SIZING_MISMATCH: ${spec.key} could not preserve native no-wrap text`);
+      // Intrinsic text boxes round outward; only painted glyphs prove clipping when available.
+      // Preserve captured intentional overflow. Without render bounds, allow one CSS pixel
+      // for native intrinsic-size rounding rather than treating a larger box as clipped ink.
+      const validBounds = (bounds) =>
+        bounds && ["x", "y", "width", "height"].every((field) => Number.isFinite(bounds[field]));
+      const painted = node.absoluteRenderBounds;
+      const positioned = node.absoluteBoundingBox;
+      let captured = validBounds(positioned)
+        ? { x: positioned.x, y: positioned.y, width: spec.width, height: spec.height }
+        : null;
+      const transform = node.absoluteTransform;
+      if (
+        transform?.length === 2 &&
+        transform.every((row) => row.length === 3 && row.every(Number.isFinite))
+      ) {
+        const points = [
+          [0, 0],
+          [spec.width, 0],
+          [0, spec.height],
+          [spec.width, spec.height],
+        ].map(([a, b]) => ({
+          x: transform[0][0] * a + transform[0][1] * b + transform[0][2],
+          y: transform[1][0] * a + transform[1][1] * b + transform[1][2],
+        }));
+        const left = Math.min(...points.map((p) => p.x)),
+          top = Math.min(...points.map((p) => p.y));
+        captured = {
+          x: left,
+          y: top,
+          width: Math.max(...points.map((p) => p.x)) - left,
+          height: Math.max(...points.map((p) => p.y)) - top,
+        };
+      }
+      const overflow = (rect, clip) => [
+        Math.max(0, clip.x - rect.x),
+        Math.max(0, clip.y - rect.y),
+        Math.max(0, rect.x + rect.width - clip.x - clip.width),
+        Math.max(0, rect.y + rect.height - clip.y - clip.height),
+      ];
+      let x = node.x,
+        y = node.y,
+        ancestor = parent;
+      while (ancestor && ancestor.type !== "PAGE" && ancestor.type !== "DOCUMENT") {
+        if (ancestor.clipsContent) {
+          const clip = ancestor.absoluteBoundingBox;
+          const usePaint = validBounds(painted) && captured && validBounds(clip);
+          const container = usePaint
+            ? clip
+            : { x: 0, y: 0, width: ancestor.width, height: ancestor.height };
+          const actual = overflow(
+            usePaint ? painted : { x, y, width: node.width, height: node.height },
+            container,
+          );
+          const expected = overflow(
+            usePaint ? captured : { x, y, width: spec.width, height: spec.height },
+            container,
+          );
+          if (actual.some((amount, i) => amount > expected[i] + (usePaint ? 0.5 : 1)))
+            fail(
+              `TEXT_METRICS_OVERFLOW: ${spec.key} needs ${node.width}×${node.height}px in Figma versus ${spec.width}×${spec.height}px captured; native text ${usePaint ? "paint" : "bounds"} would be clipped by ${ancestor.name}`,
+            );
+        }
+        x += ancestor.x;
+        y += ancestor.y;
+        ancestor = ancestor.parent;
+      }
     }
     await propertyDefinitions(spec, node, pageKey);
     if (!input.flat)
