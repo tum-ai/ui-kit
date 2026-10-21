@@ -43,6 +43,15 @@ collapses and expands, so the visible viewport changes height while the large vi
   bar and toolbar (`src/components/dialog.tsx`, `DialogContent`).
 - Modal dialogs are laid out in the dynamic viewport (`h-dvh`), so they always sit in the visible
   area and never under the toolbar.
+- Any fixed layer at the screen's edges makes Safari paint both bars solid: in the layer's own
+  colour, or the brand-black root canvas when the layer is transparent. A modal's backdrop, its
+  viewport and Base UI's internal overlay are all full-screen fixed layers, so the bars became
+  near-black slabs above and below the dimmed page. Moving the scrim off the backdrop alone didn't
+  help (tested on an iPhone, [website_new#343](https://github.com/tum-ai/website_new/pull/343)). A
+  modal now has no fixed layers. Its portal is absolute at the scroll position the dialog opened at
+  (the page is scroll-locked), and the internal overlay, the backdrop and the viewport are absolute
+  inside it. The backdrop bleeds 10rem past both edges to dim the page behind the bars
+  (`src/components/dialog.tsx`).
 - The mobile menu is the ds `DialogContent variant="fullscreen"`: a flat ink panel over the whole
   large viewport, so no page shows below it. Its content uses `min-h-lvh` with a bottom padding of
   `100lvh - 100dvh`, so the last row can still scroll above the toolbar on small phones and in

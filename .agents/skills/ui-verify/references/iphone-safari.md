@@ -31,6 +31,8 @@ portrait, and in landscape where noted.
 ## Dialogs
 
 - [ ] The backdrop dims the areas behind the status bar and toolbar too.
+- [ ] Both bars stay translucent with the dimmed page behind them: no near-black slabs above and
+      below a modal dialog, while open or after closing.
 - [ ] The dialog sits in the visible area, never under the toolbar, including after the toolbar
       collapses.
 - [ ] Scrolling inside a long dialog doesn't scroll the page behind it.
