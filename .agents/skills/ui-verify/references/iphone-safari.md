@@ -20,7 +20,10 @@ portrait, and in landscape where noted.
 
 - [ ] The header pill stays visible and legible over the hero and over light bands.
 - [ ] Opening the menu: the dark panel covers the whole screen, and the status bar and toolbar
-      both tint to the same dark colour; no page content shows below the panel.
+      both tint to the panel's ink colour, with no black band above or below it; no page
+      content shows below the panel.
+- [ ] Closing the menu: the page dims with the usual black scrim (no ink wash), and the bars
+      return to the page's colour within about a second.
 - [ ] The last menu row can scroll above the toolbar (small phone and landscape).
 - [ ] Closing with the close button returns focus and restores the scroll position; the page
       behind never scrolled while the menu was open.

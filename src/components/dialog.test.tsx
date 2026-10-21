@@ -104,6 +104,26 @@ describe("Dialog", () => {
     expect(screen.queryByRole("button", { name: "Close" })).toBeNull();
   });
 
+  test("fullscreen backdrop carries the dialog's tone for Safari's bar tint", async () => {
+    const user = userEvent.setup();
+    render(<Page variant="fullscreen" />);
+    await user.click(screen.getByRole("button", { name: "Open details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Event details" });
+    // Base UI also portals an internal overlay with this role; only the
+    // styled backdrop carries the open state.
+    const backdrop = document.querySelector('[role="presentation"][data-open]');
+    expect(dialog).toHaveAttribute("data-variant", "fullscreen");
+    expect(backdrop).toHaveAttribute("data-tone", dialog.getAttribute("data-tone"));
+  });
+
+  test("modal backdrop keeps the brand-black scrim", async () => {
+    const { dialog } = await openDialog();
+    expect(dialog).toHaveAttribute("data-variant", "modal");
+    const backdrop = document.querySelector('[role="presentation"][data-open]');
+    expect(backdrop).toBeInTheDocument();
+    expect(backdrop).not.toHaveAttribute("data-tone");
+  });
+
   test("a canceled uncontrolled open leaves the background interactive", async () => {
     const user = userEvent.setup();
     let cancelOpen = true;

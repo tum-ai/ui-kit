@@ -12,6 +12,27 @@
   html {
     background-color: var(--color-black);
   }
+  /* Safari: while a fullscreen dialog (the header menu) is open, the root
+     canvas takes the dialog's tone, so both bars match the panel rather than
+     the brand black (docs/browser-quirks.md). */
+  html:has([data-variant="fullscreen"][data-open][data-tone="paper"]) {
+    background-color: var(--tone-paper);
+  }
+  html:has([data-variant="fullscreen"][data-open][data-tone="mist"]) {
+    background-color: var(--tone-mist);
+  }
+  html:has([data-variant="fullscreen"][data-open][data-tone="lavender"]) {
+    background-color: var(--tone-lavender);
+  }
+  html:has([data-variant="fullscreen"][data-open][data-tone="ink"]) {
+    background-color: var(--tone-ink);
+  }
+  html:has([data-variant="fullscreen"][data-open][data-tone="night"]) {
+    background-color: var(--tone-night);
+  }
+  html:has([data-variant="fullscreen"][data-open][data-tone="violet"]) {
+    background-color: var(--tone-violet);
+  }
   body {
     margin: 0;
     min-width: 320px;

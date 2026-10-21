@@ -173,6 +173,10 @@ function CloseButton({ label }: { label: string }) {
  * The dialog surface, portalled with its backdrop. The backdrop spans the
  * large viewport (h-lvh) so it also dims the areas behind Safari's status
  * bar and toolbar, which Safari tints from it (docs/browser-quirks.md).
+ * Safari: a `fullscreen` dialog's backdrop takes the dialog's tone while it
+ * is open, and `shell.css` gives the root canvas that tone too, so both bars
+ * match the panel. Both revert as closing starts (`data-open` drops), so the
+ * closing fade is the usual brand-black scrim.
  */
 export function DialogContent({
   children,
@@ -185,9 +189,11 @@ export function DialogContent({
   ...props
 }: DialogContentProps) {
   const withClose = showClose ?? variant === "modal";
+  const fullscreen = variant === "fullscreen";
   const popup = (
     <BaseDialog.Popup
       data-tone={tone}
+      data-variant={variant}
       className={cn(popupStyles({ variant, size }), className)}
       {...props}
     >
@@ -207,8 +213,14 @@ export function DialogContent({
 
   return (
     <BaseDialog.Portal>
-      <BaseDialog.Backdrop className="inset-x-0 top-0 fixed z-50 h-lvh bg-ink-950/65 backdrop-blur-[6px] transition-opacity duration-surface ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none" />
-      {variant === "fullscreen" ? (
+      <BaseDialog.Backdrop
+        data-tone={fullscreen ? tone : undefined}
+        className={cn(
+          "inset-x-0 top-0 fixed z-50 h-lvh bg-ink-950/65 backdrop-blur-[6px] transition-opacity duration-surface ease-brand data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none",
+          fullscreen && "data-[open]:bg-canvas/65",
+        )}
+      />
+      {fullscreen ? (
         popup
       ) : (
         // The viewport uses the dynamic height (h-dvh) so the dialog always
