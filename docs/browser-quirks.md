@@ -44,11 +44,19 @@ collapses and expands, so the visible viewport changes height while the large vi
 - Modal dialogs are laid out in the dynamic viewport (`h-dvh`), so they always sit in the visible
   area and never under the toolbar.
 - The mobile menu is the ds `DialogContent variant="fullscreen"`: a flat ink panel over the whole
-  large viewport, so both bars tint to the same colour and no page shows below it. Its content
-  uses `min-h-lvh` with a bottom padding of `100lvh - 100dvh`, so the last row can still scroll
-  above the toolbar on small phones and in landscape (`src/shell/header.tsx`).
+  large viewport, so no page shows below it. Its content uses `min-h-lvh` with a bottom padding of
+  `100lvh - 100dvh`, so the last row can still scroll above the toolbar on small phones and in
+  landscape (`src/shell/header.tsx`).
+- Safari does not tint the bars from that panel. It took the brand black of the backdrop
+  (`ink-950`) or the root canvas, so the ink menu looked cut off at both ends. While a fullscreen
+  dialog is open (`data-open`), its backdrop takes the dialog's tone at 65 %
+  (`src/components/dialog.tsx`), and the root canvas takes that tone through `html:has(...)`
+  (`src/styles/shell.css`). Whichever Safari samples, or both blended, the bars match the panel.
+  Base UI drops `data-open` as closing starts, so the closing fade is the usual black scrim. Safari
+  still keeps the panel colour in the bars for about a second after closing; that delay is
+  Safari's own.
 
-History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`401bd5f`, `9a13d68`, `9bab38f`).
+History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`401bd5f`, `9a13d68`, `9bab38f`), [website_new#341](https://github.com/tum-ai/website_new/pull/341) (bar tint matching the menu).
 
 ## Focus escaping modals
 
