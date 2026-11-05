@@ -101,8 +101,11 @@ History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`7ac
 
 ## Touch
 
-- A brand-tinted tap highlight replaces the default grey flash, and `touch-action: manipulation`
-  on links and buttons removes double-tap zoom on repeated taps (`src/styles/tailwind.css`).
+- Safari on iOS and Chrome on Android flash a tint over the box of a tapped link or button. The
+  kit turns it off (`-webkit-tap-highlight-color: transparent`): over wide targets such as an FAQ
+  row it showed as a short coloured blink, and controls have their own pressed and focus states.
+  `touch-action: manipulation` on links and buttons removes double-tap zoom on repeated taps
+  (`src/styles/tailwind.css`).
 
 History: [website_new#262](https://github.com/tum-ai/website_new/pull/262) (`9bab38f`).
 

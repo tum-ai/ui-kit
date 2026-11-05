@@ -419,9 +419,12 @@
     border-color: var(--tone-hairline);
   }
 
-  /* iOS: brand-tinted tap flash; no double-tap zoom on repeated taps. */
+  /* Safari on iOS and Chrome on Android flash a tint over a tapped control's
+     box. Over wide targets such as an FAQ row it reads as a blink of colour,
+     and controls already show their own pressed and focus states, so no flash.
+     No double-tap zoom on repeated taps either. */
   :root {
-    -webkit-tap-highlight-color: rgb(154 100 217 / 0.16);
+    -webkit-tap-highlight-color: transparent;
   }
 
   :where(a, button, [role="button"], summary, label) {
