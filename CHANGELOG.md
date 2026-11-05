@@ -1,5 +1,11 @@
 # @tum.ai/ui-kit
 
+## 0.3.0
+
+### Minor Changes
+
+- f3470f9: Hold up on old and low-end devices. The header watches frame pacing while the page scrolls and, once frames fall well behind (or the reader prefers reduced transparency), marks the page `data-effects="reduced"`: its pill then drops the backdrop blur for a nearly opaque fill. The new `effects-reduced:` variant lets other costly surfaces do the same. `HalftoneField` starts only within a viewport of the screen, declines software WebGL (the CSS dots show instead) and steps down its resolution, frame rate and finally to a still frame when its own frames run slow (`data-quality` on the canvas).
+
 ## 0.2.3
 
 ### Patch Changes
