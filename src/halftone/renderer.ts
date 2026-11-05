@@ -6,7 +6,21 @@
  * visible, caps the pixel ratio and the pixel count, and under reduced
  * motion draws a single still frame (redrawn on resize). On context loss it
  * stops and reports, so the CSS fallback can take over.
+ *
+ * Constrained devices: it declines software rendering (the CSS dots are far
+ * cheaper than a full-screen shader on the CPU) and watches its own frame
+ * times, stepping down a quality ladder (quality.ts) when the GPU can't keep
+ * up: fewer pixels, then fewer frames, then one still frame. The canvas
+ * carries the level as `data-quality` (0 is full quality).
  */
+import {
+  type DeviceHints,
+  lowerSharedLevel,
+  QUALITY_LEVELS,
+  QUALITY_SAMPLES,
+  sharedLevel,
+  tooSlow,
+} from "./quality";
 import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shader";
 
 type Rgb = readonly [number, number, number];
@@ -95,12 +109,22 @@ const UNIFORMS = [
   "uFadeBottom",
 ] as const;
 
-/** Device pixel ratio for a canvas: capped at 2 and at a pixel budget. */
-export function effectiveDpr(width: number, height: number, dpr: number, coarse: boolean) {
-  const budget = coarse ? 2_000_000 : 3_500_000;
+/**
+ * Device pixel ratio for a canvas: capped at 2 and at a pixel budget, scaled
+ * by the quality level's `budget`. Full quality never drops below 1; a
+ * reduced level may go to 0.75 (softer dots, far fewer pixels).
+ */
+export function effectiveDpr(
+  width: number,
+  height: number,
+  dpr: number,
+  coarse: boolean,
+  scale = 1,
+) {
+  const budget = (coarse ? 2_000_000 : 3_500_000) * scale;
   const capped = Math.min(dpr, 2);
   const area = Math.max(1, width * height);
-  return Math.max(1, Math.min(capped, Math.sqrt(budget / area)));
+  return Math.max(scale < 1 ? 0.75 : 1, Math.min(capped, Math.sqrt(budget / area)));
 }
 
 /** ease-brand, cubic-bezier(0.22, 1, 0.36, 1), approximated by an ease-out quint. */
@@ -134,18 +158,34 @@ export function createHalftone(
     stencil: false,
     premultipliedAlpha: true,
     powerPreference: "low-power",
+    // Software WebGL (a blocklisted GPU, SwiftShader) would run the
+    // full-screen shader on the CPU; the CSS dots stand in instead.
+    failIfMajorPerformanceCaveat: true,
   });
   if (!context) return null;
   const gl: WebGL2RenderingContext = context;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarse = window.matchMedia("(pointer: coarse)").matches;
-  const fps = options.fps ?? 60;
   const speed = options.speed ?? 1;
+  const hints: DeviceHints = {
+    deviceMemory: (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
+    hardwareConcurrency: navigator.hardwareConcurrency,
+  };
+  let level = sharedLevel(hints);
+  let fps = 60;
+  let still = reduced;
+  function applyLevel() {
+    const quality = QUALITY_LEVELS[level] ?? QUALITY_LEVELS[0];
+    fps = Math.min(options.fps ?? 60, quality?.fps ?? 60);
+    still = reduced || Boolean(quality?.still);
+    canvas.dataset["quality"] = String(level);
+  }
+  applyLevel();
 
   const state: HalftoneState = {
     sun: { x: -9999, y: -9999, r: 1 },
-    rise: options.rise === false || reduced ? 1 : 0,
+    rise: options.rise === false || still ? 1 : 0,
     density: 1,
     warm: 1,
     edge: 1,
@@ -171,6 +211,12 @@ export function createHalftone(
   let lastFrame = 0;
   let clock = 0;
   let riseStart = -1;
+  // Frame-time watch: drawn-frame intervals, the display's own interval (the
+  // shortest gap between animation frames) and a warm-up after each start.
+  let samples: number[] = [];
+  let display = 16.7;
+  let lastTick = 0;
+  let judgeAfter = 0;
   const pointer = { x: -9999, y: -9999, amt: 0, targetX: -9999, targetY: -9999, targetAmt: 0 };
   const firstFrame: (() => void)[] = [];
   const lostCallbacks: (() => void)[] = [];
@@ -229,7 +275,8 @@ export function createHalftone(
     const rect = canvas.getBoundingClientRect();
     width = rect.width;
     height = rect.height;
-    dpr = effectiveDpr(width, height, window.devicePixelRatio || 1, coarse);
+    const scale = QUALITY_LEVELS[level]?.budget ?? 1;
+    dpr = effectiveDpr(width, height, window.devicePixelRatio || 1, coarse, scale);
     canvas.width = Math.max(1, Math.round(width * dpr));
     canvas.height = Math.max(1, Math.round(height * dpr));
     measureClear();
@@ -267,10 +314,39 @@ export function createHalftone(
     }
   }
 
+  /** Steps down one quality level and applies it. */
+  function stepDown(now: number) {
+    level += 1;
+    lowerSharedLevel(level);
+    applyLevel();
+    samples = [];
+    judgeAfter = now + 1000;
+    if (still) {
+      stop();
+      state.rise = 1;
+    }
+    resize();
+  }
+
+  /** Judges a full window of drawn frames against what the frame cap allows. */
+  function watchFrames(now: number, interval: number) {
+    if (!interval || now < judgeAfter) return;
+    samples.push(interval);
+    if (samples.length < QUALITY_SAMPLES) return;
+    // The fps gate draws on whole display frames: at 40 fps on a 60 Hz
+    // screen every second frame (33 ms) is on time.
+    const expected = Math.ceil((1000 / fps - 2) / display) * display;
+    if (tooSlow(samples, expected) && level < QUALITY_LEVELS.length - 1) stepDown(now);
+    samples = [];
+  }
+
   function frame(now: number) {
     raf = requestAnimationFrame(frame);
+    if (lastTick) display = Math.min(display, Math.max(6, now - lastTick));
+    lastTick = now;
     if (now - lastFrame < 1000 / fps - 2) return;
-    const dt = Math.min(0.1, lastFrame ? (now - lastFrame) / 1000 : 0);
+    const interval = lastFrame ? now - lastFrame : 0;
+    const dt = Math.min(0.1, interval / 1000);
     lastFrame = now;
     clock += dt * speed;
     if (state.rise < 1) {
@@ -283,12 +359,16 @@ export function createHalftone(
     pointer.y += (pointer.targetY - pointer.y) * (pointer.y < -9000 ? 1 : k);
     pointer.amt += (pointer.targetAmt - pointer.amt) * k;
     draw();
+    watchFrames(now, interval);
   }
 
   function start() {
-    if (running || reduced || lost || destroyed || !visible || document.hidden) return;
+    if (running || still || lost || destroyed || !visible || document.hidden) return;
     running = true;
     lastFrame = 0;
+    lastTick = 0;
+    samples = [];
+    judgeAfter = performance.now() + 1000;
     raf = requestAnimationFrame(frame);
   }
 
@@ -305,7 +385,7 @@ export function createHalftone(
       visible = Boolean(entry?.isIntersecting);
       if (visible) {
         start();
-        if (reduced) draw();
+        if (still) draw();
       } else stop();
     },
     { rootMargin: "120px 0px" },
