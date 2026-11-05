@@ -40,11 +40,14 @@ type Mode = "pending" | "css" | "webgl" | "lost";
 /**
  * A halftone dot field after the Makeathon posters: a warped dot grid that
  * breathes in slow waves, dense at the edges, warming toward a sun. Once the
- * page is idle the WebGL2 renderer loads, draws its first frame and the
- * canvas fades in; it draws only while on screen, and a single still frame
- * under reduced motion. A CSS dot pattern rendered by the server stands in
- * only where the live field cannot: without JavaScript, without WebGL, or
- * after a lost context. Fills its nearest positioned ancestor (`absolute
+ * field is within a viewport of the screen and the page is idle, the WebGL2
+ * renderer loads, draws its first frame and the canvas fades in; it draws
+ * only while on screen, and a single still frame under reduced motion. On a
+ * GPU that can't keep up it lowers its resolution, then its frame rate, then
+ * holds a still frame. A CSS dot pattern rendered by the server stands in
+ * only where the live field cannot: without JavaScript, without WebGL (or
+ * with software-only WebGL), or after a lost context. Fills its nearest
+ * positioned ancestor (`absolute
  * inset-0`). Needs `@tum.ai/ui-kit/halftone.css`. Decorative: hidden from
  * assistive technology.
  */
@@ -93,13 +96,35 @@ export function HalftoneField({
     };
     // Older Safari has no requestIdleCallback.
     const hasIdle = "requestIdleCallback" in window;
-    const idle = hasIdle
-      ? window.requestIdleCallback(load, { timeout: 900 })
-      : window.setTimeout(load, 120);
+    let idle: number | null = null;
+    const schedule = () => {
+      idle = hasIdle
+        ? window.requestIdleCallback(load, { timeout: 900 })
+        : window.setTimeout(load, 120);
+    };
+    // A field screens away waits until it comes within a viewport, so a page
+    // with several fields doesn't open every WebGL context (canvas memory and
+    // a shader compile each) at load.
+    let near: IntersectionObserver | null = null;
+    const canvas = canvasRef.current;
+    if (canvas && "IntersectionObserver" in window) {
+      near = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry?.isIntersecting) return;
+          near?.disconnect();
+          schedule();
+        },
+        { rootMargin: "100% 0px" },
+      );
+      near.observe(canvas);
+    } else schedule();
     return () => {
       cancelled = true;
-      if (hasIdle) window.cancelIdleCallback(idle);
-      else window.clearTimeout(idle);
+      near?.disconnect();
+      if (idle !== null) {
+        if (hasIdle) window.cancelIdleCallback(idle);
+        else window.clearTimeout(idle);
+      }
       handle?.destroy();
     };
   }, [sunRef, clearRef]);
