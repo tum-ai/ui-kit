@@ -1,5 +1,11 @@
 # @tum.ai/ui-kit
 
+## 0.3.1
+
+### Patch Changes
+
+- e7e05c2: No tap flash on touch screens: the base styles set `-webkit-tap-highlight-color` to transparent instead of a brand purple tint, which showed on iPhone and Android as a short coloured blink over the tapped link or button (most visibly over a whole FAQ row).
+
 ## 0.3.0
 
 ### Minor Changes
