@@ -2,7 +2,7 @@
 
 This development/private plugin applies the published `figma-scene.json` from `tum-ai/ui-kit` to the exact file configured in `design/figma.config.json`. It uses the ordinary Figma Plugin API and requires no API token or browser automation after installation.
 
-It checks the latest stable release on launch and every five minutes while the plugin stays open. Closing the plugin stops execution; reopening it catches up. Figma does not expose a supported background service for writing arbitrary design nodes or launching this plugin remotely. Keep one designated release listener open in the target document for prompt updates.
+It checks the latest stable release on launch and every five minutes while the plugin stays open. Closing the plugin stops execution; reopening it catches up. The public Plugin API does not launch this updater remotely while the editor is closed. Figma’s separate hosted MCP writer has different authentication and capability limits; see [remote operation](../../docs/figma.md#running-remotely). Keep one designated release listener open in the target document for prompt updates.
 
 ## Install once
 
@@ -16,11 +16,13 @@ If an earlier MCP-based import created native assets, preserve its real returned
 
 ## Release contract
 
-Every accepted release must provide both `figma-scene.json` and `figma-scene.json.sha256`. The plugin checks the checksum, configured repository and package, stable version against the release tag, source commit against that tag, `source.completeInventory === true`, `source.dirtyCheckout === false`, and every scene fidelity diagnostic. Incomplete or unsupported captures fail before writing. It downloads JSON data only; it never evaluates code from a release.
+Every accepted release must provide both `figma-scene.json` and `figma-scene.json.sha256`, with GitHub SHA-256 asset digests. The release workflow mirrors those exact bytes to the `figma-release-data` branch. The updater resolves that branch to one immutable commit and downloads both files through GitHub's CORS-enabled raw endpoint. Direct release-download redirects are not browser-readable from Figma. Mirrored content must match the release asset digests and sizes before any document writes. The plugin checks the checksum, configured repository and package, stable version against the release tag, source commit against that tag, `source.completeInventory === true`, `source.dirtyCheckout === false`, and every scene fidelity diagnostic. Incomplete or unsupported captures fail before writing. It downloads JSON data only; it never evaluates code from a release.
 
 Native components, variant sets, editable text and rich text ranges, vector SVGs, image paints, Auto Layout, variables, aliases, bindings, text styles and effect styles use the same checked-in reconciliation engine as the MCP transport. A release updates known identities. Identical content preserves IDs and does not write managed canvas nodes. Removed exports and layers are retained and reported as deprecated. Unmanaged designer content is preserved. Deleting deprecated assets or publishing the Figma library remains a deliberate human action.
 
 Figma color-variable bindings control the complete RGBA value, including alpha. A CSS opacity modifier therefore needs a derived color variable with the correct value in each mode. The engine checks the resulting bound paint alpha and fails explicitly if it differs from the captured source.
+
+Text sizing is applied after geometry and variable bindings, because Figma resizing can reset it. Explicit CSS `nowrap` and captured single-line inline labels use intrinsic text sizing; paragraphs keep their captured wrapping width. Updating an older ledger verifies the existing fingerprint before migrating sizing in place. The updater checks painted glyph bounds against clipping ancestors and reports additional overflow instead of shrinking fonts or widening containers.
 
 Managed native properties are fingerprinted. A manual edit to generated text, fills, bound variables, styles or owned geometry causes an explicit drift failure on replay, including a replay of the same release. Canvas placement of top-level library assets is designer-owned. Imported SVG roots retain their identity; changed SVG source replaces only known imported vector descendants, and fails if a designer inserted content inside those descendants.
 

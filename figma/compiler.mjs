@@ -204,9 +204,7 @@ export function compileBatch(
     index = batches.findIndex((b) => b.key === batchKey);
   if (index < 0) throw new Error(`Unknown Figma batch ${batchKey}`);
   const batch = batches[index],
-    foundationHash = contentHash(
-      batches[0].key === "foundations" ? batches[0] : foundations(scene),
-    );
+    foundationHash = context.foundationHash;
   if (
     index > 0 &&
     ledger.completedBatches[batches[index - 1].key] !==
