@@ -5,11 +5,16 @@ import { usePathname } from "next/navigation";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { stubMatchMedia, stubObservers } from "../components/testing";
+import { watchEffects } from "../lib/effects";
 import { Header, type HeaderProps } from "./header";
 import { headerFrostAfter } from "./header-scroll";
 import { shellConnectLinks, shellLogo, shellNavigation } from "./testing";
 
 vi.mock("next/navigation", () => ({ usePathname: vi.fn(() => "/projects") }));
+// The frame watch has its own tests (src/lib/effects.test.ts); here it only
+// has to start and stop with the header.
+const releaseEffects = vi.fn();
+vi.mock("../lib/effects", () => ({ watchEffects: vi.fn(() => releaseEffects) }));
 
 function renderHeader(pathname = "/projects", props: Partial<HeaderProps> = {}) {
   vi.mocked(usePathname).mockReturnValue(pathname);
@@ -141,6 +146,17 @@ describe("scroll frosting", () => {
   test("solid is applied from the first render", () => {
     renderHeader("/projects", { solid: true });
     expect(pill()).toHaveClass("backdrop-blur-xl");
+  });
+  test("watches frame pacing and drops the blur under reduced effects", () => {
+    const { unmount } = renderHeader("/projects", { solid: true });
+    expect(watchEffects).toHaveBeenCalled();
+    // Tailwind adds the -webkit- prefix for Safari.
+    expect(pill()).toHaveClass(
+      "effects-reduced:[backdrop-filter:none]",
+      "effects-reduced:bg-ink-950/95",
+    );
+    unmount();
+    expect(releaseEffects).toHaveBeenCalled();
   });
   test("coalesces scroll and resize into one frame and cancels it on unmount", () => {
     const frames: FrameRequestCallback[] = [];

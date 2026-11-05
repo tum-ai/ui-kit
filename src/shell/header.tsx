@@ -24,6 +24,7 @@ import {
   DialogTrigger,
 } from "../components/dialog";
 import { cn } from "../lib/cn";
+import { watchEffects } from "../lib/effects";
 import { getHeaderScrollState } from "./header-scroll";
 import { NavAnchor } from "./nav-anchor";
 import type { NavLink, ShellLogo } from "./types";
@@ -53,7 +54,10 @@ export type HeaderProps = Omit<ComponentProps<"header">, "children"> & {
 
 /**
  * Floating site header with route highlighting and a fullscreen mobile menu.
- * The pill stays visible and frosts after scrolling. Its gap below the top edge
+ * The pill stays visible and frosts after scrolling; once the page is found to
+ * drop frames (`data-effects="reduced"`, src/lib/effects.ts) or the reader
+ * prefers reduced transparency, it turns nearly opaque without the blur, which
+ * is costly to redraw over moving content. Its gap below the top edge
  * preserves Safari's page tint; the menu spans the large viewport and leaves
  * dynamic-viewport padding so long navigation remains reachable above toolbars.
  * Requires the consumer's Next App Router and the kit's shell styles.
@@ -86,6 +90,10 @@ export function Header({
   );
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+
+  // Watch frame pacing while the page scrolls; on a device that can't keep
+  // up, the frosted blur (redrawn every frame over moving content) steps back.
+  useEffect(() => watchEffects(), []);
 
   useEffect(() => {
     let frame = 0;
@@ -149,7 +157,9 @@ export function Header({
             className={cn(
               "h-14 gap-2 pr-2 pl-4 text-white md:pl-5 pointer-events-auto relative flex items-center rounded-full border transition-[background-color,border-color,box-shadow] duration-surface ease-brand",
               frosted
-                ? "border-white/10 backdrop-blur-xl bg-ink-950/75 shadow-[0_16px_40px_-18px_var(--color-ink-950)] shadow-ink-950/80 backdrop-saturate-150"
+                ? // Under reduced effects the blur goes (any backdrop filter costs a
+                  // weak GPU about the same) and the pill turns nearly opaque instead.
+                  "border-white/10 backdrop-blur-xl bg-ink-950/75 shadow-[0_16px_40px_-18px_var(--color-ink-950)] shadow-ink-950/80 backdrop-saturate-150 effects-reduced:bg-ink-950/95 effects-reduced:[backdrop-filter:none]"
                 : "border-transparent bg-transparent",
             )}
           >

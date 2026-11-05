@@ -196,7 +196,7 @@ Motion
 - `Reveal`: fades content in on scroll. Variants: `up`, `fade`, `scale`, `left`, `right`, `line`. Use `delay={i * 80}` to stagger.
 - `SplitWords`: headline words rise in on load; animated with CSS only.
 - `CountUp`: parses formatted strings such as "1.2M+"; `parseFigure` and `formatFigure` are the server-safe helpers.
-- `MotionProvider`: framer-motion's `LazyMotion strict`, rendered once in the application's root layout.
+- `MotionProvider`: framer-motion's `LazyMotion strict`, rendered once in the application's root layout when it renders `m.*` components. No kit component needs it (`CountUp` animates imperatively), so an app without its own `m.*` can leave it out and skip LazyMotion's features in its bundle.
 - `BrandMark`: the logomark as a tonal background shape, with an `intensity` step for dark bands. Use it as decoration only, never as a logo substitute.
 - `Aurora`: slow light field for dark bands.
 
@@ -246,6 +246,25 @@ Under reduced motion nothing animates: transforms are gated by `motion-safe:` (t
 - Prefix every looping or entrance animation with `motion-safe:`, and gate every transform that responds to interaction (`motion-safe:hover:…`, or `motion-reduce:transition-none` on the same element). Lint enforces both.
 - Hover effects stay small: slow image zoom (1.04, `zoom-media`), arrow nudges, a 4px card lift, spotlight. Nothing bouncy.
 - framer-motion runs inside `LazyMotion strict`: import `m`, not `motion`.
+
+### Reduced effects
+
+Old and low-end devices can't redraw every layer of a busy page in time. The
+`Header` watches frame pacing while the page scrolls; once two seconds of
+scrolling run slow (a mean under about 45 fps) or stutter (over a quarter of
+the frames take more than 25 ms), it marks the document
+`data-effects="reduced"` for the rest of the visit.
+`prefers-reduced-transparency: reduce` counts as reduced effects too.
+
+- `effects-reduced:` is the variant for it. Put the costly part of a surface
+  behind it, with a cheaper look that keeps contrast: the header pill trades
+  its backdrop blur for a nearly opaque fill
+  (`effects-reduced:[backdrop-filter:none] effects-reduced:bg-ink-950/95`).
+- Use it for backdrop filters and other effects that are recomposited every
+  frame over moving content. Any backdrop filter costs a weak GPU about the
+  same, so a smaller blur radius does not help; drop the filter.
+- The verdict never reverts during a visit, so surfaces don't flicker between
+  looks. `HalftoneField` adapts on its own frame times (components/halftone.md).
 
 ## Composition rules
 

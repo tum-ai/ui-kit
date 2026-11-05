@@ -757,6 +757,22 @@
   }
 }
 
+/*
+ * `effects-reduced:` applies once the page has been found to drop frames
+ * (`data-effects="reduced"` on the root, set by the header's frame watch in
+ * src/lib/effects.ts) or the reader asks for less transparency. Costly
+ * decoration (backdrop blurs above all) steps back under it.
+ */
+@custom-variant effects-reduced {
+  &:where(:root[data-effects="reduced"] *) {
+    @slot;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    @slot;
+  }
+}
+
 /* Anchor targets land below the fixed header (see --header-offset). */
 @utility scroll-mt-header {
   scroll-margin-top: var(--header-offset);
