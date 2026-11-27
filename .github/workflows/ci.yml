@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup
       - run: bun run test:coverage
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: ${{ !cancelled() }}
         with:
           name: unit-reports
@@ -55,7 +55,7 @@ jobs:
       - run: bun run check:size
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:consumer
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: ${{ !cancelled() }}
         with:
           name: package-reports
@@ -79,7 +79,7 @@ jobs:
       - run: bun run figma:build
       - run: bun run test:stories
       - run: bun run test:e2e
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: ${{ !cancelled() }}
         with:
           name: browser-reports
